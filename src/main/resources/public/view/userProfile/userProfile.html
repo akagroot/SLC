@@ -25,7 +25,7 @@
 	<div>
 		<div style="display:inline-block">
 			<h3 style="display:inline-block;">Goals</h3>
-			<span class="action-icon pull-right align-h3">
+			<span ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'" class="action-icon pull-right align-h3">
 				<a ui-sref="userGoals({userId: UserProfile.userId})" style="margin-top:5px;">(Edit)</a>
 			</span>
 		</div>

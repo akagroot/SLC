@@ -14,6 +14,8 @@ import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.client.Clients;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -27,10 +29,15 @@ public class StormpathServiceImpl implements StormpathService {
     private final String STORMPATH_CLIENT_APIKEY_SECRET = "MZ1+TiXSakXnzVirkfI9U1YB9h737NgGOxze4yq7mbk";
     private final String STORMPATH_APPLICATION_HREF = "https://api.stormpath.com/v1/applications/5GzpRvRW6ainb6yVyzu6Qz";
     
+
+    @Autowired
+    private Environment environment;
+    
     @Override
     public StormpathAccount getStormpathAccount(String email) {
+        String href = environment.getRequiredProperty("stormpath.application.href");
         Client client = Clients.builder().build();
-        Application application = client.getResource(STORMPATH_APPLICATION_HREF, Application.class);
+        Application application = client.getResource(href, Application.class);
         
         Map<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("username", email);
