@@ -1,1 +1,6 @@
+UAS
 target
+src/main/resources/local.environmental.properties
+src/main/resources/server.environmental.properties
+src/main/resources/environmental.properties
+
