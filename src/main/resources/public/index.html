@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>My AngularJS App</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/html5-boilerplate/normalize.css">
+  <link rel="stylesheet" href="css/html5-boilerplate/main.css">
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <script src="js/assets/html5-boilerplate/modernizr-2.8.3.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div menu></div>
+ 
+    <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <div ui-view></div>
+
+    <hr/>
+    <div>PerformanceCareRx</div>
+  </div>
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.js"></script>
+  -->
+  <script src="js/assets/jquery/jquery.js"></script>
+  <script src="js/assets/angular/angular.js"></script>
+  <script src="js/assets/bootstrap/ui-bootstrap.js"></script>
+  <script src="js/assets/bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="js/assets/angular-ui-router/angular-ui-router.js"></script>
+  <script src="js/assets/spin.js/spin.js"></script>
+  <script src="js/assets/angular-spinner/angular-spinner.js"></script>
+  <script src="js/assets/lodash/lodash.js"></script>
+  <script src="js/assets/restangular/restangular.js"></script>
+  <script src="js/app.js"></script>
+
+  <script src="js/service/common.service.js"></script>
+  <script src="js/service/user.service.js"></script>
+  <script src="js/service/exercise.service.js"></script>
+
+  <script src="js/directive/menu/menu.directive.js"></script>
+  <script src="js/directive/action.directive.js"></script>
+
+  <script src="view/redirectToDashboard/redirectToDashboard.js"></script>
+  <script src="view/users/users.js"></script>
+  <script src="view/addUser/addUser.js"></script>
+  <script src="view/userProfile/userProfile.js"></script>
+  <script src="view/userGoals/userGoals.js"></script>
+  <script src="view/exercises/exercises.js"></script>
+</body>
+</html>

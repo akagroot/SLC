@@ -1,0 +1,156 @@
+<div ng-if="UserProfile.dataLoading"><span us-spinner></span> Loading...</div>
+<div ng-if="!UserProfile.dataLoading">
+	<div ng-if="UserProfile.saving" us-spinner></div>
+	<label>Exercise Summary</label>
+	<div>
+		<div class="pull-right" ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'">
+			Role <select ng-disabled="UserProfile.saving" 
+				ng-change="UserProfile.roleChanged()" 
+					ng-model="UserProfile.selectedUserRole">
+					<option value="ATHLETE">Athlete</option>
+					<option value="ADMIN">Admin</option>
+				</select>
+		</div>
+		<h3>{{UserProfile.userData.userProfileModel.firstName}} {{UserProfile.userData.userProfileModel.lastName}}</h3>
+	</div>
+	<div ng-if="UserProfile.setRoleError" class="alert alert-danger">
+		<strong>Error!</strong> {{UserProfile.setRoleErrorMessage}}
+	</div>
+	<style>
+		.align-h3 {
+			padding-top: 24px;
+			padding-bottom: 10px;
+		}
+	</style>
+	<div>
+		<div style="display:inline-block">
+			<h3 style="display:inline-block;">Goals</h3>
+			<span class="action-icon pull-right align-h3">
+				<a ui-sref="userGoals({userId: UserProfile.userId})" style="margin-top:5px;">(Edit)</a>
+			</span>
+		</div>
+	</div>
+
+	<div ng-if="UserProfile.userData.gradedExercises.length > 0">
+		<div ng-repeat="entry in UserProfile.userData.gradedExercises"
+		class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-muted"><span class="glyphicon glyphicon-calendar"></span></th>
+						<th>
+							<span class="capitalize category">{{entry.group.displayName}}</span>
+							<span class="normal-text grade-average badge alert-info">{{entry.averageGrade | number:2}} avg</span>
+						</th>
+						<th class="right">Goal</th>
+						<th class="right">RM</th>
+						<th class="right">Grade</th>
+						<th class="right">#</th>
+						<th class="right">Reps</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="exercise in entry.exercises">
+						<td class="age-cell"><div class="age-label label label-info">1</div></td>
+						<td><div class="exercise-name">{{exercise.exerciseModel.name}}</div></td>
+						<td class="right">{{exercise.goal}}</td>
+						<td class="right">{{exercise.estimated1RM}}</td>
+						<td class="right">{{exercise.grade | number:2}}</td>
+						<td class="right">{{exercise.weight}}</td>
+						<td class="right">{{exercise.reps}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div ng-if="UserProfile.userData.gradedExercises.length == 0" class="alert alert-warning">
+		There are no graded exercises available.
+	</div>
+
+	<form name="addExerciseForm" ng-submit="UserProfile.addExercise(addExerciseForm)">
+		<h3>Add Exercise</h3>
+
+		<div ng-if="UserProfile.showExerciseAdded" class="alert alert-success">
+			<strong>Added!</strong> The exercise has been added.
+		</div>
+
+		<div ng-if="UserProfile.exerciseAddedError" class="alert alert-danger">
+			<strong>Error!</strong> There was an error adding the exercise.
+		</div>
+
+		<div class="form-group">
+			<label>Date</label>
+			<input type="date" class="form-control" required
+				ng-model="UserProfile.addExerciseModel.date"/>
+		</div>
+		<div class="form-group">
+			<label>Exercise</label>
+			<select class="form-control" required 
+      			ng-model="UserProfile.addExerciseModel.exercise">
+      			<optgroup ng-repeat="entry in UserProfile.groupedExercises"
+      				label="{{entry.group.displayName}}">
+      				<option ng-repeat="exercise in entry.exercises"
+      					value="{{exercise.id}}">{{exercise.name}}</option>
+      			</optgroup>
+      		</select>
+		</div>
+		<div class="form-group">
+			<label>Weight</label>
+			<select class="form-control" required
+				ng-model="UserProfile.addExerciseModel.weight">
+				<option ng-repeat="weight in UserProfile.weights" 
+					value="{{weight}}">{{weight}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Reps</label>
+			<select class="form-control" required
+				ng-model="UserProfile.addExerciseModel.reps">
+				<option ng-repeat="rep in UserProfile.reps" 
+					value="{{rep}}">{{rep}}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label>Note</label>
+			<input type="text" ng-model="UserProfile.addExerciseModel.note" class="form-control"/>
+		</div>
+		<button type="submit" class="btn btn-primary"
+			ng-disabled="UserProfile.saving">Add Exercise</button>
+	</form>
+
+	<h3>Exercise Log</h3>
+	<div ng-if="UserProfile.deleteExerciseError" class="alert alert-danger">
+		<strong>Error!</strong> {{UserProfile.deleteExerciseErrorMessage}}
+	</div>
+	<div ng-if="UserProfile.userData.exercisesByDate.length > 0">
+		<div ng-repeat="entry in UserProfile.userData.exercisesByDate" 
+			ng-if="UserProfile.countVisibleEntries(entry.exercises) > 0"
+			class="panel panel-default">
+			<div class="panel-heading"><h5>{{entry.date | date}}</h5></div>
+			<div class="panel-body">
+				<ul class="list-group">
+					<li class="list-group-item hover-highlight col-xs-12" 
+						ng-repeat="exercise in entry.exercises"
+						ng-if="exercise.deleted != true"
+						ng-mouseenter="exercise.showRemove = true" 
+						ng-mouseleave="exercise.showRemove = false">
+						<div class="action-icon delete-exercise">
+							<span ng-click="UserProfile.deleteExerciseRecorded(exercise)" 
+							title="Remove"
+							ng-hide="!exercise.showRemove" class="glyphicon glyphicon-remove"></span>
+						</div>
+						<span class="badge alert-info reps">{{exercise.reps}}</span>
+						<span class="badge alert-success">{{exercise.weight}}#</span>
+						<div>{{exercise.exerciseModel.name}}<span class="note text-muted">{{exercise.note}}</span></div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div ng-if="UserProfile.userData.exercisesByDate.length == 0">
+		<label>There are no recorded exercises for this user.</label>
+	</div>
+</div>
+<div ng-if="UserProfile.error" class="alert alert-danger">
+	<strong>Error!</strong> {{UserProfile.errorMessage}}
+</div>

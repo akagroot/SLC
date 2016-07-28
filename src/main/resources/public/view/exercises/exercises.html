@@ -1,0 +1,115 @@
+<div ng-if="Exercises.dataLoading"><span us-spinner></span> Loading...</div>
+<div ng-if="!Exercises.dataLoading">
+	<h2>Exercises</h2>
+	<div ng-repeat="entry in Exercises.groupedExercises" class="panel panel-default">
+		<div class="panel-heading" 
+			ng-if="entry.group.deleted != true"
+			ng-mouseenter="hoverEntry=true" 
+			ng-mouseleave="hoverEntry=false">
+			<div ng-if="!entry.group.editing">
+				<div class="action-icon delete-exercise">
+					<span ng-click="Exercises.deleteExerciseGroup(entry.group.keyName)" 
+						ng-hide="!hoverEntry" title="Remove" class="glyphicon glyphicon-remove"></span>
+				</div>
+				<div class="action-icon">
+					<span ng-click="Exercises.edit(entry.group, entry.group.htmlId);" 
+						ng-hide="!hoverEntry" title="Edit" class="glyphicon glyphicon-edit"></span>
+				</div>
+				<h5>{{entry.group.displayName}}</h5>
+			</div>
+			<div ng-if="entry.group.editing" class="input-group">
+				<input id="{{entry.group.htmlId}}" type="text" 
+					ng-model="entry.group.displayName_editable" class="form-control" />
+				<span class="input-group-addon btn btn-primary" tabindex="0"
+					action-directive="Exercises.saveEditGroup(entry.group)">Save</span>
+				<span class="input-group-addon btn btn-danger" tabindex="0"
+					action-directive="Exercises.cancelEdit(entry.group, entry.group.displayName, entry.group.displayName_editable)">Cancel</span>
+			</div>
+		</div>
+		<ul class="list-group">
+			<li ng-repeat="exercise in entry.exercises" 
+				class="list-group-item hover-highlight"
+				ng-if="exercise.deleted != true"
+				ng-mouseenter="hoverExercise = true" 
+				ng-mouseleave="hoverExercise = false">
+				<div ng-if="!exercise.editing">
+					<div class="action-icon delete-exercise">
+						<span ng-click="Exercises.deleteExercise(exercise.id)" 
+							title="Remove"
+							ng-hide="!hoverExercise" class="glyphicon glyphicon-remove"></span>
+					</div>
+					<div class="action-icon">
+						<span ng-click="Exercises.edit(exercise, exercise.htmlId)" 
+							title="Edit"
+							ng-hide="!hoverExercise" class="glyphicon glyphicon-edit"></span>
+					</div>
+					<span>{{exercise.name}}</span>
+				</div>
+				<div ng-if="exercise.editing" class="input-group col-xs-12">
+					<div class="input-group">
+						<span class="input-group-addon no-style bold">Group:</span>
+						<select class="form-control" required 
+				  			ng-model="exercise.exerciseGroupKeyName">
+				  			<option ng-repeat="entry in Exercises.groupedExercises"
+				  				value="{{entry.group.keyName}}">
+				  					{{entry.group.displayName}}</option>
+				  		</select>
+					</div>
+					<div class="input-group col-xs-12">
+						<input id="{{exercise.htmlId}}" type="text" 
+							ng-model="exercise.name_editable" class="form-control" />
+						<span class="input-group-addon btn btn-primary" tabindex="0"
+							action-directive="Exercises.saveEditExercise(exercise)">Save</span>
+						<span class="input-group-addon btn btn-danger" tabindex="0"
+							action-directive="Exercises.cancelEdit(exercise, exericse.name, exercise.name_editable)">Cancel</span>
+					</div>
+				</div>
+			</li>
+		<ul>
+	</div>
+
+	<div ng-if="Exercises.error" class="alert alert-danger">
+		<strong>Error!</strong> {{Exercises.errorMessage}}
+	</div>
+	<div ng-if="Exercises.successful" class="alert alert-success">
+		<strong>Success!</strong> {{Exercises.successfulMessage}}
+	</div>
+
+	<form name="addExerciseGroupForm" ng-submit="Exercises.addExerciseGroup()">
+		<h3>Add Exercise Group</h3>
+
+  		<div class="form-group">
+			<label>Key Name</label>
+			<input type="text" required 
+				ng-model="Exercises.addExerciseGroupModel.keyName" class="form-control"/>
+		</div>
+  		<div class="form-group">
+			<label>Display Name</label>
+			<input type="text" required 
+				ng-model="Exercises.addExerciseGroupModel.displayName" class="form-control"/>
+		</div>
+		<button type="submit" class="btn btn-primary"
+			ng-disabled="Exercises.saving">Add Group</button>
+	</form>
+
+	<form name="addExerciseForm" ng-submit="Exercises.addExercise()">
+		<h3>Add Exercise</h3>
+
+		<div class="form-group">
+			<label>Exercise Group</label>
+			<select class="form-control" required 
+	  			ng-model="Exercises.addExerciseModel.exerciseGroupKeyName">
+	  			<option ng-repeat="entry in Exercises.groupedExercises"
+	  				value="{{entry.group.keyName}}">
+	  					{{entry.group.displayName}}</option>
+	  		</select>
+	  	</div>
+  		<div class="form-group">
+			<label>Name</label>
+			<input type="text" required 
+				ng-model="Exercises.addExerciseModel.name" class="form-control"/>
+		</div>
+		<button type="submit" class="btn btn-primary"
+			ng-disabled="Exercises.saving">Add Exercise</button>
+	</form>
+</div>

@@ -1,0 +1,94 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+.right {
+  text-align: right;
+}
+.normal-text {
+  font-weight: normal;
+}
+.grade-average {
+  float: right;
+  font-size: 14px;
+}
+.capitalize {
+  text-transform: capitalize;
+}
+.category {
+  color: #3a87ad;
+}
+.age-cell {
+  padding-top: 13px;
+  position: relative;;
+}
+.age-label {
+  opacity: 0.5;
+}
+.exercise-name {
+  width: 330px;
+}
+
+.reps {
+  width: 22px;
+  height: 22px;
+  text-align: center;
+}
+.action-icon {
+  float: right;
+  margin-left: 5px;
+  width: 22px;
+  height: 22px;
+}
+.delete-exercise {
+  color: #a94442;
+}
+.delete-exercise > * {
+  color: #a94442;
+}
+.input-group-addon.no-style {
+  border: 0px;
+  background-color: transparent;
+}
+.bold {
+  font-weight: bold;
+}
+.list-group-item.hover-highlight:hover {
+  background-color: #fcf8e3;
+}
+.list-group-item {
+  /*border: 0px;*/
+}
+.list-group-item:not(:last-child) {
+  /*border-bottom: 1px solid #ddd;*/
+}
+.note {
+  margin-left: 10px;
+}
