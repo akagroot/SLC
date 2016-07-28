@@ -1,1 +1,1 @@
-web: sh target/bin/PerformanceCareRx
+web: java -Dserver.port=$PORT -jar target/*.jar
