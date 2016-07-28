@@ -1,6 +1,6 @@
+<h2>Exercises</h2>
 <div ng-if="Exercises.dataLoading"><span us-spinner></span> Loading...</div>
 <div ng-if="!Exercises.dataLoading">
-	<h2>Exercises</h2>
 	<div ng-repeat="entry in Exercises.groupedExercises" class="panel panel-default">
 		<div class="panel-heading" 
 			ng-if="entry.group.deleted != true"

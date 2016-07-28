@@ -1,10 +1,9 @@
 <a ui-sref="userProfile({userId: viewmodel.userId})">Back</a>
-
+<div>
+	<h2>Goals for: {{UserGoals.data.user.firstName}} {{UserGoals.data.user.lastName}}</h2>
+</div>
 <div ng-if="UserGoals.dataLoading"><span us-spinner></span> Loading...</div>
 <div ng-if="!UserGoals.dataLoading">
-	<div>
-		<h2>Goals for: {{UserGoals.data.user.firstName}} {{UserGoals.data.user.lastName}}</h2>
-	</div>
 
 	<div ng-if="UserGoals.data.groupedGoals.length > 0">
 		<div ng-repeat="entry in UserGoals.data.groupedGoals" class="panel panel-default">

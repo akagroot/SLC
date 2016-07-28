@@ -1,7 +1,7 @@
-<div ng-if="UserProfile.dataLoading"><span us-spinner></span> Loading...</div>
-<div ng-if="!UserProfile.dataLoading">
+<label>Exercise Summary</label>
+<div ng-if="UserProfile.loadingData"><span us-spinner></span> Loading...</div>
+<div ng-if="!UserProfile.loadingData">
 	<div ng-if="UserProfile.saving" us-spinner></div>
-	<label>Exercise Summary</label>
 	<div>
 		<div class="pull-right" ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'">
 			Role <select ng-disabled="UserProfile.saving" 
@@ -43,9 +43,9 @@
 							<span class="normal-text grade-average badge alert-info">{{entry.averageGrade | number:2}} avg</span>
 						</th>
 						<th class="right">Goal</th>
-						<th class="right">RM</th>
+						<th width="80px" class="right">RM</th>
 						<th class="right">Grade</th>
-						<th class="right">#</th>
+						<th width="80px" class="right">#</th>
 						<th class="right">Reps</th>
 					</tr>
 				</thead>
