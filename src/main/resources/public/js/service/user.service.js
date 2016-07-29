@@ -12,6 +12,8 @@ function userService($q, $log, commonService) {
   service.getUserData = getUserData;
   service.addUser = addUser;
   service.setRole = setRole;
+  service.updateUser = updateUser;
+  service.deleteUser = deleteUser;
 
   var getUserProfileRoute = "/userProfile";
   var getUserDataRoute = "/userData";
@@ -19,6 +21,8 @@ function userService($q, $log, commonService) {
   var getAllUsersRoute = "/allUsers";
   var addUserRoute = "/addUser";
   var setUserRoleRoute = "/updateRole";
+  var updateUserRoute = "/updateUser";
+  var deleteUserRoute = "/deleteUser/{userId}";
 
   service.addGoal = addGoal;
   service.deleteGoal = deleteGoal;
@@ -64,6 +68,14 @@ function userService($q, $log, commonService) {
 
   function addUser(data) {
     return commonService.post(addUserRoute, data);
+  }
+
+  function updateUser(model) {
+    return commonService.post(updateUserRoute, model);
+  }
+
+  function deleteUser(userId) {
+    return commonService.get(deleteUserRoute.replace("{userId}", userId));
   }
   
   return service;

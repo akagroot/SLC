@@ -58,6 +58,29 @@ public class UserRepositoryImpl implements UserRepository {
     }
     
     @Override
+    public UserProfileModel updateUser(UserProfileModel userModel) {
+        LOGGER.debug("UserRepositoryImpl.updateUser {}", userModel);
+        
+        dslContext.update(USERS)
+                .set(USERS.FIRSTNAME, userModel.getFirstName())
+                .set(USERS.LASTNAME, userModel.getLastName())
+                .set(USERS.EMAIL, userModel.getEmail())
+                .set(USERS.ROLE, userModel.getRole())
+                .where(USERS.ID.eq(userModel.getId()))
+                .execute();
+        
+        return userModel;
+    }
+    
+    @Override
+    public Boolean deleteUser(Integer userId) {
+        LOGGER.debug("UserRepositoryImpl.deleteUser: {}", userId);
+        return dslContext.deleteFrom(USERS)
+                .where(USERS.ID.eq(userId))
+                .execute() == 1;
+    }
+    
+    @Override
     public Boolean setUserRole(Integer userId, String role) {
         LOGGER.debug("UserRepositoryImpl.setUserRole: {} {}", userId, role);
         dslContext.update(USERS)

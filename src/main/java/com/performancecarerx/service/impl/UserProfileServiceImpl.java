@@ -14,6 +14,7 @@ import com.performancecarerx.model.UserProfileModel;
 import com.performancecarerx.model.dto.AddUserModel;
 import com.performancecarerx.model.dto.ExercisesByDate;
 import com.performancecarerx.model.dto.GroupedGradedExercises;
+import com.performancecarerx.model.dto.UpdateUserInfoModel;
 import com.performancecarerx.model.dto.UserDataResponse;
 import com.performancecarerx.repository.ExerciseGoalRepository;
 import com.performancecarerx.repository.UserRepository;
@@ -85,6 +86,18 @@ public class UserProfileServiceImpl implements UserProfileService {
         userProfileModel.setRole(model.getRole());
         return createUser(userProfileModel);
     }
+    
+    @Override
+    public UserProfileModel updateUser(UpdateUserInfoModel model) {
+        UserProfileModel upModel = userRepository.getUserById(model.getUserId());
+        upModel.setFirstName(model.getFirstName());
+        upModel.setLastName(model.getLastName());
+        return updateUser(upModel);
+    }
+    
+    private UserProfileModel updateUser(UserProfileModel model) {
+        return userRepository.updateUser(model);
+    }
 
     @Override
     public UserProfileModel getUserById(Integer userId) {
@@ -104,6 +117,11 @@ public class UserProfileServiceImpl implements UserProfileService {
     @Override
     public Integer getNumberOfAdmins() {
         return userRepository.getNumberOfAdmins();
+    }
+    
+    @Override
+    public Boolean deleteUser(Integer userId) {
+        return userRepository.deleteUser(userId);
     }
     
     @Override

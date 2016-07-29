@@ -9,6 +9,7 @@ import com.performancecarerx.constants.Constants;
 import com.performancecarerx.exception.NotAllowedException;
 import com.performancecarerx.model.UserProfileModel;
 import com.performancecarerx.model.dto.AddUserModel;
+import com.performancecarerx.model.dto.UpdateUserInfoModel;
 import com.performancecarerx.model.dto.UpdateUserRoleModel;
 import com.performancecarerx.model.dto.UserDataResponse;
 import com.performancecarerx.service.SecurityService;
@@ -91,6 +92,15 @@ public class UserProfileController {
         return userProfileService.createUser(model);
     }
     
+    @RequestMapping(value = "/api/v1/updateUser", method=RequestMethod.POST) 
+    public UserProfileModel updateUser(@RequestBody @Valid UpdateUserInfoModel model) {
+        LOGGER.debug("updateUser() {}", model);
+        String email = securityService.checkUserIsLoggedIn();
+        securityService.checkUserIsAdmin(email);
+        
+        return userProfileService.updateUser(model);
+    }
+    
     @RequestMapping(value = "/api/v1/updateRole", method=RequestMethod.POST)
     public Boolean setUserRole(@RequestBody @Valid UpdateUserRoleModel role) {
         LOGGER.debug("setUserRole() {}", role);
@@ -103,5 +113,21 @@ public class UserProfileController {
         }
         
         return userProfileService.setUserRole(role.getUserId(), role.getRole());
+    }
+    
+    @RequestMapping(value = "/api/v1/deleteUser/{userId}", method=RequestMethod.GET)
+    public Boolean deleteUser(@PathVariable("userId") Integer userId) {
+        LOGGER.debug("deleteUser() {}", userId);
+        String email = securityService.checkUserIsLoggedIn();
+        securityService.checkUserIsAdmin(email);
+        
+        UserProfileModel deleteUser = userProfileService.getUserById(userId);
+        
+        if(deleteUser.getRole().equals(Constants.USER_ROLE_ADMIN) && 
+                userProfileService.getNumberOfAdmins() == 1) {
+            throw new NotAllowedException("This action is not allowed because there would be no more admins. Please create another admin account before disabling this admin account.");
+        }
+        
+        return userProfileService.deleteUser(userId);
     }
 }

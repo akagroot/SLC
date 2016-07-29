@@ -16,6 +16,8 @@ public interface UserRepository {
     public UserProfileModel getUserById(Integer userId);
     public UserProfileModel getUserByEmail(String email);
     public UserProfileModel insertUser(UserProfileModel userModel);
+    public UserProfileModel updateUser(UserProfileModel userModel);
+    public Boolean deleteUser(Integer userId);
     public List<UserProfileModel> getAllUsers();
     public Boolean setUserRole(Integer userId, String role);
     public Integer getNumberOfAdmins();

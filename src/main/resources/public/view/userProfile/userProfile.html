@@ -1,9 +1,21 @@
 <label>Exercise Summary</label>
+<style>
+	.align-h3 {
+		padding-top: 24px;
+		padding-bottom: 10px;
+	}
+</style>
 <div ng-if="UserProfile.loadingData"><span us-spinner></span> Loading...</div>
 <div ng-if="!UserProfile.loadingData">
 	<div ng-if="UserProfile.saving" us-spinner></div>
+	<div ng-if="UserProfile.updateUserSuccess" class="alert alert-success">
+		<strong>Success!</strong> The user's name has been updated.
+	</div>
+	<div ng-if="UserProfile.updateUserError" class="alert alert-danger">
+		<strong>Error!</strong> {{UserProfile.updateUserErrorMessage}}
+	</div>
 	<div>
-		<div class="pull-right" ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'">
+		<div class="pull-right align-h3" ng-if="UserProfile.isAdmin">
 			Role <select ng-disabled="UserProfile.saving" 
 				ng-change="UserProfile.roleChanged()" 
 					ng-model="UserProfile.selectedUserRole">
@@ -11,21 +23,41 @@
 					<option value="ADMIN">Admin</option>
 				</select>
 		</div>
-		<h3>{{UserProfile.userData.userProfileModel.firstName}} {{UserProfile.userData.userProfileModel.lastName}}</h3>
+		<div ng-if="!UserProfile.editUser">
+			<h3 style="display:inline-block;">{{UserProfile.userData.userProfileModel.firstName}} {{UserProfile.userData.userProfileModel.lastName}}</h3>
+			<div action-directive="UserProfile.editUser = true" tabindex="0" ng-if="UserProfile.isAdmin"
+				title="Edit" class="glyphicon glyphicon-edit"></div>
+		</div>
+		<div ng-if="UserProfile.editUser">
+			<label>Edit User</label>
+			<form ng-submit="UserProfile.updateUser()" ng-if="UserProfile.editUser" class="form-inline">
+				<div class="form-group">
+					<input type="text" class="form-control"
+						ng-model="UserProfile.updateUserModel.firstName" />
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control"
+						ng-model="UserProfile.updateUserModel.lastName" />
+				</div>
+				<div class="form-group">
+					<button type="submit" class="form-control btn btn-primary" 
+						tabindex="0">Save</button>
+				</div>
+				<div class="form-group">
+					<div class="form-control btn btn-danger" tabindex="0"
+						action-directive="UserProfile.cancelEditUser()">Cancel</div>
+				</div>
+			</form>
+		</div>
+		<label>{{UserProfile.userData.userProfileModel.email}}</label>
 	</div>
 	<div ng-if="UserProfile.setRoleError" class="alert alert-danger">
 		<strong>Error!</strong> {{UserProfile.setRoleErrorMessage}}
 	</div>
-	<style>
-		.align-h3 {
-			padding-top: 24px;
-			padding-bottom: 10px;
-		}
-	</style>
 	<div>
 		<div style="display:inline-block">
 			<h3 style="display:inline-block;">Goals</h3>
-			<span ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'" class="action-icon pull-right align-h3">
+			<span ng-if="UserProfile.isAdmin" class="action-icon pull-right align-h3">
 				<a ui-sref="userGoals({userId: UserProfile.userId})" style="margin-top:5px;">(Edit)</a>
 			</span>
 		</div>
@@ -149,6 +181,11 @@
 	</div>
 	<div ng-if="UserProfile.userData.exercisesByDate.length == 0">
 		<label>There are no recorded exercises for this user.</label>
+	</div>
+
+	<div ng-if="UserProfile.isAdmin">
+		<hr/>
+		<button ng-click="UserProfile.deleteUser(UserProfile.userId)" class="btn btn-danger">Delete User</button>
 	</div>
 </div>
 <div ng-if="UserProfile.error" class="alert alert-danger">
