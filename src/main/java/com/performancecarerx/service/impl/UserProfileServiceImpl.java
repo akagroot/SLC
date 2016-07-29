@@ -62,6 +62,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
     
     private UserProfileModel createUser(String email) {
+        LOGGER.debug("Create user: {}", email);
         StormpathAccount account = stormpathService.getStormpathAccount(email);
         
         UserProfileModel model = new UserProfileModel(email);

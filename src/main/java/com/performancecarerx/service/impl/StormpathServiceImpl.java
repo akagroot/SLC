@@ -14,6 +14,8 @@ import com.stormpath.sdk.client.Client;
 import com.stormpath.sdk.client.Clients;
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -25,19 +27,26 @@ import org.springframework.stereotype.Component;
 @Component("stormpathService")
 public class StormpathServiceImpl implements StormpathService {
 
-    private final String STORMPATH_CLIENT_APIKEY_ID = "V99UNQJIXOSTC0LFWV1GGBR8X";
-    private final String STORMPATH_CLIENT_APIKEY_SECRET = "MZ1+TiXSakXnzVirkfI9U1YB9h737NgGOxze4yq7mbk";
-    private final String STORMPATH_APPLICATION_HREF = "https://api.stormpath.com/v1/applications/5GzpRvRW6ainb6yVyzu6Qz";
-    
+//    private final String STORMPATH_CLIENT_APIKEY_ID = "V99UNQJIXOSTC0LFWV1GGBR8X";
+//    private final String STORMPATH_CLIENT_APIKEY_SECRET = "MZ1+TiXSakXnzVirkfI9U1YB9h737NgGOxze4yq7mbk";
+//    private final String STORMPATH_APPLICATION_HREF = "https://api.stormpath.com/v1/applications/5GzpRvRW6ainb6yVyzu6Qz";
+//    private final String STORMPATH_APPLICATION_HREF = "https://api.stormpath.com/v1/applications/3XesVyJpcvbphcEUBwZNvw";
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(StormpathServiceImpl.class);
+    
     @Autowired
     private Environment environment;
     
     @Override
     public StormpathAccount getStormpathAccount(String email) {
+        LOGGER.debug("getStormpathAccount: {}", email);
         String href = environment.getRequiredProperty("stormpath.application.href");
+        LOGGER.debug("stormpath.application.href: {}", href);
         Client client = Clients.builder().build();
         Application application = client.getResource(href, Application.class);
+//        Application application = client.getResource(STORMPATH_APPLICATION_HREF, Application.class);
+        
+        LOGGER.debug("Got application...");
         
         Map<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("username", email);
