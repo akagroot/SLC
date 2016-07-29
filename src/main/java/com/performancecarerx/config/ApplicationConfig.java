@@ -36,6 +36,14 @@ public class ApplicationConfig {
 
     @Autowired
     private Environment environment;
+    
+    @Bean
+    public Application stormpathClient() {
+        String href = environment.getRequiredProperty("stormpath.application.href");
+        Client client = Clients.builder().build();
+        Application application = client.getResource(href, Application.class);
+        return application;
+    }
 
     @Bean
     public DataSource dataSource() {

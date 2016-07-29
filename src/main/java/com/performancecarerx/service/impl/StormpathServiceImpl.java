@@ -35,18 +35,11 @@ public class StormpathServiceImpl implements StormpathService {
     private static final Logger LOGGER = LoggerFactory.getLogger(StormpathServiceImpl.class);
     
     @Autowired
-    private Environment environment;
+    private Application application;
     
     @Override
     public StormpathAccount getStormpathAccount(String email) {
         LOGGER.debug("getStormpathAccount: {}", email);
-        String href = environment.getRequiredProperty("stormpath.application.href");
-        LOGGER.debug("stormpath.application.href: {}", href);
-        Client client = Clients.builder().build();
-        Application application = client.getResource(href, Application.class);
-//        Application application = client.getResource(STORMPATH_APPLICATION_HREF, Application.class);
-        
-        LOGGER.debug("Got application...");
         
         Map<String, Object> queryParams = new HashMap<String, Object>();
         queryParams.put("username", email);
