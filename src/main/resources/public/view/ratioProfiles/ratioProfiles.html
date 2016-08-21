@@ -1,0 +1,109 @@
+<h2>Ratio Profiles</h2>
+<div ng-if="RatioProfiles.dataLoading"><span us-spinner></span> Loading profiles...</div>
+<div ng-if="!RatioProfiles.dataLoading">
+	<div>
+		<label>Profile:</label>
+		<select ng-options="item as item.name for item in RatioProfiles.profiles track by item.id" 
+			ng-model="RatioProfiles.selectedProfile" ng-change="RatioProfiles.selectedProfileChanged()">
+		</select>
+	</div> 
+	<div ng-if="!RatioProfiles.editProfile">
+		<h3 style="display:inline-block">{{RatioProfiles.selectedProfile.name}}</h3>
+		<div action-directive="RatioProfiles.editProfile = true" tabindex="0"
+			title="Edit" class="glyphicon glyphicon-edit"></div>
+	</div>
+	<div ng-if="RatioProfiles.editProfile">
+		<label>Edit Profile Name</label>
+		<form ng-submit="RatioProfiles.updateRatioProfile()" class="form-inline">
+			<div class="form-group">
+				<input type="text" class="form-control"
+					ng-model="RatioProfiles.updateRatioProfileModel.name" />
+			</div>
+			<div class="form-group">
+				<button type="submit" class="form-control btn btn-primary" 
+					tabindex="0">Save</button>
+			</div>
+			<div class="form-group">
+				<div class="form-control btn btn-danger" tabindex="0"
+					action-directive="RatioProfiles.cancelEditRatioProfile()">Cancel</div>
+			</div>
+		</form>
+	</div>
+	<div ng-if="RatioProfiles.selectedProfile.values.length > 0"
+		class="col-xs-12 col-sm-12 col-md-12">
+		<ul class="list-group col-xs-6">
+			<li class="list-group-item col-xs-12 hover-highlight" 
+				ng-repeat="value in RatioProfiles.selectedProfile.values">
+				<div ng-if="!value.editing">
+					<div class="col-xs-3">{{value.reps}}</div>
+					<div class="col-xs-3">{{value.multiplier}}</div>
+					<div class="pull-right">
+						<span class="action-icon glyphicon glyphicon-edit" tabindex="0" title="Edit"
+							action-directive="value.editing=true"></span>
+						<span class="action-icon glyphicon glyphicon-remove" tabindex="0" title="Delete"
+							action-directive="RatioProfiles.deleteRatioProfileValue(value)"></span>
+					</div>
+				</div>
+				<div ng-if="value.editing">
+					<form class="form-inline" ng-submit="RatioProfiles.updateRatioProfileValue(value.updateModel)">
+						<div class="form-group col-xs-3"> 
+							<input type="number" class="form-control" required style="width:60px;"
+								ng-model="value.updateModel.reps" />
+						</div>
+						<div class="form-group col-xs-3">
+							<input type="decimal" class="form-control" required style="width: 60px;"
+								ng-model="value.updateModel.multiplier" />
+						</div>
+						<div class="form-group col-xs-6">
+							<div class="btn-group" role="group">
+								<button type="submit" class="btn btn-sm btn-primary">Save</button>
+								<button type="button" class="btn btn-sm btn-danger" 
+									action-directive="RatioProfiles.cancelEditRatioValue(value);">Cancel</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<div ng-if="RatioProfiles.selectedProfile.values.length == 0" class="alert alert-warning">
+		There are no values for this profile.
+	</div>
+	<h4>Add to profile: {{RatioProfile.selectedProfile.name}}</h4>
+	<form class="form-inline" ng-submit="RatioProfiles.addRatioProfileValue()">
+		<div class="form-group">
+			<label>Reps</label>
+			<input id="addReps" class="form-control" type="number" required
+				ng-model="RatioProfiles.addRatioProfileValueModel.reps" />
+		</div>
+		<div class="form-group">
+			<label>Multiplier</label>
+			<input class="form-control" type="decimal" required
+				ng-model="RatioProfiles.addRatioProfileValueModel.multiplier" />
+		</div>
+		<button class="btn btn-primary">Add</button>
+	</form>
+	<hr/>
+
+	<div style="display:inline-block;">
+		<h4 style="display:inline-block;">Delete this profile?</h4>
+		<div action-directive="RatioProfiles.deleteRatioProfile()" class="btn btn-sm btn-danger">Delete</div>
+	</div>
+	<hr/>
+
+	<h3>Create new profile</h3>
+	<form class="form" ng-submit="RatioProfiles.addRatioProfile()">
+		<div class="form-group">
+			<label>Name</label>
+			<input class="form-control" type="text" required
+				ng-model="RatioProfiles.addRatioProfileModel.name" />
+		</div>
+		<button class="btn btn-primary">Add Profile</button>
+	</form>
+</div>
+<div ng-if="RatioProfiles.successful" class="alert alert-success">
+	<strong>Success!</strong> {{RatioProfiles.successfulMessage}}
+</div>
+<div ng-if="RatioProfiles.error" class="alert alert-danger">
+	<strong>Error!</strong> {{RatioProfiles.errorMessage}}
+</div>

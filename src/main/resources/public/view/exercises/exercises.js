@@ -4,10 +4,11 @@ angular.module('myApp')
 
 .controller('ExercisesCtrl', ExercisesCtrl);
 
-function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
+function ExercisesCtrl(exerciseService, ratioProfileService, $q, $rootScope, $state, $scope) {
 
 	var viewmodel = this;
 	viewmodel.users = null;
+	viewmodel.finishedLoading = false;
 	viewmodel.dataLoading = true;
 	viewmodel.saving = false;
 	viewmodel.successful = false;
@@ -17,6 +18,7 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 
 	viewmodel.addExerciseGroupModel = null;
 	viewmodel.addExerciseModel = null;
+	viewmodel.selectedExercises = new Array();
 
 	viewmodel.addExerciseGroup = addExerciseGroup;
 	viewmodel.addExercise = addExercise;
@@ -28,6 +30,10 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 	viewmodel.cancelEdit = cancelEdit;
 	viewmodel.saveEditGroup = saveEditGroup;
 	viewmodel.saveEditExercise = saveEditExercise;
+
+	viewmodel.selectAllExercises = selectAllExercises;
+	viewmodel.selectNoExercises = selectNoExercises;
+	viewmodel.setSelectedToProfile = setSelectedToProfile;
 
 	if($rootScope.userProfile == null) {
 		$scope.$watch(function() {
@@ -42,19 +48,94 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 		loadPage();
 	}
 
+	function forEachExercise(callback) {
+		$.each(viewmodel.groupedExercises, function(i, e) {
+			$.each(e.exercises, function(j, ex) {
+				callback(ex);
+			});
+		});
+	}
+
+	function setSelectedToProfile(form) {
+		console.log(form);
+		console.log(form.selectedProfile.$modelValue);
+
+		var selectedProfile = form.selectedProfile.$modelValue;
+
+		if(selectedProfile == null || selectedProfile == undefined) {
+			viewmodel.error = true;
+			viewmodel.errorMessage = "Please select a profile to set all of the selected exercises.";
+			return;
+		}
+
+		viewmodel.error = false;
+
+		var requests = new Array();
+
+		forEachExercise(function(exercise) {
+			if(exercise.isSelected) {
+				var model = {};
+				model.id = exercise.id;
+				model.name = exercise.name_editable;
+				model.ratioProfileId = selectedProfile;
+				model.exerciseGroupKeyName = exercise.exerciseGroupKeyName;
+
+				requests.push(exerciseService.updateExercise(model));
+			}
+		});
+
+		if(requests.length > 0) {
+			viewmodel.saving = true;
+
+			$q.all(requests)
+			.finally(function() {
+				loadPage();
+				viewmodel.saving = false;
+			});
+		} else {
+			viewmodel.error = true;
+			viewmodel.errorMessage = "Please select exercises to set a ratio profile.";
+		}
+	}
+
+	function selectAllExercises() {
+		forEachExercise(function(ex) {
+			ex.isSelected = true;
+		});
+	}
+
+	function selectNoExercises() {
+		forEachExercise(function(ex) {
+			ex.isSelected = false;
+		});
+	}
+
 	function loadPage() {
 		if($rootScope.userProfile.role != "ADMIN") {
 			$state.go('redirectToDashboard');
 			return;
 		}
 
-		exerciseService.getGroupedExercises(true)
-		.then(function(response) {
-			viewmodel.groupedExercises = cleanGroupedDataResponse(response);
+		viewmodel.dataLoading = true;
+		$q.all([
+			ratioProfileService.getRatioProfiles('s')
+			.then(function(response) {
+				viewmodel.ratioProfiles = response.data;
+			}, function(error) {
+				viewmodel.error = true;
+				viewmodel.errorMessage = error.data.error;
+			}), 
+
+			exerciseService.getGroupedExercises(true)
+			.then(function(response) {
+				viewmodel.groupedExercises = cleanGroupedDataResponse(response);
+			}, function(error) {
+				viewmodel.error = true;
+				viewmodel.errorMessage = error.data.error;
+			})
+		]).finally(function() {
 			viewmodel.dataLoading = false;
-		}, function(error) {
-			viewmodel.error = true;
-			viewmodel.errorMessage = error.data.error;
+			viewmodel.finishedLoading = true;
 		});
 	}
 
@@ -99,7 +180,11 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 		});
 	}
 
-	function saveEditExercise(exercise) {
+	function saveEditExercise(exercise, reloadPage) {
+		if(reloadPage == null || reloadPage == undefined) {
+			reloadPage = true;
+		}
+
 		console.log("save exercise", exercise);
 
 		if(exercise.name_editable.length == 0) {
@@ -115,12 +200,15 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 		var model = {};
 		model.id = exercise.id;
 		model.name = exercise.name_editable;
+		model.ratioProfileId = exercise.ratioProfileId;
 		model.exerciseGroupKeyName = exercise.exerciseGroupKeyName;
 
 		exerciseService.updateExercise(model)
 		.then(function(response) {
 			exercise.editing = false;
-			loadPage();
+			if(reloadPage) {
+				loadPage();
+			}
 		}, function(error) {
 			viewmodel.error = true;
 			viewmodel.errorMessage = error.data.error;
@@ -131,7 +219,6 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 	}
 
 	function cleanGroupedDataResponse(data) {
-		console.log("Data: ", data);
 		$.each(data, function(i, e) {
 			e.group.editing = false;
 			e.group.displayName_editable = angular.copy(e.group.displayName);
@@ -141,8 +228,10 @@ function ExercisesCtrl(exerciseService, $rootScope, $state, $scope) {
 				ex.htmlId = 'exercise' + ex.id;
 				ex.name_editable = angular.copy(ex.name);
 				ex.editing = false;
+				ex.isSelected = false;
 			});
 		});
+		console.log("Data: ", data);
 		return data;
 	}
 

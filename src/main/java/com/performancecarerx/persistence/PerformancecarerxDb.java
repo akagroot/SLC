@@ -8,6 +8,8 @@ import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
+import com.performancecarerx.persistence.tables.RatioProfileValues;
+import com.performancecarerx.persistence.tables.RatioProfiles;
 import com.performancecarerx.persistence.tables.Roles;
 import com.performancecarerx.persistence.tables.Users;
 
@@ -35,7 +37,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PerformancecarerxDb extends SchemaImpl {
 
-    private static final long serialVersionUID = -2144492960;
+    private static final long serialVersionUID = 1679628538;
 
     /**
      * The reference instance of <code>performancecarerx_db</code>
@@ -61,6 +63,16 @@ public class PerformancecarerxDb extends SchemaImpl {
      * The table <code>performancecarerx_db.exercise_groups</code>.
      */
     public final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
+
+    /**
+     * The table <code>performancecarerx_db.ratio_profiles</code>.
+     */
+    public final RatioProfiles RATIO_PROFILES = com.performancecarerx.persistence.tables.RatioProfiles.RATIO_PROFILES;
+
+    /**
+     * The table <code>performancecarerx_db.ratio_profile_values</code>.
+     */
+    public final RatioProfileValues RATIO_PROFILE_VALUES = com.performancecarerx.persistence.tables.RatioProfileValues.RATIO_PROFILE_VALUES;
 
     /**
      * The table <code>performancecarerx_db.roles</code>.
@@ -101,6 +113,8 @@ public class PerformancecarerxDb extends SchemaImpl {
             ExercisesRecorded.EXERCISES_RECORDED,
             ExerciseGoals.EXERCISE_GOALS,
             ExerciseGroups.EXERCISE_GROUPS,
+            RatioProfiles.RATIO_PROFILES,
+            RatioProfileValues.RATIO_PROFILE_VALUES,
             Roles.ROLES,
             Users.USERS);
     }

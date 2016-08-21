@@ -9,14 +9,18 @@ import com.performancecarerx.exception.NotFoundException;
 import com.performancecarerx.model.ExerciseGroupModel;
 import com.performancecarerx.model.ExerciseModel;
 import com.performancecarerx.model.ExerciseRecordedModel;
+import com.performancecarerx.model.RatioProfileModel;
 import com.performancecarerx.model.dto.AddExerciseModel;
 import com.performancecarerx.model.dto.GroupedExercises;
 import com.performancecarerx.repository.ExerciseGroupRepository;
 import com.performancecarerx.repository.ExerciseRepository;
+import com.performancecarerx.repository.RatioProfileRepository;
 import com.performancecarerx.service.ExerciseService;
+import com.performancecarerx.service.RatioProfileService;
 import com.performancecarerx.service.UserProfileService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,6 +40,9 @@ public class ExerciseServiceImpl implements ExerciseService {
     @Autowired
     private ExerciseGroupRepository exerciseGroupRepository;
     
+    @Autowired
+    private RatioProfileService ratioProfileService;
+    
     @Override
     public List<GroupedExercises> getGroupedExercises() {
         List<ExerciseModel> exercises = exerciseRepository.getGroupedExercises();
@@ -44,6 +51,8 @@ public class ExerciseServiceImpl implements ExerciseService {
         List<ExerciseModel> currentGroupList = new ArrayList();
         ExerciseGroupModel groupModel = null;
         GroupedExercises nextGroup = null;
+        
+        Map<Integer, RatioProfileModel> ratioProfiles = ratioProfileService.getMappedRatioProfiles(false);
         
         for(ExerciseModel e : exercises) {
             if(groupModel == null || !groupModel.getKeyName().equals(e.getExerciseGroupKeyName())) {
@@ -56,6 +65,7 @@ public class ExerciseServiceImpl implements ExerciseService {
                 groupModel = e.getExerciseGroupModel();
             }
             if(e.getId() != null) {
+                e.setRatioProfileModel(ratioProfiles.get(e.getRatioProfileId()));
                 currentGroupList.add(e);
             }
         }

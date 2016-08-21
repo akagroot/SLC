@@ -8,6 +8,8 @@ import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
+import com.performancecarerx.persistence.tables.RatioProfileValues;
+import com.performancecarerx.persistence.tables.RatioProfiles;
 import com.performancecarerx.persistence.tables.Roles;
 import com.performancecarerx.persistence.tables.Users;
 
@@ -46,6 +48,16 @@ public class Tables {
      * The table <code>performancecarerx_db.exercise_groups</code>.
      */
     public static final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
+
+    /**
+     * The table <code>performancecarerx_db.ratio_profiles</code>.
+     */
+    public static final RatioProfiles RATIO_PROFILES = com.performancecarerx.persistence.tables.RatioProfiles.RATIO_PROFILES;
+
+    /**
+     * The table <code>performancecarerx_db.ratio_profile_values</code>.
+     */
+    public static final RatioProfileValues RATIO_PROFILE_VALUES = com.performancecarerx.persistence.tables.RatioProfileValues.RATIO_PROFILE_VALUES;
 
     /**
      * The table <code>performancecarerx_db.roles</code>.

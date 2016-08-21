@@ -1,6 +1,7 @@
 <ul class="menu">
   <li ng-if="userProfile.role=='ADMIN'"><a ui-sref="redirectToDashboard">Users</a></li>
   <li ng-if="userProfile.role=='ADMIN'"><a ui-sref="exercises">Exercises</a></li>
+  <li ng-if="userProfile.role=='ADMIN'"><a ui-sref="ratioProfiles">Ratios</a></li>
   <li><a href="/#/userProfile/">My Profile</a></li>
   <li><a href="/logout">Logout</a></li>
 </ul>

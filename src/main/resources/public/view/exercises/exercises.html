@@ -1,19 +1,52 @@
-<h2>Exercises</h2>
+<div>
+	<div ng-if="Exercises.finishedLoading" class="pull-right">
+		<button ng-if="!Exercises.multiEdit" class="btn btn-default" ng-click="Exercises.multiEdit=true">Multi-edit</button>
+	</div>
+	<h2>Exercises</h2>
+</div>
 <div ng-if="Exercises.dataLoading"><span us-spinner></span> Loading...</div>
 <div ng-if="!Exercises.dataLoading">
+	<div ng-if="Exercises.finishedLoading">
+		<div class="col-xs-12 km" style="margin-bottom: 5px;">
+			<button ng-if="Exercises.multiEdit" class="btn btn-default col-xs-4 col-sm-3 col-md-2" 
+				ng-click="Exercises.selectAllExercises();">Select All</button>
+			<button ng-if="Exercises.multiEdit" class="btn btn-default col-xs-4 col-sm-3 col-md-2" 
+				ng-click="Exercises.selectNoExercises();">Select None</button>
+			<button ng-if="Exercises.multiEdit" class="btn btn-default col-xs-4 col-sm-3 col-md-2" 
+				ng-click="Exercises.multiEdit=false">Done Editing</button>
+		</div>
+
+		<form ng-if="Exercises.multiEdit" name="multiSetRatioProfile" class="form-inline"
+			ng-submit="Exercises.setSelectedToProfile(multiSetRatioProfile)">
+
+			<div class="form-group">
+				<label>Ratio Profile</label>
+				<select name="selectedProfile" class="form-control"
+					ng-model="selectedProfile"
+					ng-options="profile.id as profile.name for profile in Exercises.ratioProfiles">
+				</select>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary">Set Selected</button>
+			</div>
+		</form>
+	</div>
 	<div ng-repeat="entry in Exercises.groupedExercises" class="panel panel-default">
 		<div class="panel-heading" 
-			ng-if="entry.group.deleted != true"
-			ng-mouseenter="hoverEntry=true" 
-			ng-mouseleave="hoverEntry=false">
+			ng-if="entry.group.deleted != true">
 			<div ng-if="!entry.group.editing">
-				<div class="action-icon delete-exercise">
-					<span ng-click="Exercises.deleteExerciseGroup(entry.group.keyName)" 
-						ng-hide="!hoverEntry" title="Remove" class="glyphicon glyphicon-remove"></span>
-				</div>
-				<div class="action-icon">
-					<span ng-click="Exercises.edit(entry.group, entry.group.htmlId);" 
-						ng-hide="!hoverEntry" title="Edit" class="glyphicon glyphicon-edit"></span>
+				<div class="pull-right">
+					<div class="action-icon">
+						<span tabindex="0" 
+							action-directive="Exercises.edit(entry.group, entry.group.htmlId);" 
+							title="Edit" class="glyphicon glyphicon-edit"></span>
+					</div>
+					<div class="action-icon">
+						<span tabindex="0" 
+							action-directive="Exercises.deleteExerciseGroup(entry.group.keyName)" 
+							title="Remove" class="delete-exercise glyphicon glyphicon-remove"></span>
+					</div>
+					<div class="clearfix"></div>
 				</div>
 				<h5>{{entry.group.displayName}}</h5>
 			</div>
@@ -29,40 +62,70 @@
 		<ul class="list-group">
 			<li ng-repeat="exercise in entry.exercises" 
 				class="list-group-item hover-highlight"
-				ng-if="exercise.deleted != true"
-				ng-mouseenter="hoverExercise = true" 
-				ng-mouseleave="hoverExercise = false">
+				ng-if="exercise.deleted != true">
 				<div ng-if="!exercise.editing">
-					<div class="action-icon delete-exercise">
-						<span ng-click="Exercises.deleteExercise(exercise.id)" 
-							title="Remove"
-							ng-hide="!hoverExercise" class="glyphicon glyphicon-remove"></span>
+					<div class="km col-xs-6 col-sm-8 col-md-9 col-lg-10">
+						<label>
+							<input ng-model="exercise.isSelected" 
+								ng-if="Exercises.multiEdit" type="checkbox"/>
+							<span class="ub">{{exercise.name}}</span>
+						</label>
 					</div>
-					<div class="action-icon">
-						<span ng-click="Exercises.edit(exercise, exercise.htmlId)" 
-							title="Edit"
-							ng-hide="!hoverExercise" class="glyphicon glyphicon-edit"></span>
+					<div class="km col-xs-6 col-sm-4 col-md-3 col-lg-2">
+						<div class="pull-right">
+							<span class="action-icon">
+								<span tabindex="0" 
+									action-directive="Exercises.edit(exercise, exercise.htmlId)" 
+									title="Edit" class="glyphicon glyphicon-edit"></span>
+							</span>
+							<span class="action-icon delete-exercise">
+								<span tabindex="0" 
+									action-directive="Exercises.deleteExercise(exercise.id)" 
+									title="Remove" class="glyphicon glyphicon-remove"></span>
+							</span>
+						</div>
+						<span>Profile: {{exercise.ratioProfileModel.name}}</span>
 					</div>
-					<span>{{exercise.name}}</span>
+					<div class="clearfix"></div>
 				</div>
 				<div ng-if="exercise.editing" class="input-group col-xs-12">
-					<div class="input-group">
-						<span class="input-group-addon no-style bold">Group:</span>
-						<select class="form-control" required 
-				  			ng-model="exercise.exerciseGroupKeyName">
-				  			<option ng-repeat="entry in Exercises.groupedExercises"
-				  				value="{{entry.group.keyName}}">
-				  					{{entry.group.displayName}}</option>
-				  		</select>
-					</div>
-					<div class="input-group col-xs-12">
-						<input id="{{exercise.htmlId}}" type="text" 
-							ng-model="exercise.name_editable" class="form-control" />
-						<span class="input-group-addon btn btn-primary" tabindex="0"
-							action-directive="Exercises.saveEditExercise(exercise)">Save</span>
-						<span class="input-group-addon btn btn-danger" tabindex="0"
-							action-directive="Exercises.cancelEdit(exercise, exericse.name, exercise.name_editable)">Cancel</span>
-					</div>
+					<form ng-submit="Exercises.saveEditExercise(exercise)">
+						<label>Edit - {{exercise.name}}</label>
+						<div class="form-group">
+							<label>Group</label>
+							<select class="form-control" required 
+					  			ng-model="exercise.exerciseGroupKeyName">
+					  			<option ng-repeat="entry in Exercises.groupedExercises"
+					  				value="{{entry.group.keyName}}">
+					  					{{entry.group.displayName}}</option>
+					  		</select>
+							<div class="clearfix"></div>
+						</div>
+						<div class="form-group">
+							<label>Name</label>
+							<input id="{{exercise.htmlId}}" type="text" 
+								ng-model="exercise.name_editable" class="form-control" />
+							<div class="clearfix"></div>
+						</div>
+						<div class="form-group">
+							<label>Ratio Profile</label>
+							<select class="form-control" required 
+								ng-options="profile.id as profile.name for profile in Exercises.ratioProfiles"
+					  			ng-model="exercise.ratioProfileId">
+					  		</select>
+							<div class="clearfix"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2">
+								<button type="submit" class="col-xs-12 btn btn-primary">Save</button>
+							</div>
+							<div class="col-xs-6 col-sm-3 col-md-2 col-lg-2">
+								<button type="button" class="col-xs-12 btn btn-danger" 
+									ng-click="Exercises.cancelEdit(exercise, exercise.name, exercise.name_editable)">Cancel</button>
+							</div>
+							<div class="clearfix"></div>
+						</div>
+					</form>
 				</div>
 			</li>
 		<ul>
@@ -94,7 +157,6 @@
 
 	<form name="addExerciseForm" ng-submit="Exercises.addExercise()">
 		<h3>Add Exercise</h3>
-
 		<div class="form-group">
 			<label>Exercise Group</label>
 			<select class="form-control" required 
@@ -108,6 +170,15 @@
 			<label>Name</label>
 			<input type="text" required 
 				ng-model="Exercises.addExerciseModel.name" class="form-control"/>
+		</div>
+		<div class="form-group">
+			<label>Ratio Profile</label>
+			<select class="form-control" required 
+	  			ng-model="Exercises.addExerciseModel.ratioProfileId">
+	  			<option ng-repeat="entry in Exercises.ratioProfiles"
+	  				value="{{entry.id}}">
+	  					{{entry.name}}</option>
+	  		</select>
 		</div>
 		<button type="submit" class="btn btn-primary"
 			ng-disabled="Exercises.saving">Add Exercise</button>

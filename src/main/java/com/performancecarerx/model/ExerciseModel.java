@@ -13,8 +13,10 @@ public class ExerciseModel {
     private Integer id;
     private String name;
     private String exerciseGroupKeyName;
+    private Integer ratioProfileId;
     
     private ExerciseGroupModel exerciseGroupModel;
+    private RatioProfileModel ratioProfileModel;
     
     public ExerciseModel() {
         
@@ -29,8 +31,14 @@ public class ExerciseModel {
     public String getExerciseGroupKeyName() {
         return exerciseGroupKeyName;
     }
+    public Integer getRatioProfileId() {
+        return ratioProfileId;
+    }
     public ExerciseGroupModel getExerciseGroupModel() {
         return exerciseGroupModel;
+    }
+    public RatioProfileModel getRatioProfileModel() {
+        return ratioProfileModel;
     }
     
     public void setId(Integer id) {
@@ -42,8 +50,14 @@ public class ExerciseModel {
     public void setExerciseGroupKeyName(String keyName) {
         this.exerciseGroupKeyName = keyName;
     }
+    public void setRatioProfileId(Integer ratioProfileId) {
+        this.ratioProfileId = ratioProfileId;
+    }
     public void setExerciseGroupModel(ExerciseGroupModel model) {
         this.exerciseGroupModel = model;
+    }
+    public void setRatioProfileModel(RatioProfileModel model) {
+        this.ratioProfileModel = model;
     }
     
     @Override
@@ -53,7 +67,9 @@ public class ExerciseModel {
                 .append("id=").append(id)
                 .append(", name=").append(name)
                 .append(", exerciseGroupKeyName=").append(exerciseGroupKeyName)
+                .append(", ratioProfileId=").append(ratioProfileId)
                 .append(", exerciseGroupModel=").append(exerciseGroupModel)
+                .append(", ratioProfileModel=").append(ratioProfileModel)
                 .append("]");
         return builder.toString();
     }

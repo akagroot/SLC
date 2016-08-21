@@ -153,6 +153,6 @@ public class UserRepositoryImpl implements UserRepository {
             model.setLastName(rec.getValue(USERS.LASTNAME));
             return model;
 	}
-}
+    }
     
 }

@@ -11,7 +11,6 @@ import com.performancecarerx.model.ExerciseRecordedModel;
 import com.performancecarerx.model.dto.AddExerciseModel;
 import static com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
 import static com.performancecarerx.persistence.tables.Exercises.EXERCISES;
-import com.performancecarerx.persistence.tables.ExercisesRecorded;
 import static com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
 import static com.performancecarerx.persistence.tables.Users.USERS;
 import com.performancecarerx.persistence.tables.records.ExercisesRecord;
@@ -48,9 +47,11 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
         LOGGER.debug("ExerciseRepositoryImpl.addExercise {}", model);
         ExercisesRecord record = dslContext.insertInto(EXERCISES)
                 .columns(EXERCISES.NAME, 
-                        EXERCISES.EXERCISE_GROUP_KEY_NAME) 
+                        EXERCISES.EXERCISE_GROUP_KEY_NAME, 
+                        EXERCISES.RATIO_PROFILE_ID) 
                 .values(model.getName(), 
-                        model.getExerciseGroupKeyName())
+                        model.getExerciseGroupKeyName(), 
+                        model.getRatioProfileId())
                 .returning(EXERCISES.ID)
                 .fetchOne();
         model.setId(record.getValue(EXERCISES.ID));
@@ -63,6 +64,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
         return dslContext.select(
                 EXERCISES.ID, 
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISE_GROUPS.KEY_NAME, 
                 EXERCISE_GROUPS.DISPLAY_NAME)
                 .from(EXERCISES)
@@ -77,6 +79,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
         return dslContext.select(
                 EXERCISES.ID, 
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISE_GROUPS.KEY_NAME,
                 EXERCISE_GROUPS.DISPLAY_NAME)
                 .from(EXERCISES)
@@ -91,6 +94,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
         return dslContext.select(
                 EXERCISES.ID, 
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISE_GROUPS.KEY_NAME,
                 EXERCISE_GROUPS.DISPLAY_NAME)
                 .from(EXERCISE_GROUPS)
@@ -107,6 +111,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
                 EXERCISES_RECORDED.ID, 
                 EXERCISES_RECORDED.EXERCISE_ID, 
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISES.EXERCISE_GROUP_KEY_NAME,
                 EXERCISE_GROUPS.DISPLAY_NAME,
                 EXERCISES_RECORDED.RECORDED_DTTM, 
@@ -131,6 +136,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
                 EXERCISES_RECORDED.ID, 
                 EXERCISES_RECORDED.EXERCISE_ID, 
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISES.EXERCISE_GROUP_KEY_NAME,
                 EXERCISE_GROUPS.DISPLAY_NAME,
                 EXERCISES_RECORDED.RECORDED_DTTM, 
@@ -229,6 +235,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
         dslContext.update(EXERCISES)
                 .set(EXERCISES.NAME, model.getName())
                 .set(EXERCISES.EXERCISE_GROUP_KEY_NAME, model.getExerciseGroupKeyName())
+                .set(EXERCISES.RATIO_PROFILE_ID, model.getRatioProfileId())
                 .where(EXERCISES.ID.eq(model.getId()))
                 .execute();
         return model;
@@ -241,6 +248,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
             model.setId(rec.getValue(EXERCISES.ID));
             model.setName(rec.getValue(EXERCISES.NAME));
             model.setExerciseGroupKeyName(rec.getValue(EXERCISE_GROUPS.KEY_NAME));
+            model.setRatioProfileId(rec.getValue(EXERCISES.RATIO_PROFILE_ID));
             
             ExerciseGroupModel groupModel = new ExerciseGroupModel();
             groupModel.setKeyName(rec.getValue(EXERCISE_GROUPS.KEY_NAME));
@@ -272,6 +280,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
             eModel.setId(rec.getValue(EXERCISES_RECORDED.EXERCISE_ID));
             eModel.setName(rec.getValue(EXERCISES.NAME));
             eModel.setExerciseGroupKeyName(rec.getValue(EXERCISES.EXERCISE_GROUP_KEY_NAME));
+            eModel.setRatioProfileId(rec.getValue(EXERCISES.RATIO_PROFILE_ID));
             eModel.setExerciseGroupModel(gModel);
             
             model.setExerciseModel(eModel);

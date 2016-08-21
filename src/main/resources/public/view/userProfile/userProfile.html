@@ -1,10 +1,4 @@
 <label>Exercise Summary</label>
-<style>
-	.align-h3 {
-		padding-top: 24px;
-		padding-bottom: 10px;
-	}
-</style>
 <div ng-if="UserProfile.loadingData"><span us-spinner></span> Loading...</div>
 <div ng-if="!UserProfile.loadingData">
 	<div ng-if="UserProfile.saving" us-spinner></div>
@@ -57,7 +51,7 @@
 	<div>
 		<div style="display:inline-block">
 			<h3 style="display:inline-block;">Goals</h3>
-			<span ng-if="UserProfile.isAdmin" class="action-icon pull-right align-h3">
+			<span ng-if="UserProfile.isAdmin" class="pull-right action-icon pull-right align-h3">
 				<a ui-sref="userGoals({userId: UserProfile.userId})" style="margin-top:5px;">(Edit)</a>
 			</span>
 		</div>
@@ -163,13 +157,10 @@
 				<ul class="list-group">
 					<li class="list-group-item hover-highlight col-xs-12" 
 						ng-repeat="exercise in entry.exercises"
-						ng-if="exercise.deleted != true"
-						ng-mouseenter="exercise.showRemove = true" 
-						ng-mouseleave="exercise.showRemove = false">
-						<div class="action-icon delete-exercise">
+						ng-if="exercise.deleted != true">
+						<div class="pull-right action-icon delete-exercise">
 							<span ng-click="UserProfile.deleteExerciseRecorded(exercise)" 
-							title="Remove"
-							ng-hide="!exercise.showRemove" class="glyphicon glyphicon-remove"></span>
+							title="Remove" class="glyphicon glyphicon-remove"></span>
 						</div>
 						<span class="badge alert-info reps">{{exercise.reps}}</span>
 						<span class="badge alert-success">{{exercise.weight}}#</span>

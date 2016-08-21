@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Exercises extends TableImpl<ExercisesRecord> {
 
-    private static final long serialVersionUID = -947058215;
+    private static final long serialVersionUID = 780730807;
 
     /**
      * The reference instance of <code>performancecarerx_db.exercises</code>
@@ -70,6 +70,11 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      * The column <code>performancecarerx_db.exercises.is_deleted</code>.
      */
     public final TableField<ExercisesRecord, Boolean> IS_DELETED = createField("is_deleted", org.jooq.impl.SQLDataType.BIT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "");
+
+    /**
+     * The column <code>performancecarerx_db.exercises.ratio_profile_id</code>.
+     */
+    public final TableField<ExercisesRecord, Integer> RATIO_PROFILE_ID = createField("ratio_profile_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>performancecarerx_db.exercises</code> table reference
@@ -130,7 +135,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      */
     @Override
     public List<ForeignKey<ExercisesRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ExercisesRecord, ?>>asList(Keys.FK_EXERCISE_EXERCISE_GROUP_KEY_NAME);
+        return Arrays.<ForeignKey<ExercisesRecord, ?>>asList(Keys.FK_EXERCISE_EXERCISE_GROUP_KEY_NAME, Keys.FK_EXERCISES_RATIO_PROFILE_ID);
     }
 
     /**

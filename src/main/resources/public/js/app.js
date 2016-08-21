@@ -58,6 +58,13 @@ angular.module('myApp', [
 			controllerAs: 'Exercises', 
 			title: 'PerformanceCareRx - Exercises'
 		})
+		.state('ratioProfiles', {
+			url: '/ratioProfiles', 
+			templateUrl: 'view/ratioProfiles/ratioProfiles.html', 
+			controller: 'RatioProfilesCtrl', 
+			controllerAs: 'RatioProfiles', 
+			title: 'PerformanceCareRx - Ratio Profiles'
+		})
 		.state('users', {
 			url: '/users',
 			templateUrl: 'view/users/users.html',

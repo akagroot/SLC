@@ -12,13 +12,10 @@
 			</div>
 			<ul class="list-group">
 				<li ng-repeat="goal in entry.goals" 
-					class="list-group-item hover-highlight"
-					ng-mouseenter="hoverExercise = true" 
-					ng-mouseleave="hoverExercise = false">
-					<div class="action-icon delete-exercise">
+					class="list-group-item hover-highlight">
+					<div class="pull-right action-icon delete-exercise">
 						<span ng-click="UserGoals.deleteGoal(goal.id)" 
-							title="Remove"
-							ng-hide="!hoverExercise" class="glyphicon glyphicon-remove"></span>
+							title="Remove" class="glyphicon glyphicon-remove"></span>
 					</div>
 					<span class="badge alert-info reps">{{goal.reps}}</span>
 					<span class="badge alert-success">{{goal.weight}}#</span>
