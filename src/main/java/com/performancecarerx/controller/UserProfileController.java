@@ -70,7 +70,8 @@ public class UserProfileController {
     public UserDataResponse getUserData() {
         LOGGER.debug("getUserData()");
         String email = securityService.checkUserIsLoggedIn();
-        return userProfileService.buildUserDataResponse(email);
+        Boolean isAdmin = userProfileService.getUserByEmail(email).getRole().equals(Constants.USER_ROLE_ADMIN);
+        return userProfileService.buildUserDataResponse(email, isAdmin);
     }
     
     @RequestMapping(value = "/api/v1/userData/{userId}", method=RequestMethod.GET)
@@ -80,7 +81,7 @@ public class UserProfileController {
         securityService.checkUserIsAdmin(email);
         
         UserProfileModel user = userProfileService.getUserById(userId);
-        return userProfileService.buildUserDataResponse(user.getEmail());
+        return userProfileService.buildUserDataResponse(user.getEmail(), true);
     }
     
     @RequestMapping(value = "/api/v1/addUser", method=RequestMethod.POST)

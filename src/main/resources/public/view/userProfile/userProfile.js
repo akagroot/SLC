@@ -4,7 +4,7 @@ angular.module('myApp')
 
 .controller('UserProfileCtrl', UserProfileCtrl);
 
-function UserProfileCtrl($stateParams, userService, $log, exerciseService, $rootScope, $scope, $state){
+function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, ratioProfileService, calculateGoalsService, $rootScope, $scope, $state){
 	var viewmodel = this;
 
 	console.log("stateParams: ", $stateParams);
@@ -39,16 +39,21 @@ function UserProfileCtrl($stateParams, userService, $log, exerciseService, $root
 	}
 
 	resetAddExerciseModel();
-	loadData();
-	loadUserData();
+	loadData()
+	.then(function() {
+		loadUserData();
+	});
 
+	viewmodel.compareGoal = compareGoal;
 	viewmodel.addExercise = addExercise;
+	viewmodel.setGoalVisibility = setGoalVisibility;
 	viewmodel.countVisibleEntries = countVisibleEntries;
 	viewmodel.deleteExerciseRecorded = deleteExerciseRecorded;
 	viewmodel.roleChanged = roleChanged;
 	viewmodel.cancelEditUser = cancelEditUser;
 	viewmodel.updateUser = updateUser;
 	viewmodel.deleteUser = deleteUser;
+	viewmodel.tableRowClicked = tableRowClicked;
 
 	if($rootScope.userProfile == null) {
 		$scope.$watch(function() {
@@ -63,25 +68,51 @@ function UserProfileCtrl($stateParams, userService, $log, exerciseService, $root
 	} else {
 		setRootscopeVars();
 	}
+
+	function tableRowClicked(entry, goal) {
+		if(!viewmodel.isAdmin) {
+			return;
+		}
+
+		goal.comparing = !goal.comparing;
+		compareGoal(entry, goal);
+	}
 	
 	function setRootscopeVars() {
-		viewmodel.currentUser = $rootScope.userProfile;
-		viewmodel.isAdmin = viewmodel.currentUser.role == 'ADMIN';
+		if($rootScope.userProfile != undefined && $rootScope.userProfile != null) {
+			viewmodel.currentUser = $rootScope.userProfile;
+			viewmodel.isAdmin = viewmodel.currentUser.role == 'ADMIN';	
+		}
 	}
 
 	function loadData() {
-		viewmodel.groupedExercises = exerciseService.getGroupedExercises()
-		.then(function(response) {
-			viewmodel.groupedExercises = response;
-		}, function(error) {
-			console.log("UserProfileCtrl.getGroupedExercises error: ", error);
-		});	
+		var deferred = $q.defer();
+
+		$q.all([
+			ratioProfileService.getRatioProfiles()
+			.then(function(response) {
+				console.log("UserProfileCtrl.setRatioProfiles: ", response);
+				calculateGoalsService.setRatioProfiles(response.data);
+			}), 
+			exerciseService.getGroupedExercises()
+			.then(function(response) {
+				console.log("UserProfileCtrl.getGroupedExercises: ", response);
+				viewmodel.groupedExercises = calculateGoalsService.analyze(response);
+			}, function(error) {
+				console.log("UserProfileCtrl.getGroupedExercises error: ", error);
+			})
+		]).finally(function() {
+			deferred.resolve();
+		});
+
+		return deferred.promise;
 	}
 
 	function loadUserData() {
 		userService.getUserData(viewmodel.userId)
 		.then(function(response) {
 			$log.debug("UserProfileCtrl.loadData.response: ", response);
+			calculateGoalsService.analyze(response.data.gradedExercises);
 			viewmodel.userData = response.data;
 			resetUpdateUserModel();
 			viewmodel.selectedUserRole = response.data.userProfileModel.role;
@@ -109,6 +140,37 @@ function UserProfileCtrl($stateParams, userService, $log, exerciseService, $root
 		}, function(error) {
 			viewmodel.updateUserError = true;
 			viewmodel.updateUserErrorMessage = error.data.error;
+		}).finally(function() {
+			viewmodel.saving = false;
+		});
+	}
+
+	function compareGoal(entry, goal) {
+		console.log("compareGoal: ", goal);
+		console.log("entry: ", entry);
+
+		var comparing = false;
+
+		$.each(entry.goals, function(i, e) {
+			if(e.comparing) {
+				comparing = true;
+			}
+		});
+		entry.comparing = comparing;
+		calculateGoalsService.analyze(viewmodel.userData.gradedExercises);
+	} 
+
+	function setGoalVisibility(goalId, visibility) {
+		viewmodel.saving = true;
+		viewmodel.updateGoalVisibilityError = false;
+		viewmodel.successfullyUpdatedVisibility = false;
+
+		userService.setGoalVisibility(goalId, visibility) 
+		.then(function(response) {
+			viewmodel.successfullyUpdatedVisibility = true;
+		}, function(error) {
+			viewmodel.updateGoalVisibilityError = true;
+			viewmodel.updateGoalVisibilityErrorMessage = error.data.error;
 		}).finally(function() {
 			viewmodel.saving = false;
 		});

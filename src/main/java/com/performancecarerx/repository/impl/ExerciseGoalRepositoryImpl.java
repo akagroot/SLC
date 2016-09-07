@@ -17,7 +17,10 @@ import static com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCIS
 import static com.performancecarerx.persistence.tables.Users.USERS;
 import com.performancecarerx.persistence.tables.records.ExerciseGoalsRecord;
 import com.performancecarerx.repository.ExerciseGoalRepository;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import org.jooq.Condition;
 import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.RecordMapper;
@@ -44,6 +47,9 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
     @Override
     public List<ExerciseGoalModel> getGoalsForUser(Integer userId) {
         LOGGER.debug("ExerciseGoalRepositoryImpl.getGoalsForUser {}", userId);
+        List<Condition> conditions = new ArrayList(Arrays.asList(
+            EXERCISE_GOALS.USER_ID.eq(userId)
+        ));
         return dslContext.select(EXERCISE_GOALS.ID, 
                 EXERCISE_GOALS.EXERCISE_ID, 
                 EXERCISE_GOALS.USER_ID, 
@@ -56,7 +62,7 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
                 .from(EXERCISE_GOALS)
                 .join(EXERCISES).on(EXERCISES.ID.eq(EXERCISE_GOALS.EXERCISE_ID))
                 .join(EXERCISE_GROUPS).on(EXERCISE_GROUPS.KEY_NAME.eq(EXERCISES.EXERCISE_GROUP_KEY_NAME))
-                .where(EXERCISE_GOALS.USER_ID.eq(userId))
+                .where(conditions)
                 .fetch(new ExerciseGoalModelRecordMapper());
     }
 
@@ -112,6 +118,14 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
     @Override
     public List<ExerciseGoalToRecordedModel> getGroupedGoalsForUser(String email) {
         LOGGER.debug("ExerciseRepositoryImpl.getGroupedExercisesForUser {}", email);
+        List<Condition> conditions = new ArrayList(Arrays.asList(
+                USERS.EMAIL.eq(email), 
+                EXERCISES_RECORDED.RECORDED_DTTM.isNull().or(EXERCISES_RECORDED.RECORDED_DTTM.eq(dslContext.select(
+                        e2.RECORDED_DTTM.max())
+                        .from(e2)
+                        .where(EXERCISES_RECORDED.EXERCISE_ID.eq(e2.EXERCISE_ID))))
+        ));
+        
         return dslContext.select(
                 EXERCISE_GOALS.ID,
                 EXERCISE_GOALS.EXERCISE_ID, 
@@ -128,6 +142,7 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
                 EXERCISES_RECORDED.NOTE,
                 EXERCISES_RECORDED.USER_ID,
                 EXERCISES.NAME, 
+                EXERCISES.RATIO_PROFILE_ID,
                 EXERCISES.EXERCISE_GROUP_KEY_NAME,
                 EXERCISE_GROUPS.DISPLAY_NAME) 
                 .from(EXERCISE_GOALS)
@@ -136,11 +151,7 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
                 .join(USERS).on(USERS.ID.eq(EXERCISE_GOALS.USER_ID))
                 .join(EXERCISES_RECORDED).on(EXERCISE_GOALS.EXERCISE_ID.eq(EXERCISES_RECORDED.EXERCISE_ID)
                     .and(EXERCISE_GOALS.USER_ID.eq(EXERCISES_RECORDED.USER_ID)))
-                .where(USERS.EMAIL.eq(email))
-                .and(EXERCISES_RECORDED.RECORDED_DTTM.isNull().or(EXERCISES_RECORDED.RECORDED_DTTM.eq(dslContext.select(
-                        e2.RECORDED_DTTM.max())
-                        .from(e2)
-                        .where(EXERCISES_RECORDED.EXERCISE_ID.eq(e2.EXERCISE_ID)))))
+                .where(conditions)
                 .orderBy(EXERCISES.EXERCISE_GROUP_KEY_NAME.asc(), EXERCISES.NAME.asc())
                 .fetch(new ExerciseGoalToRecordedModelRecordMapper());
     }
@@ -159,6 +170,8 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
         public ExerciseGoalToRecordedModel map(Record rec) {
             ExerciseGoalModel goal = rec.map(new ExerciseGoalModelRecordMapper());
             ExerciseRecordedModel recorded = rec.map(new ExerciseRecordedModelRecordMapper());
+            goal.setExerciseModel(recorded.getExerciseModel());
+            goal.setRecordedModel(recorded);
             
             return new ExerciseGoalToRecordedModel(goal, recorded);
         }
@@ -185,6 +198,7 @@ public class ExerciseGoalRepositoryImpl implements ExerciseGoalRepository {
             eModel.setName(rec.getValue(EXERCISES.NAME));
             eModel.setExerciseGroupKeyName(rec.getValue(EXERCISES.EXERCISE_GROUP_KEY_NAME));
             eModel.setExerciseGroupModel(gModel);
+            eModel.setRatioProfileId(rec.getValue(EXERCISES.RATIO_PROFILE_ID));
             
             model.setExerciseModel(eModel);
             

@@ -14,6 +14,7 @@ function userService($q, $log, commonService) {
   service.setRole = setRole;
   service.updateUser = updateUser;
   service.deleteUser = deleteUser;
+  service.setGoalVisibility = setGoalVisibility;
 
   var getUserProfileRoute = "/userProfile";
   var getUserDataRoute = "/userData";
@@ -30,10 +31,18 @@ function userService($q, $log, commonService) {
 
   var addGoalRoute = "/addGoal";
   var deleteGoalRoute = "/deleteGoal/{goalId}";
+  var visibilityGoalRoute = "/updateGoalVisibility";
   var getGroupedGoalsRoute = "/groupedGoals/{userId}";
 
   function addGoal(model) {
     return commonService.post(addGoalRoute, model);
+  }
+
+  function setGoalVisibility(goalId, visibility) {
+    var model = new Object();
+    model.exerciseGoalId = goalId;
+    model.visibility = visibility;
+    return commonService.post(visibilityGoalRoute, model);
   }
 
   function deleteGoal(goalId) {

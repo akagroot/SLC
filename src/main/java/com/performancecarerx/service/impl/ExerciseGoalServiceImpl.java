@@ -12,6 +12,7 @@ import com.performancecarerx.model.ExerciseRecordedModel;
 import com.performancecarerx.model.dto.ExercisesByDate;
 import com.performancecarerx.model.dto.GroupedExerciseGoal;
 import com.performancecarerx.model.dto.GroupedGradedExercises;
+import com.performancecarerx.model.dto.UpdateGoalVisibilityModel;
 import com.performancecarerx.repository.ExerciseGoalRepository;
 import com.performancecarerx.service.ExerciseGoalService;
 import java.util.ArrayList;

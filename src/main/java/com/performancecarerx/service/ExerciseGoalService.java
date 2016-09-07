@@ -7,6 +7,7 @@ package com.performancecarerx.service;
 
 import com.performancecarerx.model.ExerciseGoalModel;
 import com.performancecarerx.model.dto.GroupedExerciseGoal;
+import com.performancecarerx.model.dto.UpdateGoalVisibilityModel;
 import java.util.List;
 
 /**

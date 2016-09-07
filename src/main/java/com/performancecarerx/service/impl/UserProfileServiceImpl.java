@@ -125,16 +125,16 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
     
     @Override
-    public UserDataResponse buildUserDataResponse(String email) {
+    public UserDataResponse buildUserDataResponse(String email, Boolean isAdmin) {
         UserProfileModel model = userRepository.getUserByEmail(email);
         List<ExercisesByDate> exercisesByDateList = getExercisesByDateForUser(email);
-        List<GroupedGradedExercises> groupedGradedExercisesList = getGroupedGradedExercisesForUser(email);
+        List<GroupedGradedExercises> groupedGradedExercisesList = getGroupedGradedExercisesForUser(email, isAdmin);
         
         UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedGradedExercisesList);
         return response;
     }
     
-    public List<GroupedGradedExercises> getGroupedGradedExercisesForUser(String email) {
+    public List<GroupedGradedExercises> getGroupedGradedExercisesForUser(String email, Boolean isAdmin) {
         List<GroupedGradedExercises> groupedGradedList = new ArrayList();
         List<ExerciseGoalRepositoryImpl.ExerciseGoalToRecordedModel> goalsToRecords = exerciseGoalRepository.getGroupedGoalsForUser(email);
         LOGGER.debug("getGroupedGoalsForUser() {}", goalsToRecords);
@@ -142,7 +142,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         GroupedGradedExercises grouped = null;
         ExerciseGroupModel lastGroupModel = null;
         String atGroup = null;
-        List<ExerciseRecordedModel> currentList = new ArrayList();
+        List<ExerciseGoalModel> currentList = new ArrayList();
         float average, grade;
         int estimated1RM, goal1RM, monthsAgo;
         ExerciseGoalModel currentGoal;
@@ -152,7 +152,7 @@ public class UserProfileServiceImpl implements UserProfileService {
             if(!e.goal.getExerciseModel().getExerciseGroupKeyName().equals(atGroup)) {
                 if(atGroup != null) {
                     average = 0.0f;
-                    for(ExerciseRecordedModel r : currentList) {
+                    for(ExerciseGoalModel r : currentList) {
                         average += r.getGrade();
                     }
                     average = average/currentList.size();
@@ -171,18 +171,18 @@ public class UserProfileServiceImpl implements UserProfileService {
             estimated1RM = getEstimated1RM(e.recorded.getReps(), e.recorded.getWeight());
             goal1RM = getEstimated1RM(e.goal.getReps(), e.goal.getWeight());
             
-            e.recorded.setEstimated1RM(estimated1RM);
-            e.recorded.setGoal(goal1RM);
-            e.recorded.setMonthsAgo(monthsAgo);
+//            e.goal.setEstimated1RM(estimated1RM);
+//            e.goal.setGoal(goal1RM);
+            e.goal.setMonthsAgo(monthsAgo);
             
             grade = (float)estimated1RM/goal1RM;
-            e.recorded.setGrade(grade);
-            currentList.add(e.recorded);
+//            e.goal.setGrade(grade);
+            currentList.add(e.goal);
         }
         
         if(atGroup != null) {
             average = 0.0f;
-            for(ExerciseRecordedModel r : currentList) {
+            for(ExerciseGoalModel r : currentList) {
                 average += r.getGrade();
             }
             average = average/currentList.size();

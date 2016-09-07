@@ -17,13 +17,63 @@ public class ExerciseGoalModel {
     private Integer weight;
     private Integer reps;
     private Integer userId;
+    private Boolean visibility = true;
     private Date createdOnDttm;
     
     private ExerciseModel exerciseModel;
+    private ExerciseRecordedModel recordedModel;
+    
+    private int monthsAgo;
+    private int goal;
+    private int estimated1RM;
+    private float grade;
     
     public ExerciseGoalModel() {
         
     }
+
+    public ExerciseRecordedModel getRecordedModel() {
+        return recordedModel;
+    }
+
+    public void setRecordedModel(ExerciseRecordedModel recordedModel) {
+        this.recordedModel = recordedModel;
+    }
+    
+    
+    public int getMonthsAgo() {
+        return monthsAgo;
+    }
+    public int getGoal() {
+        return goal;
+    }
+    public int getEstimated1RM() {
+        return estimated1RM;
+    }
+    public float getGrade() {
+        return grade;
+    }
+    public void setMonthsAgo(int monthsAgo) {
+        this.monthsAgo = monthsAgo;
+    }
+    public void setGoal(int goal) {
+        this.goal = goal;
+    }
+    public void setEstimated1RM(int estimated1RM) {
+        this.estimated1RM = estimated1RM;
+    }
+    public void setGrade(float grade) {
+        this.grade = grade;
+    }
+
+    public Boolean getVisibility() {
+        return visibility;
+    }
+
+    public void setVisibility(Boolean visibility) {
+        this.visibility = visibility;
+    }
+    
     
     public Integer getId() {
         return id;
@@ -79,6 +129,12 @@ public class ExerciseGoalModel {
                 .append(", reps=").append(reps)
                 .append(", userId=").append(userId)
                 .append(", exerciseModel=").append(exerciseModel)
+                .append(", recordedModel=").append(recordedModel)
+                .append(", visibility=").append(visibility)
+                .append(", monthsAgo=").append(monthsAgo)
+                .append(", goal=").append(goal)
+                .append(", estimated1RM=").append(estimated1RM)
+                .append(", grade=").append(grade)
                 .append("]");
         return builder.toString();
     }

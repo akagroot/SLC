@@ -19,7 +19,7 @@ public interface UserProfileService {
     public UserProfileModel getUserByEmail(String email);
     public UserProfileModel getUserById(Integer userId);
     public List<UserProfileModel> getAllUsers();
-    public UserDataResponse buildUserDataResponse(String email);
+    public UserDataResponse buildUserDataResponse(String email, Boolean isAdmin);
     public UserProfileModel createUser(UserProfileModel model);
     public UserProfileModel createUser(AddUserModel model);
     public UserProfileModel updateUser(UpdateUserInfoModel model);

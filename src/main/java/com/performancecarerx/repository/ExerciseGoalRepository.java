@@ -6,6 +6,7 @@
 package com.performancecarerx.repository;
 
 import com.performancecarerx.model.ExerciseGoalModel;
+import com.performancecarerx.model.dto.UpdateGoalVisibilityModel;
 import com.performancecarerx.repository.impl.ExerciseGoalRepositoryImpl.ExerciseGoalToRecordedModel;
 import java.util.List;
 

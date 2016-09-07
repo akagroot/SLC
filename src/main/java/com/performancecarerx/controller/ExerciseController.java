@@ -17,6 +17,7 @@ import com.performancecarerx.model.dto.AddExerciseModel;
 import com.performancecarerx.model.dto.GoalDataResponse;
 import com.performancecarerx.model.dto.GroupedExerciseGoal;
 import com.performancecarerx.model.dto.GroupedExercises;
+import com.performancecarerx.model.dto.UpdateGoalVisibilityModel;
 import com.performancecarerx.service.ExerciseGoalService;
 import com.performancecarerx.service.ExerciseGroupService;
 import com.performancecarerx.service.ExerciseService;

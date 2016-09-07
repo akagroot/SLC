@@ -24,11 +24,6 @@ public class ExerciseRecordedModel {
     private ExerciseModel exerciseModel;
     private UserProfileModel userProfileModel;
     
-    private int monthsAgo;
-    private int goal;
-    private int estimated1RM;
-    private float grade;
-    
     public ExerciseRecordedModel(AddExerciseModel model) {
         this.recordedDttm = model.getDate();
         this.weight = model.getWeight();
@@ -69,19 +64,6 @@ public class ExerciseRecordedModel {
         return userProfileModel;
     }
     
-    public int getMonthsAgo() {
-        return monthsAgo;
-    }
-    public int getGoal() {
-        return goal;
-    }
-    public int getEstimated1RM() {
-        return estimated1RM;
-    }
-    public float getGrade() {
-        return grade;
-    }
-    
     public void setId(Integer id) {
         this.id = id;
     }
@@ -109,18 +91,6 @@ public class ExerciseRecordedModel {
     public void setUserProfileModel(UserProfileModel model) {
         this.userProfileModel = model;
     }
-    public void setMonthsAgo(int monthsAgo) {
-        this.monthsAgo = monthsAgo;
-    }
-    public void setGoal(int goal) {
-        this.goal = goal;
-    }
-    public void setEstimated1RM(int estimated1RM) {
-        this.estimated1RM = estimated1RM;
-    }
-    public void setGrade(float grade) {
-        this.grade = grade;
-    }
     
     @Override
     public String toString() {
@@ -135,10 +105,6 @@ public class ExerciseRecordedModel {
                 .append(", note=").append(note)
                 .append(", exerciseModel=").append(exerciseModel)
                 .append(", userProfileModel=").append(userProfileModel)
-                .append(", monthsAgo=").append(monthsAgo)
-                .append(", goal=").append(goal)
-                .append(", estimated1RM=").append(estimated1RM)
-                .append(", grade=").append(grade)
                 .append("]");
         return builder.toString();
     }

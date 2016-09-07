@@ -57,13 +57,32 @@
 		</div>
 	</div>
 
+	<style>
+		tr.comparing {
+			background-color: lightgrey;
+			text-decoration: line-through;
+		}
+	</style>
+
 	<div ng-if="UserProfile.userData.gradedExercises.length > 0">
+		<div ng-if="UserProfile.successfullyUpdatedVisibility" class="alert alert-success">
+			<strong>Success!</strong> Saved!
+		</div>
+
+		<div ng-if="UserProfile.updateGoalVisibilityError" class="alert alert-danger">
+			<strong>Error!</strong> {{UserProfile.updateGoalVisibilityErrorMessage}}
+		</div>
 		<div ng-repeat="entry in UserProfile.userData.gradedExercises"
 		class="table-responsive">
 			<table class="table">
 				<thead>
 					<tr>
-						<th class="text-muted"><span class="glyphicon glyphicon-calendar"></span></th>
+						<th ng-if="UserProfile.isAdmin" class="text-muted">
+							<span class="glyphicon glyphicon-equalizer"></span>
+						</th>
+						<th class="text-muted">
+							<span class="glyphicon glyphicon-calendar"></span>
+						</th>
 						<th>
 							<span class="capitalize category">{{entry.group.displayName}}</span>
 							<span class="normal-text grade-average badge alert-info">{{entry.averageGrade | number:2}} avg</span>
@@ -76,14 +95,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="exercise in entry.exercises">
+					<tr ng-repeat="goal in entry.goals" 
+						ng-click="UserProfile.tableRowClicked(entry, goal)"
+						ng-class="{'comparing':entry.comparing && !goal.comparing}">
+						<td ng-if="UserProfile.isAdmin">
+							<input id="compare{{goal.id}}" type="checkbox" ng-model="goal.comparing" ng-click="goal.comparing=!goal.comparing" />
+						</td>
 						<td class="age-cell"><div class="age-label label label-info">1</div></td>
-						<td><div class="exercise-name">{{exercise.exerciseModel.name}}</div></td>
-						<td class="right">{{exercise.goal}}</td>
-						<td class="right">{{exercise.estimated1RM}}</td>
-						<td class="right">{{exercise.grade | number:2}}</td>
-						<td class="right">{{exercise.weight}}</td>
-						<td class="right">{{exercise.reps}}</td>
+						<td><div class="exercise-name">{{goal.exerciseModel.name}}</div></td>
+						<td class="right">{{goal.goal | number:0}}</td>
+						<td class="right">{{goal.estimated1RM | number:0}}</td>
+						<td class="right">{{goal.grade | number:2}}</td>
+						<td class="right">{{goal.weight}}</td>
+						<td class="right">{{goal.reps}}</td>
 					</tr>
 				</tbody>
 			</table>

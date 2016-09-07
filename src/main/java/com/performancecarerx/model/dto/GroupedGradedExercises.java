@@ -5,6 +5,7 @@
  */
 package com.performancecarerx.model.dto;
 
+import com.performancecarerx.model.ExerciseGoalModel;
 import com.performancecarerx.model.ExerciseGroupModel;
 import com.performancecarerx.model.ExerciseRecordedModel;
 import java.util.List;
@@ -15,12 +16,12 @@ import java.util.List;
  */
 public class GroupedGradedExercises {
     private ExerciseGroupModel group;
-    private List<ExerciseRecordedModel> exercises;
+    private List<ExerciseGoalModel> goals;
     private float averageGrade;
     
-    public GroupedGradedExercises(ExerciseGroupModel group, List<ExerciseRecordedModel> exercises, float averageGrade) {
+    public GroupedGradedExercises(ExerciseGroupModel group, List<ExerciseGoalModel> goals, float averageGrade) {
         this.group = group;
-        this.exercises = exercises;
+        this.goals = goals;
         this.averageGrade = averageGrade;
     }
     
@@ -28,8 +29,8 @@ public class GroupedGradedExercises {
         return group;
     }
     
-    public List<ExerciseRecordedModel> getExercises() {
-        return exercises;
+    public List<ExerciseGoalModel> getGoals() {
+        return goals;
     }
     
     public float getAverageGrade() {
@@ -41,7 +42,7 @@ public class GroupedGradedExercises {
         StringBuilder builder = new StringBuilder();
         builder.append("GroupedExercises [")
                 .append("group=").append(group)
-                .append(", exercises=").append(exercises)
+                .append(", goals=").append(goals)
                 .append(", averageGrade=").append(averageGrade)
                 .append("]");
         return builder.toString();

@@ -18,6 +18,7 @@ function UserGoalsCtrl(userService, exerciseService, $rootScope, $state, $scope,
 
 	viewmodel.addGoalModel = null;
 
+	viewmodel.setVisibility = setVisibility;
 	viewmodel.addGoal = addGoal;
 	viewmodel.deleteGoal = deleteGoal;
 
@@ -79,6 +80,23 @@ function UserGoalsCtrl(userService, exerciseService, $rootScope, $state, $scope,
 			viewmodel.addGoalModel.exerciseId != null && 
 			viewmodel.addGoalModel.reps != null && 
 			viewmodel.addGoalModel.weight != null;
+	}
+
+	function setVisibility(goalId, visibility) {
+		viewmodel.saving = true;
+		viewmodel.error = false;
+		viewmodel.successful = false;
+
+		userService.setGoalVisibility(goalId, visibility) 
+		.then(function(response) {
+			viewmodel.successful = true;
+			viewmodel.successfulMessage = "Saved";
+		}, function(error) {
+			viewmodel.error = true;
+			viewmodel.errorMessage = error.data.error;
+		}).finally(function() {
+			viewmodel.saving = false;
+		});
 	}
 
 	function addGoal() {
