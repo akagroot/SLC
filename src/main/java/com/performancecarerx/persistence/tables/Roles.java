@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.RolesRecord;
 
 import java.util.Arrays;
@@ -34,10 +34,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Roles extends TableImpl<RolesRecord> {
 
-    private static final long serialVersionUID = -1650341293;
+    private static final long serialVersionUID = 42394646;
 
     /**
-     * The reference instance of <code>performancecarerx_db.roles</code>
+     * The reference instance of <code>public.roles</code>
      */
     public static final Roles ROLES = new Roles();
 
@@ -50,19 +50,19 @@ public class Roles extends TableImpl<RolesRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.roles.role</code>.
+     * The column <code>public.roles.role</code>.
      */
-    public final TableField<RolesRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR.length(55).nullable(false), this, "");
+    public final TableField<RolesRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.roles</code> table reference
+     * Create a <code>public.roles</code> table reference
      */
     public Roles() {
         this("roles", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.roles</code> table reference
+     * Create an aliased <code>public.roles</code> table reference
      */
     public Roles(String alias) {
         this(alias, ROLES);
@@ -81,7 +81,7 @@ public class Roles extends TableImpl<RolesRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -89,7 +89,7 @@ public class Roles extends TableImpl<RolesRecord> {
      */
     @Override
     public UniqueKey<RolesRecord> getPrimaryKey() {
-        return Keys.KEY_ROLES_PRIMARY;
+        return Keys.ROLES_PKEY;
     }
 
     /**
@@ -97,7 +97,7 @@ public class Roles extends TableImpl<RolesRecord> {
      */
     @Override
     public List<UniqueKey<RolesRecord>> getKeys() {
-        return Arrays.<UniqueKey<RolesRecord>>asList(Keys.KEY_ROLES_PRIMARY);
+        return Arrays.<UniqueKey<RolesRecord>>asList(Keys.ROLES_PKEY);
     }
 
     /**

@@ -17,7 +17,7 @@ import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in performancecarerx_db
+ * Convenience access to all tables in public
  */
 @Generated(
     value = {
@@ -30,42 +30,42 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>performancecarerx_db.exercises</code>.
-     */
-    public static final Exercises EXERCISES = com.performancecarerx.persistence.tables.Exercises.EXERCISES;
-
-    /**
-     * The table <code>performancecarerx_db.exercises_recorded</code>.
-     */
-    public static final ExercisesRecorded EXERCISES_RECORDED = com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
-
-    /**
-     * The table <code>performancecarerx_db.exercise_goals</code>.
+     * The table <code>public.exercise_goals</code>.
      */
     public static final ExerciseGoals EXERCISE_GOALS = com.performancecarerx.persistence.tables.ExerciseGoals.EXERCISE_GOALS;
 
     /**
-     * The table <code>performancecarerx_db.exercise_groups</code>.
+     * The table <code>public.exercise_groups</code>.
      */
     public static final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
 
     /**
-     * The table <code>performancecarerx_db.ratio_profiles</code>.
+     * The table <code>public.exercises</code>.
      */
-    public static final RatioProfiles RATIO_PROFILES = com.performancecarerx.persistence.tables.RatioProfiles.RATIO_PROFILES;
+    public static final Exercises EXERCISES = com.performancecarerx.persistence.tables.Exercises.EXERCISES;
 
     /**
-     * The table <code>performancecarerx_db.ratio_profile_values</code>.
+     * The table <code>public.exercises_recorded</code>.
+     */
+    public static final ExercisesRecorded EXERCISES_RECORDED = com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
+
+    /**
+     * The table <code>public.ratio_profile_values</code>.
      */
     public static final RatioProfileValues RATIO_PROFILE_VALUES = com.performancecarerx.persistence.tables.RatioProfileValues.RATIO_PROFILE_VALUES;
 
     /**
-     * The table <code>performancecarerx_db.roles</code>.
+     * The table <code>public.ratio_profiles</code>.
+     */
+    public static final RatioProfiles RATIO_PROFILES = com.performancecarerx.persistence.tables.RatioProfiles.RATIO_PROFILES;
+
+    /**
+     * The table <code>public.roles</code>.
      */
     public static final Roles ROLES = com.performancecarerx.persistence.tables.Roles.ROLES;
 
     /**
-     * The table <code>performancecarerx_db.users</code>.
+     * The table <code>public.users</code>.
      */
     public static final Users USERS = com.performancecarerx.persistence.tables.Users.USERS;
 }

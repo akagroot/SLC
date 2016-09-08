@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.ExerciseGoalsRecord;
 
 import java.sql.Timestamp;
@@ -37,10 +37,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
 
-    private static final long serialVersionUID = -877529487;
+    private static final long serialVersionUID = 1143306176;
 
     /**
-     * The reference instance of <code>performancecarerx_db.exercise_goals</code>
+     * The reference instance of <code>public.exercise_goals</code>
      */
     public static final ExerciseGoals EXERCISE_GOALS = new ExerciseGoals();
 
@@ -53,44 +53,44 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.id</code>.
+     * The column <code>public.exercise_goals.id</code>.
      */
-    public final TableField<ExerciseGoalsRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ExerciseGoalsRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercise_goals_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.exercise_id</code>.
+     * The column <code>public.exercise_goals.exercise_id</code>.
      */
     public final TableField<ExerciseGoalsRecord, Integer> EXERCISE_ID = createField("exercise_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.weight</code>.
+     * The column <code>public.exercise_goals.weight</code>.
      */
     public final TableField<ExerciseGoalsRecord, Integer> WEIGHT = createField("weight", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.reps</code>.
+     * The column <code>public.exercise_goals.reps</code>.
      */
     public final TableField<ExerciseGoalsRecord, Integer> REPS = createField("reps", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.user_id</code>.
+     * The column <code>public.exercise_goals.user_id</code>.
      */
     public final TableField<ExerciseGoalsRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_goals.created_on_dttm</code>.
+     * The column <code>public.exercise_goals.created_on_dttm</code>.
      */
-    public final TableField<ExerciseGoalsRecord, Timestamp> CREATED_ON_DTTM = createField("created_on_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.inline("CURRENT_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+    public final TableField<ExerciseGoalsRecord, Timestamp> CREATED_ON_DTTM = createField("created_on_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.exercise_goals</code> table reference
+     * Create a <code>public.exercise_goals</code> table reference
      */
     public ExerciseGoals() {
         this("exercise_goals", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.exercise_goals</code> table reference
+     * Create an aliased <code>public.exercise_goals</code> table reference
      */
     public ExerciseGoals(String alias) {
         this(alias, EXERCISE_GOALS);
@@ -109,14 +109,14 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public Identity<ExerciseGoalsRecord, Integer> getIdentity() {
+    public Identity<ExerciseGoalsRecord, Long> getIdentity() {
         return Keys.IDENTITY_EXERCISE_GOALS;
     }
 
@@ -125,7 +125,7 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
      */
     @Override
     public UniqueKey<ExerciseGoalsRecord> getPrimaryKey() {
-        return Keys.KEY_EXERCISE_GOALS_PRIMARY;
+        return Keys.EXERCISE_GOALS_PKEY;
     }
 
     /**
@@ -133,7 +133,7 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
      */
     @Override
     public List<UniqueKey<ExerciseGoalsRecord>> getKeys() {
-        return Arrays.<UniqueKey<ExerciseGoalsRecord>>asList(Keys.KEY_EXERCISE_GOALS_PRIMARY);
+        return Arrays.<UniqueKey<ExerciseGoalsRecord>>asList(Keys.EXERCISE_GOALS_PKEY);
     }
 
     /**
@@ -141,7 +141,7 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
      */
     @Override
     public List<ForeignKey<ExerciseGoalsRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ExerciseGoalsRecord, ?>>asList(Keys.FK_USER_GOALS_EXERCISE_ID, Keys.FK_USER_GOALS_USER_ID);
+        return Arrays.<ForeignKey<ExerciseGoalsRecord, ?>>asList(Keys.EXERCISE_GOALS__FK_EXERCISE_GOALS_EXERCISE_IDX, Keys.EXERCISE_GOALS__FK_EXERCISE_GOALS_USER_IDX);
     }
 
     /**

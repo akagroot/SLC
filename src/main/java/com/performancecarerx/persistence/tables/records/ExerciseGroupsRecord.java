@@ -28,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExerciseGroupsRecord extends UpdatableRecordImpl<ExerciseGroupsRecord> implements Record2<String, String> {
 
-    private static final long serialVersionUID = 747826946;
+    private static final long serialVersionUID = -212771262;
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_groups.key_name</code>.
+     * Setter for <code>public.exercise_groups.key_name</code>.
      */
     public void setKeyName(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_groups.key_name</code>.
+     * Getter for <code>public.exercise_groups.key_name</code>.
      */
     public String getKeyName() {
         return (String) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_groups.display_name</code>.
+     * Setter for <code>public.exercise_groups.display_name</code>.
      */
     public void setDisplayName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_groups.display_name</code>.
+     * Getter for <code>public.exercise_groups.display_name</code>.
      */
     public String getDisplayName() {
         return (String) get(1);
