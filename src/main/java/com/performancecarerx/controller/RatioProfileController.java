@@ -39,7 +39,6 @@ public class RatioProfileController {
     public List<RatioProfileModel> ratioProfiles(@PathVariable("load") String load) {
         LOGGER.debug("ratioProfiles() {}", load);
         String email = securityService.checkUserIsLoggedIn();
-        securityService.checkUserIsAdmin(email);
         
         if(load.equals("s")) {
             return ratioProfileService.getRatioProfiles(false);
@@ -52,7 +51,6 @@ public class RatioProfileController {
     public RatioProfileModel getRatioProfile(@PathVariable("id") Integer profileId) {
         LOGGER.debug("getRatioProfile {}", profileId);
         String email = securityService.checkUserIsLoggedIn();
-        securityService.checkUserIsAdmin(email);
         return ratioProfileService.getRatioProfile(profileId);
     }
     
