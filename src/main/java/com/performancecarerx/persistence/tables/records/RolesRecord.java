@@ -27,17 +27,17 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RolesRecord extends UpdatableRecordImpl<RolesRecord> implements Record1<String> {
 
-    private static final long serialVersionUID = -1194615143;
+    private static final long serialVersionUID = -1683658433;
 
     /**
-     * Setter for <code>performancecarerx_db.roles.role</code>.
+     * Setter for <code>public.roles.role</code>.
      */
     public void setRole(String value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.roles.role</code>.
+     * Getter for <code>public.roles.role</code>.
      */
     public String getRole() {
         return (String) get(0);

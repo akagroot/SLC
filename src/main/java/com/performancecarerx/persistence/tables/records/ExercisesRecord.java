@@ -28,73 +28,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExercisesRecord extends UpdatableRecordImpl<ExercisesRecord> implements Record5<Integer, String, String, Boolean, Integer> {
 
-    private static final long serialVersionUID = -410592707;
+    private static final long serialVersionUID = 631618473;
 
     /**
-     * Setter for <code>performancecarerx_db.exercises.id</code>.
+     * Setter for <code>public.exercises.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises.id</code>.
+     * Getter for <code>public.exercises.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises.name</code>.
+     * Setter for <code>public.exercises.name</code>.
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises.name</code>.
+     * Getter for <code>public.exercises.name</code>.
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises.exercise_group_key_name</code>.
+     * Setter for <code>public.exercises.exercise_group_key_name</code>.
      */
     public void setExerciseGroupKeyName(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises.exercise_group_key_name</code>.
+     * Getter for <code>public.exercises.exercise_group_key_name</code>.
      */
     public String getExerciseGroupKeyName() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises.is_deleted</code>.
+     * Setter for <code>public.exercises.is_deleted</code>.
      */
     public void setIsDeleted(Boolean value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises.is_deleted</code>.
+     * Getter for <code>public.exercises.is_deleted</code>.
      */
     public Boolean getIsDeleted() {
         return (Boolean) get(3);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises.ratio_profile_id</code>.
+     * Setter for <code>public.exercises.ratio_profile_id</code>.
      */
     public void setRatioProfileId(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises.ratio_profile_id</code>.
+     * Getter for <code>public.exercises.ratio_profile_id</code>.
      */
     public Integer getRatioProfileId() {
         return (Integer) get(4);

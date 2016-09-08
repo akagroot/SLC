@@ -27,7 +27,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 1844031059;
+    private static final long serialVersionUID = 1577829123;
 
     /**
      * The reference instance of <code></code>
@@ -35,9 +35,9 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>performancecarerx_db</code>.
+     * The schema <code>public</code>.
      */
-    public final PerformancecarerxDb PERFORMANCECARERX_DB = com.performancecarerx.persistence.PerformancecarerxDb.PERFORMANCECARERX_DB;
+    public final Public PUBLIC = com.performancecarerx.persistence.Public.PUBLIC;
 
     /**
      * No further instances allowed
@@ -55,6 +55,6 @@ public class DefaultCatalog extends CatalogImpl {
 
     private final List<Schema> getSchemas0() {
         return Arrays.<Schema>asList(
-            PerformancecarerxDb.PERFORMANCECARERX_DB);
+            Public.PUBLIC);
     }
 }

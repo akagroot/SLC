@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.RatioProfileValuesRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
 
-    private static final long serialVersionUID = 634854902;
+    private static final long serialVersionUID = -1570471196;
 
     /**
-     * The reference instance of <code>performancecarerx_db.ratio_profile_values</code>
+     * The reference instance of <code>public.ratio_profile_values</code>
      */
     public static final RatioProfileValues RATIO_PROFILE_VALUES = new RatioProfileValues();
 
@@ -52,34 +52,34 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.ratio_profile_values.id</code>.
+     * The column <code>public.ratio_profile_values.id</code>.
      */
-    public final TableField<RatioProfileValuesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RatioProfileValuesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profile_values_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.ratio_profile_values.ratio_profile_id</code>.
+     * The column <code>public.ratio_profile_values.ratio_profile_id</code>.
      */
     public final TableField<RatioProfileValuesRecord, Integer> RATIO_PROFILE_ID = createField("ratio_profile_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.ratio_profile_values.reps</code>.
+     * The column <code>public.ratio_profile_values.reps</code>.
      */
     public final TableField<RatioProfileValuesRecord, Integer> REPS = createField("reps", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.ratio_profile_values.multiplier</code>.
+     * The column <code>public.ratio_profile_values.multiplier</code>.
      */
-    public final TableField<RatioProfileValuesRecord, Double> MULTIPLIER = createField("multiplier", org.jooq.impl.SQLDataType.FLOAT.nullable(false), this, "");
+    public final TableField<RatioProfileValuesRecord, Double> MULTIPLIER = createField("multiplier", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.ratio_profile_values</code> table reference
+     * Create a <code>public.ratio_profile_values</code> table reference
      */
     public RatioProfileValues() {
         this("ratio_profile_values", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.ratio_profile_values</code> table reference
+     * Create an aliased <code>public.ratio_profile_values</code> table reference
      */
     public RatioProfileValues(String alias) {
         this(alias, RATIO_PROFILE_VALUES);
@@ -98,7 +98,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -114,7 +114,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
      */
     @Override
     public UniqueKey<RatioProfileValuesRecord> getPrimaryKey() {
-        return Keys.KEY_RATIO_PROFILE_VALUES_PRIMARY;
+        return Keys.RATIO_PROFILE_VALUES_PKEY;
     }
 
     /**
@@ -122,7 +122,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
      */
     @Override
     public List<UniqueKey<RatioProfileValuesRecord>> getKeys() {
-        return Arrays.<UniqueKey<RatioProfileValuesRecord>>asList(Keys.KEY_RATIO_PROFILE_VALUES_PRIMARY);
+        return Arrays.<UniqueKey<RatioProfileValuesRecord>>asList(Keys.RATIO_PROFILE_VALUES_PKEY);
     }
 
     /**
@@ -130,7 +130,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
      */
     @Override
     public List<ForeignKey<RatioProfileValuesRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RatioProfileValuesRecord, ?>>asList(Keys.FK_RATIOPROFILEVALUE_RATIOPROFILEID);
+        return Arrays.<ForeignKey<RatioProfileValuesRecord, ?>>asList(Keys.RATIO_PROFILE_VALUES__FK_RATIO_PROFILE_VALUES_RATIO_PROFILE_IDX);
     }
 
     /**

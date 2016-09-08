@@ -28,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfilesRecord extends UpdatableRecordImpl<RatioProfilesRecord> implements Record2<Integer, String> {
 
-    private static final long serialVersionUID = -1011287613;
+    private static final long serialVersionUID = 1349584573;
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profiles.id</code>.
+     * Setter for <code>public.ratio_profiles.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profiles.id</code>.
+     * Getter for <code>public.ratio_profiles.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profiles.name</code>.
+     * Setter for <code>public.ratio_profiles.name</code>.
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profiles.name</code>.
+     * Getter for <code>public.ratio_profiles.name</code>.
      */
     public String getName() {
         return (String) get(1);

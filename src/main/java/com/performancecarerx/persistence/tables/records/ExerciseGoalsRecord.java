@@ -30,87 +30,87 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExerciseGoalsRecord extends UpdatableRecordImpl<ExerciseGoalsRecord> implements Record6<Integer, Integer, Integer, Integer, Integer, Timestamp> {
 
-    private static final long serialVersionUID = -864142252;
+    private static final long serialVersionUID = 513729836;
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.id</code>.
+     * Setter for <code>public.exercise_goals.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.id</code>.
+     * Getter for <code>public.exercise_goals.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.exercise_id</code>.
+     * Setter for <code>public.exercise_goals.exercise_id</code>.
      */
     public void setExerciseId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.exercise_id</code>.
+     * Getter for <code>public.exercise_goals.exercise_id</code>.
      */
     public Integer getExerciseId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.weight</code>.
+     * Setter for <code>public.exercise_goals.weight</code>.
      */
     public void setWeight(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.weight</code>.
+     * Getter for <code>public.exercise_goals.weight</code>.
      */
     public Integer getWeight() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.reps</code>.
+     * Setter for <code>public.exercise_goals.reps</code>.
      */
     public void setReps(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.reps</code>.
+     * Getter for <code>public.exercise_goals.reps</code>.
      */
     public Integer getReps() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.user_id</code>.
+     * Setter for <code>public.exercise_goals.user_id</code>.
      */
     public void setUserId(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.user_id</code>.
+     * Getter for <code>public.exercise_goals.user_id</code>.
      */
     public Integer getUserId() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercise_goals.created_on_dttm</code>.
+     * Setter for <code>public.exercise_goals.created_on_dttm</code>.
      */
     public void setCreatedOnDttm(Timestamp value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercise_goals.created_on_dttm</code>.
+     * Getter for <code>public.exercise_goals.created_on_dttm</code>.
      */
     public Timestamp getCreatedOnDttm() {
         return (Timestamp) get(5);

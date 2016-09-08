@@ -28,59 +28,59 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfileValuesRecord extends UpdatableRecordImpl<RatioProfileValuesRecord> implements Record4<Integer, Integer, Integer, Double> {
 
-    private static final long serialVersionUID = -1281803355;
+    private static final long serialVersionUID = 71097271;
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profile_values.id</code>.
+     * Setter for <code>public.ratio_profile_values.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profile_values.id</code>.
+     * Getter for <code>public.ratio_profile_values.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profile_values.ratio_profile_id</code>.
+     * Setter for <code>public.ratio_profile_values.ratio_profile_id</code>.
      */
     public void setRatioProfileId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profile_values.ratio_profile_id</code>.
+     * Getter for <code>public.ratio_profile_values.ratio_profile_id</code>.
      */
     public Integer getRatioProfileId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profile_values.reps</code>.
+     * Setter for <code>public.ratio_profile_values.reps</code>.
      */
     public void setReps(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profile_values.reps</code>.
+     * Getter for <code>public.ratio_profile_values.reps</code>.
      */
     public Integer getReps() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.ratio_profile_values.multiplier</code>.
+     * Setter for <code>public.ratio_profile_values.multiplier</code>.
      */
     public void setMultiplier(Double value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.ratio_profile_values.multiplier</code>.
+     * Getter for <code>public.ratio_profile_values.multiplier</code>.
      */
     public Double getMultiplier() {
         return (Double) get(3);

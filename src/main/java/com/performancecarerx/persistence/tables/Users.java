@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.UsersRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Users extends TableImpl<UsersRecord> {
 
-    private static final long serialVersionUID = 755482173;
+    private static final long serialVersionUID = -324126271;
 
     /**
-     * The reference instance of <code>performancecarerx_db.users</code>
+     * The reference instance of <code>public.users</code>
      */
     public static final Users USERS = new Users();
 
@@ -52,39 +52,39 @@ public class Users extends TableImpl<UsersRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.users.id</code>.
+     * The column <code>public.users.id</code>.
      */
-    public final TableField<UsersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<UsersRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('users_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.users.email</code>.
+     * The column <code>public.users.email</code>.
      */
-    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<UsersRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.users.role</code>.
+     * The column <code>public.users.firstname</code>.
      */
-    public final TableField<UsersRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR.length(55).nullable(false).defaultValue(org.jooq.impl.DSL.inline("ATHLETE", org.jooq.impl.SQLDataType.VARCHAR)), this, "");
+    public final TableField<UsersRecord, String> FIRSTNAME = createField("firstname", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.users.firstname</code>.
+     * The column <code>public.users.lastname</code>.
      */
-    public final TableField<UsersRecord, String> FIRSTNAME = createField("firstname", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<UsersRecord, String> LASTNAME = createField("lastname", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.users.lastname</code>.
+     * The column <code>public.users.role</code>.
      */
-    public final TableField<UsersRecord, String> LASTNAME = createField("lastname", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<UsersRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.CLOB.nullable(false).defaultValue(org.jooq.impl.DSL.field("'ATHLETE'::text", org.jooq.impl.SQLDataType.CLOB)), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.users</code> table reference
+     * Create a <code>public.users</code> table reference
      */
     public Users() {
         this("users", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.users</code> table reference
+     * Create an aliased <code>public.users</code> table reference
      */
     public Users(String alias) {
         this(alias, USERS);
@@ -103,7 +103,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -119,7 +119,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public UniqueKey<UsersRecord> getPrimaryKey() {
-        return Keys.KEY_USERS_PRIMARY;
+        return Keys.USERS_PKEY;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public List<UniqueKey<UsersRecord>> getKeys() {
-        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.KEY_USERS_PRIMARY);
+        return Arrays.<UniqueKey<UsersRecord>>asList(Keys.USERS_PKEY);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Users extends TableImpl<UsersRecord> {
      */
     @Override
     public List<ForeignKey<UsersRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<UsersRecord, ?>>asList(Keys.FK_USERS_ROLES);
+        return Arrays.<ForeignKey<UsersRecord, ?>>asList(Keys.USERS__FK_USERS_ROLES_IDX);
     }
 
     /**

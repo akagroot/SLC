@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.ExercisesRecordedRecord;
 
 import java.sql.Timestamp;
@@ -37,10 +37,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
 
-    private static final long serialVersionUID = 1506459188;
+    private static final long serialVersionUID = 1317885451;
 
     /**
-     * The reference instance of <code>performancecarerx_db.exercises_recorded</code>
+     * The reference instance of <code>public.exercises_recorded</code>
      */
     public static final ExercisesRecorded EXERCISES_RECORDED = new ExercisesRecorded();
 
@@ -53,54 +53,54 @@ public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.id</code>.
+     * The column <code>public.exercises_recorded.id</code>.
      */
-    public final TableField<ExercisesRecordedRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ExercisesRecordedRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercises_recorded_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.exercise_id</code>.
+     * The column <code>public.exercises_recorded.exercise_id</code>.
      */
     public final TableField<ExercisesRecordedRecord, Integer> EXERCISE_ID = createField("exercise_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.recorded_dttm</code>.
+     * The column <code>public.exercises_recorded.recorded_dttm</code>.
      */
-    public final TableField<ExercisesRecordedRecord, Timestamp> RECORDED_DTTM = createField("recorded_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.inline("CURRENT_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+    public final TableField<ExercisesRecordedRecord, Timestamp> RECORDED_DTTM = createField("recorded_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.nullable(false).defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.weight</code>.
+     * The column <code>public.exercises_recorded.weight</code>.
      */
     public final TableField<ExercisesRecordedRecord, Integer> WEIGHT = createField("weight", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.reps</code>.
+     * The column <code>public.exercises_recorded.reps</code>.
      */
     public final TableField<ExercisesRecordedRecord, Integer> REPS = createField("reps", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.user_id</code>.
+     * The column <code>public.exercises_recorded.user_id</code>.
      */
     public final TableField<ExercisesRecordedRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.created_dttm</code>.
+     * The column <code>public.exercises_recorded.created_dttm</code>.
      */
-    public final TableField<ExercisesRecordedRecord, Timestamp> CREATED_DTTM = createField("created_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.inline("CURRENT_TIMESTAMP", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
+    public final TableField<ExercisesRecordedRecord, Timestamp> CREATED_DTTM = createField("created_dttm", org.jooq.impl.SQLDataType.TIMESTAMP.defaultValue(org.jooq.impl.DSL.field("now()", org.jooq.impl.SQLDataType.TIMESTAMP)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises_recorded.note</code>.
+     * The column <code>public.exercises_recorded.note</code>.
      */
-    public final TableField<ExercisesRecordedRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.VARCHAR.length(255), this, "");
+    public final TableField<ExercisesRecordedRecord, String> NOTE = createField("note", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
-     * Create a <code>performancecarerx_db.exercises_recorded</code> table reference
+     * Create a <code>public.exercises_recorded</code> table reference
      */
     public ExercisesRecorded() {
         this("exercises_recorded", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.exercises_recorded</code> table reference
+     * Create an aliased <code>public.exercises_recorded</code> table reference
      */
     public ExercisesRecorded(String alias) {
         this(alias, EXERCISES_RECORDED);
@@ -119,7 +119,7 @@ public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -135,7 +135,7 @@ public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
      */
     @Override
     public UniqueKey<ExercisesRecordedRecord> getPrimaryKey() {
-        return Keys.KEY_EXERCISES_RECORDED_PRIMARY;
+        return Keys.EXERCISES_RECORDED_PKEY;
     }
 
     /**
@@ -143,7 +143,7 @@ public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
      */
     @Override
     public List<UniqueKey<ExercisesRecordedRecord>> getKeys() {
-        return Arrays.<UniqueKey<ExercisesRecordedRecord>>asList(Keys.KEY_EXERCISES_RECORDED_PRIMARY);
+        return Arrays.<UniqueKey<ExercisesRecordedRecord>>asList(Keys.EXERCISES_RECORDED_PKEY);
     }
 
     /**
@@ -151,7 +151,7 @@ public class ExercisesRecorded extends TableImpl<ExercisesRecordedRecord> {
      */
     @Override
     public List<ForeignKey<ExercisesRecordedRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ExercisesRecordedRecord, ?>>asList(Keys.FK_EXERCISES_RECORDED_EXERCISES_ID, Keys.FK_EXERCISES_RECORD_USER_ID);
+        return Arrays.<ForeignKey<ExercisesRecordedRecord, ?>>asList(Keys.EXERCISES_RECORDED__FK_EXERCISES_RECORDED_EXERCISES_IDX, Keys.EXERCISES_RECORDED__FK_EXERCISES_RECORDED_USER_IDX);
     }
 
     /**

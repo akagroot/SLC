@@ -28,75 +28,75 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Record5<Integer, String, String, String, String> {
 
-    private static final long serialVersionUID = -1890606300;
+    private static final long serialVersionUID = 136181842;
 
     /**
-     * Setter for <code>performancecarerx_db.users.id</code>.
+     * Setter for <code>public.users.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.users.id</code>.
+     * Getter for <code>public.users.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.users.email</code>.
+     * Setter for <code>public.users.email</code>.
      */
     public void setEmail(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.users.email</code>.
+     * Getter for <code>public.users.email</code>.
      */
     public String getEmail() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.users.role</code>.
+     * Setter for <code>public.users.firstname</code>.
      */
-    public void setRole(String value) {
+    public void setFirstname(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.users.role</code>.
+     * Getter for <code>public.users.firstname</code>.
      */
-    public String getRole() {
+    public String getFirstname() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.users.firstname</code>.
+     * Setter for <code>public.users.lastname</code>.
      */
-    public void setFirstname(String value) {
+    public void setLastname(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.users.firstname</code>.
+     * Getter for <code>public.users.lastname</code>.
      */
-    public String getFirstname() {
+    public String getLastname() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.users.lastname</code>.
+     * Setter for <code>public.users.role</code>.
      */
-    public void setLastname(String value) {
+    public void setRole(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.users.lastname</code>.
+     * Getter for <code>public.users.role</code>.
      */
-    public String getLastname() {
+    public String getRole() {
         return (String) get(4);
     }
 
@@ -153,14 +153,6 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public Field<String> field3() {
-        return Users.USERS.ROLE;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Field<String> field4() {
         return Users.USERS.FIRSTNAME;
     }
 
@@ -168,8 +160,16 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      * {@inheritDoc}
      */
     @Override
-    public Field<String> field5() {
+    public Field<String> field4() {
         return Users.USERS.LASTNAME;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Field<String> field5() {
+        return Users.USERS.ROLE;
     }
 
     /**
@@ -193,14 +193,6 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public String value3() {
-        return getRole();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String value4() {
         return getFirstname();
     }
 
@@ -208,8 +200,16 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      * {@inheritDoc}
      */
     @Override
-    public String value5() {
+    public String value4() {
         return getLastname();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String value5() {
+        return getRole();
     }
 
     /**
@@ -235,15 +235,6 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      */
     @Override
     public UsersRecord value3(String value) {
-        setRole(value);
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public UsersRecord value4(String value) {
         setFirstname(value);
         return this;
     }
@@ -252,8 +243,17 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
      * {@inheritDoc}
      */
     @Override
-    public UsersRecord value5(String value) {
+    public UsersRecord value4(String value) {
         setLastname(value);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public UsersRecord value5(String value) {
+        setRole(value);
         return this;
     }
 
@@ -284,13 +284,13 @@ public class UsersRecord extends UpdatableRecordImpl<UsersRecord> implements Rec
     /**
      * Create a detached, initialised UsersRecord
      */
-    public UsersRecord(Integer id, String email, String role, String firstname, String lastname) {
+    public UsersRecord(Integer id, String email, String firstname, String lastname, String role) {
         super(Users.USERS);
 
         set(0, id);
         set(1, email);
-        set(2, role);
-        set(3, firstname);
-        set(4, lastname);
+        set(2, firstname);
+        set(3, lastname);
+        set(4, role);
     }
 }

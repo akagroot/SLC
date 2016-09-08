@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.ExercisesRecord;
 
 import java.util.Arrays;
@@ -36,10 +36,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Exercises extends TableImpl<ExercisesRecord> {
 
-    private static final long serialVersionUID = 780730807;
+    private static final long serialVersionUID = 1814005383;
 
     /**
-     * The reference instance of <code>performancecarerx_db.exercises</code>
+     * The reference instance of <code>public.exercises</code>
      */
     public static final Exercises EXERCISES = new Exercises();
 
@@ -52,39 +52,39 @@ public class Exercises extends TableImpl<ExercisesRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.exercises.id</code>.
+     * The column <code>public.exercises.id</code>.
      */
-    public final TableField<ExercisesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ExercisesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercises_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises.name</code>.
+     * The column <code>public.exercises.name</code>.
      */
-    public final TableField<ExercisesRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(255).nullable(false), this, "");
+    public final TableField<ExercisesRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises.exercise_group_key_name</code>.
+     * The column <code>public.exercises.exercise_group_key_name</code>.
      */
-    public final TableField<ExercisesRecord, String> EXERCISE_GROUP_KEY_NAME = createField("exercise_group_key_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<ExercisesRecord, String> EXERCISE_GROUP_KEY_NAME = createField("exercise_group_key_name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises.is_deleted</code>.
+     * The column <code>public.exercises.is_deleted</code>.
      */
-    public final TableField<ExercisesRecord, Boolean> IS_DELETED = createField("is_deleted", org.jooq.impl.SQLDataType.BIT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "");
+    public final TableField<ExercisesRecord, Boolean> IS_DELETED = createField("is_deleted", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("false", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercises.ratio_profile_id</code>.
+     * The column <code>public.exercises.ratio_profile_id</code>.
      */
     public final TableField<ExercisesRecord, Integer> RATIO_PROFILE_ID = createField("ratio_profile_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * Create a <code>performancecarerx_db.exercises</code> table reference
+     * Create a <code>public.exercises</code> table reference
      */
     public Exercises() {
         this("exercises", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.exercises</code> table reference
+     * Create an aliased <code>public.exercises</code> table reference
      */
     public Exercises(String alias) {
         this(alias, EXERCISES);
@@ -103,7 +103,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -119,7 +119,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      */
     @Override
     public UniqueKey<ExercisesRecord> getPrimaryKey() {
-        return Keys.KEY_EXERCISES_PRIMARY;
+        return Keys.EXERCISES_PKEY;
     }
 
     /**
@@ -127,7 +127,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      */
     @Override
     public List<UniqueKey<ExercisesRecord>> getKeys() {
-        return Arrays.<UniqueKey<ExercisesRecord>>asList(Keys.KEY_EXERCISES_PRIMARY);
+        return Arrays.<UniqueKey<ExercisesRecord>>asList(Keys.EXERCISES_PKEY);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      */
     @Override
     public List<ForeignKey<ExercisesRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ExercisesRecord, ?>>asList(Keys.FK_EXERCISE_EXERCISE_GROUP_KEY_NAME, Keys.FK_EXERCISES_RATIO_PROFILE_ID);
+        return Arrays.<ForeignKey<ExercisesRecord, ?>>asList(Keys.EXERCISES__FK_EXERCISES_EXERCISE_GROUP_KEY_NAME_IDX, Keys.EXERCISES__FK_EXERCISES_RATIO_PROFILE_IDX);
     }
 
     /**

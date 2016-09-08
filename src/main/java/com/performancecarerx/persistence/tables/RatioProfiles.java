@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.RatioProfilesRecord;
 
 import java.util.Arrays;
@@ -35,10 +35,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
 
-    private static final long serialVersionUID = -1906855265;
+    private static final long serialVersionUID = -1867097940;
 
     /**
-     * The reference instance of <code>performancecarerx_db.ratio_profiles</code>
+     * The reference instance of <code>public.ratio_profiles</code>
      */
     public static final RatioProfiles RATIO_PROFILES = new RatioProfiles();
 
@@ -51,24 +51,24 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.ratio_profiles.id</code>.
+     * The column <code>public.ratio_profiles.id</code>.
      */
-    public final TableField<RatioProfilesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<RatioProfilesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profiles_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>performancecarerx_db.ratio_profiles.name</code>.
+     * The column <code>public.ratio_profiles.name</code>.
      */
-    public final TableField<RatioProfilesRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<RatioProfilesRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.ratio_profiles</code> table reference
+     * Create a <code>public.ratio_profiles</code> table reference
      */
     public RatioProfiles() {
         this("ratio_profiles", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.ratio_profiles</code> table reference
+     * Create an aliased <code>public.ratio_profiles</code> table reference
      */
     public RatioProfiles(String alias) {
         this(alias, RATIO_PROFILES);
@@ -87,7 +87,7 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -103,7 +103,7 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
      */
     @Override
     public UniqueKey<RatioProfilesRecord> getPrimaryKey() {
-        return Keys.KEY_RATIO_PROFILES_PRIMARY;
+        return Keys.RATIO_PROFILES_PKEY;
     }
 
     /**
@@ -111,7 +111,7 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
      */
     @Override
     public List<UniqueKey<RatioProfilesRecord>> getKeys() {
-        return Arrays.<UniqueKey<RatioProfilesRecord>>asList(Keys.KEY_RATIO_PROFILES_PRIMARY);
+        return Arrays.<UniqueKey<RatioProfilesRecord>>asList(Keys.RATIO_PROFILES_PKEY);
     }
 
     /**

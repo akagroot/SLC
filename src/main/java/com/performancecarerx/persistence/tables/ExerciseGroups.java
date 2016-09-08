@@ -5,7 +5,7 @@ package com.performancecarerx.persistence.tables;
 
 
 import com.performancecarerx.persistence.Keys;
-import com.performancecarerx.persistence.PerformancecarerxDb;
+import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.ExerciseGroupsRecord;
 
 import java.util.Arrays;
@@ -34,10 +34,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExerciseGroups extends TableImpl<ExerciseGroupsRecord> {
 
-    private static final long serialVersionUID = 987811798;
+    private static final long serialVersionUID = 877522112;
 
     /**
-     * The reference instance of <code>performancecarerx_db.exercise_groups</code>
+     * The reference instance of <code>public.exercise_groups</code>
      */
     public static final ExerciseGroups EXERCISE_GROUPS = new ExerciseGroups();
 
@@ -50,24 +50,24 @@ public class ExerciseGroups extends TableImpl<ExerciseGroupsRecord> {
     }
 
     /**
-     * The column <code>performancecarerx_db.exercise_groups.key_name</code>.
+     * The column <code>public.exercise_groups.key_name</code>.
      */
-    public final TableField<ExerciseGroupsRecord, String> KEY_NAME = createField("key_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<ExerciseGroupsRecord, String> KEY_NAME = createField("key_name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>performancecarerx_db.exercise_groups.display_name</code>.
+     * The column <code>public.exercise_groups.display_name</code>.
      */
-    public final TableField<ExerciseGroupsRecord, String> DISPLAY_NAME = createField("display_name", org.jooq.impl.SQLDataType.VARCHAR.length(45).nullable(false), this, "");
+    public final TableField<ExerciseGroupsRecord, String> DISPLAY_NAME = createField("display_name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * Create a <code>performancecarerx_db.exercise_groups</code> table reference
+     * Create a <code>public.exercise_groups</code> table reference
      */
     public ExerciseGroups() {
         this("exercise_groups", null);
     }
 
     /**
-     * Create an aliased <code>performancecarerx_db.exercise_groups</code> table reference
+     * Create an aliased <code>public.exercise_groups</code> table reference
      */
     public ExerciseGroups(String alias) {
         this(alias, EXERCISE_GROUPS);
@@ -86,7 +86,7 @@ public class ExerciseGroups extends TableImpl<ExerciseGroupsRecord> {
      */
     @Override
     public Schema getSchema() {
-        return PerformancecarerxDb.PERFORMANCECARERX_DB;
+        return Public.PUBLIC;
     }
 
     /**
@@ -94,7 +94,7 @@ public class ExerciseGroups extends TableImpl<ExerciseGroupsRecord> {
      */
     @Override
     public UniqueKey<ExerciseGroupsRecord> getPrimaryKey() {
-        return Keys.KEY_EXERCISE_GROUPS_PRIMARY;
+        return Keys.EXERCISE_GROUPS_PKEY;
     }
 
     /**
@@ -102,7 +102,7 @@ public class ExerciseGroups extends TableImpl<ExerciseGroupsRecord> {
      */
     @Override
     public List<UniqueKey<ExerciseGroupsRecord>> getKeys() {
-        return Arrays.<UniqueKey<ExerciseGroupsRecord>>asList(Keys.KEY_EXERCISE_GROUPS_PRIMARY);
+        return Arrays.<UniqueKey<ExerciseGroupsRecord>>asList(Keys.EXERCISE_GROUPS_PKEY);
     }
 
     /**

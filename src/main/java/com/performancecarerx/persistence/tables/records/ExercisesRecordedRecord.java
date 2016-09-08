@@ -30,115 +30,115 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExercisesRecordedRecord extends UpdatableRecordImpl<ExercisesRecordedRecord> implements Record8<Integer, Integer, Timestamp, Integer, Integer, Integer, Timestamp, String> {
 
-    private static final long serialVersionUID = 1218035388;
+    private static final long serialVersionUID = -693859762;
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.id</code>.
+     * Setter for <code>public.exercises_recorded.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.id</code>.
+     * Getter for <code>public.exercises_recorded.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.exercise_id</code>.
+     * Setter for <code>public.exercises_recorded.exercise_id</code>.
      */
     public void setExerciseId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.exercise_id</code>.
+     * Getter for <code>public.exercises_recorded.exercise_id</code>.
      */
     public Integer getExerciseId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.recorded_dttm</code>.
+     * Setter for <code>public.exercises_recorded.recorded_dttm</code>.
      */
     public void setRecordedDttm(Timestamp value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.recorded_dttm</code>.
+     * Getter for <code>public.exercises_recorded.recorded_dttm</code>.
      */
     public Timestamp getRecordedDttm() {
         return (Timestamp) get(2);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.weight</code>.
+     * Setter for <code>public.exercises_recorded.weight</code>.
      */
     public void setWeight(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.weight</code>.
+     * Getter for <code>public.exercises_recorded.weight</code>.
      */
     public Integer getWeight() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.reps</code>.
+     * Setter for <code>public.exercises_recorded.reps</code>.
      */
     public void setReps(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.reps</code>.
+     * Getter for <code>public.exercises_recorded.reps</code>.
      */
     public Integer getReps() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.user_id</code>.
+     * Setter for <code>public.exercises_recorded.user_id</code>.
      */
     public void setUserId(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.user_id</code>.
+     * Getter for <code>public.exercises_recorded.user_id</code>.
      */
     public Integer getUserId() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.created_dttm</code>.
+     * Setter for <code>public.exercises_recorded.created_dttm</code>.
      */
     public void setCreatedDttm(Timestamp value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.created_dttm</code>.
+     * Getter for <code>public.exercises_recorded.created_dttm</code>.
      */
     public Timestamp getCreatedDttm() {
         return (Timestamp) get(6);
     }
 
     /**
-     * Setter for <code>performancecarerx_db.exercises_recorded.note</code>.
+     * Setter for <code>public.exercises_recorded.note</code>.
      */
     public void setNote(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>performancecarerx_db.exercises_recorded.note</code>.
+     * Getter for <code>public.exercises_recorded.note</code>.
      */
     public String getNote() {
         return (String) get(7);
