@@ -37,7 +37,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
 
-    private static final long serialVersionUID = 1143306176;
+    private static final long serialVersionUID = -2061323878;
 
     /**
      * The reference instance of <code>public.exercise_goals</code>
@@ -55,7 +55,7 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
     /**
      * The column <code>public.exercise_goals.id</code>.
      */
-    public final TableField<ExerciseGoalsRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercise_goals_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<ExerciseGoalsRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercise_goals_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.exercise_goals.exercise_id</code>.
@@ -116,7 +116,7 @@ public class ExerciseGoals extends TableImpl<ExerciseGoalsRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<ExerciseGoalsRecord, Long> getIdentity() {
+    public Identity<ExerciseGoalsRecord, Integer> getIdentity() {
         return Keys.IDENTITY_EXERCISE_GOALS;
     }
 

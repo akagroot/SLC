@@ -47,12 +47,12 @@ public class Keys {
     // IDENTITY definitions
     // -------------------------------------------------------------------------
 
-    public static final Identity<ExerciseGoalsRecord, Long> IDENTITY_EXERCISE_GOALS = Identities0.IDENTITY_EXERCISE_GOALS;
-    public static final Identity<ExercisesRecord, Long> IDENTITY_EXERCISES = Identities0.IDENTITY_EXERCISES;
-    public static final Identity<ExercisesRecordedRecord, Long> IDENTITY_EXERCISES_RECORDED = Identities0.IDENTITY_EXERCISES_RECORDED;
-    public static final Identity<RatioProfileValuesRecord, Long> IDENTITY_RATIO_PROFILE_VALUES = Identities0.IDENTITY_RATIO_PROFILE_VALUES;
-    public static final Identity<RatioProfilesRecord, Long> IDENTITY_RATIO_PROFILES = Identities0.IDENTITY_RATIO_PROFILES;
-    public static final Identity<UsersRecord, Long> IDENTITY_USERS = Identities0.IDENTITY_USERS;
+    public static final Identity<ExerciseGoalsRecord, Integer> IDENTITY_EXERCISE_GOALS = Identities0.IDENTITY_EXERCISE_GOALS;
+    public static final Identity<ExercisesRecord, Integer> IDENTITY_EXERCISES = Identities0.IDENTITY_EXERCISES;
+    public static final Identity<ExercisesRecordedRecord, Integer> IDENTITY_EXERCISES_RECORDED = Identities0.IDENTITY_EXERCISES_RECORDED;
+    public static final Identity<RatioProfileValuesRecord, Integer> IDENTITY_RATIO_PROFILE_VALUES = Identities0.IDENTITY_RATIO_PROFILE_VALUES;
+    public static final Identity<RatioProfilesRecord, Integer> IDENTITY_RATIO_PROFILES = Identities0.IDENTITY_RATIO_PROFILES;
+    public static final Identity<UsersRecord, Integer> IDENTITY_USERS = Identities0.IDENTITY_USERS;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -85,12 +85,12 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     private static class Identities0 extends AbstractKeys {
-        public static Identity<ExerciseGoalsRecord, Long> IDENTITY_EXERCISE_GOALS = createIdentity(ExerciseGoals.EXERCISE_GOALS, ExerciseGoals.EXERCISE_GOALS.ID);
-        public static Identity<ExercisesRecord, Long> IDENTITY_EXERCISES = createIdentity(Exercises.EXERCISES, Exercises.EXERCISES.ID);
-        public static Identity<ExercisesRecordedRecord, Long> IDENTITY_EXERCISES_RECORDED = createIdentity(ExercisesRecorded.EXERCISES_RECORDED, ExercisesRecorded.EXERCISES_RECORDED.ID);
-        public static Identity<RatioProfileValuesRecord, Long> IDENTITY_RATIO_PROFILE_VALUES = createIdentity(RatioProfileValues.RATIO_PROFILE_VALUES, RatioProfileValues.RATIO_PROFILE_VALUES.ID);
-        public static Identity<RatioProfilesRecord, Long> IDENTITY_RATIO_PROFILES = createIdentity(RatioProfiles.RATIO_PROFILES, RatioProfiles.RATIO_PROFILES.ID);
-        public static Identity<UsersRecord, Long> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.ID);
+        public static Identity<ExerciseGoalsRecord, Integer> IDENTITY_EXERCISE_GOALS = createIdentity(ExerciseGoals.EXERCISE_GOALS, ExerciseGoals.EXERCISE_GOALS.ID);
+        public static Identity<ExercisesRecord, Integer> IDENTITY_EXERCISES = createIdentity(Exercises.EXERCISES, Exercises.EXERCISES.ID);
+        public static Identity<ExercisesRecordedRecord, Integer> IDENTITY_EXERCISES_RECORDED = createIdentity(ExercisesRecorded.EXERCISES_RECORDED, ExercisesRecorded.EXERCISES_RECORDED.ID);
+        public static Identity<RatioProfileValuesRecord, Integer> IDENTITY_RATIO_PROFILE_VALUES = createIdentity(RatioProfileValues.RATIO_PROFILE_VALUES, RatioProfileValues.RATIO_PROFILE_VALUES.ID);
+        public static Identity<RatioProfilesRecord, Integer> IDENTITY_RATIO_PROFILES = createIdentity(RatioProfiles.RATIO_PROFILES, RatioProfiles.RATIO_PROFILES.ID);
+        public static Identity<UsersRecord, Integer> IDENTITY_USERS = createIdentity(Users.USERS, Users.USERS.ID);
     }
 
     private static class UniqueKeys0 extends AbstractKeys {

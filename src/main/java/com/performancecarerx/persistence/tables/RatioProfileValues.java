@@ -8,7 +8,6 @@ import com.performancecarerx.persistence.Keys;
 import com.performancecarerx.persistence.Public;
 import com.performancecarerx.persistence.tables.records.RatioProfileValuesRecord;
 
-import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
 
-    private static final long serialVersionUID = -437831551;
+    private static final long serialVersionUID = -1570471196;
 
     /**
      * The reference instance of <code>public.ratio_profile_values</code>
@@ -55,7 +54,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
     /**
      * The column <code>public.ratio_profile_values.id</code>.
      */
-    public final TableField<RatioProfileValuesRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profile_values_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<RatioProfileValuesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profile_values_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.ratio_profile_values.ratio_profile_id</code>.
@@ -70,7 +69,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
     /**
      * The column <code>public.ratio_profile_values.multiplier</code>.
      */
-    public final TableField<RatioProfileValuesRecord, BigDecimal> MULTIPLIER = createField("multiplier", org.jooq.impl.SQLDataType.NUMERIC.nullable(false), this, "");
+    public final TableField<RatioProfileValuesRecord, Double> MULTIPLIER = createField("multiplier", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
      * Create a <code>public.ratio_profile_values</code> table reference
@@ -106,7 +105,7 @@ public class RatioProfileValues extends TableImpl<RatioProfileValuesRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RatioProfileValuesRecord, Long> getIdentity() {
+    public Identity<RatioProfileValuesRecord, Integer> getIdentity() {
         return Keys.IDENTITY_RATIO_PROFILE_VALUES;
     }
 

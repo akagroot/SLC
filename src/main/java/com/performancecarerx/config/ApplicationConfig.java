@@ -91,7 +91,7 @@ public class ApplicationConfig {
     @Bean
     public DefaultConfiguration jooqConfig() {
             DefaultConfiguration config = new DefaultConfiguration();
-            config.setSQLDialect(SQLDialect.MYSQL);
+            config.setSQLDialect(SQLDialect.POSTGRES);
             config.setConnectionProvider(connectionProvider());
 //            config.setExecuteListenerProvider(new DefaultExecuteListenerProvider(exceptionTranslator()));
             return config;

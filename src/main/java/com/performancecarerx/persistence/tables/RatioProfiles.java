@@ -35,7 +35,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
 
-    private static final long serialVersionUID = -760727858;
+    private static final long serialVersionUID = -1867097940;
 
     /**
      * The reference instance of <code>public.ratio_profiles</code>
@@ -53,7 +53,7 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
     /**
      * The column <code>public.ratio_profiles.id</code>.
      */
-    public final TableField<RatioProfilesRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profiles_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<RatioProfilesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('ratio_profiles_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.ratio_profiles.name</code>.
@@ -94,7 +94,7 @@ public class RatioProfiles extends TableImpl<RatioProfilesRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RatioProfilesRecord, Long> getIdentity() {
+    public Identity<RatioProfilesRecord, Integer> getIdentity() {
         return Keys.IDENTITY_RATIO_PROFILES;
     }
 

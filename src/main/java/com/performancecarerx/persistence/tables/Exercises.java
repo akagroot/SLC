@@ -36,7 +36,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Exercises extends TableImpl<ExercisesRecord> {
 
-    private static final long serialVersionUID = -1227653425;
+    private static final long serialVersionUID = 1814005383;
 
     /**
      * The reference instance of <code>public.exercises</code>
@@ -54,7 +54,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
     /**
      * The column <code>public.exercises.id</code>.
      */
-    public final TableField<ExercisesRecord, Long> ID = createField("id", org.jooq.impl.SQLDataType.BIGINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercises_id_seq'::regclass)", org.jooq.impl.SQLDataType.BIGINT)), this, "");
+    public final TableField<ExercisesRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('exercises_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.exercises.name</code>.
@@ -110,7 +110,7 @@ public class Exercises extends TableImpl<ExercisesRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<ExercisesRecord, Long> getIdentity() {
+    public Identity<ExercisesRecord, Integer> getIdentity() {
         return Keys.IDENTITY_EXERCISES;
     }
 
