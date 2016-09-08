@@ -246,6 +246,10 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 	}
 
 	function deleteExerciseRecorded(exerciseRecorded) {
+		if(!window.confirm("Are you sure you want to delete this logged entry?")) {
+			return;
+		}
+
 		viewmodel.saving = true;
 		viewmodel.deleteExerciseError = false;
 		console.log("deleteExerciseRecorded: " + viewmodel.userId, exerciseRecorded);

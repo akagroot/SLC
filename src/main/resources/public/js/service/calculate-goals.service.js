@@ -22,7 +22,12 @@ function calculateGoalsService($q, $log, ratioProfileService) {
     ratioProfiles = new Object();
 
     $.each(profiles, function(i, e) {
-      ratioProfiles[e.id] = e.values;
+      var mappedValues = new Object();
+      $.each(e.values, function(i, v) {
+        mappedValues[v.reps] = v.multiplier;
+      });
+
+      ratioProfiles[e.id] = mappedValues;
     });
 
     $log.debug("calculateGoalsService.ratioProfiles: ", ratioProfiles);
@@ -39,6 +44,8 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       var average = 0;
       var exercisesCalculated = 0;
       var forceCompare = true;
+      
+      entry.averageGrade = 0;
 
       $.each(entry.goals, function(i, e) {
         if(e.comparing) {
@@ -47,7 +54,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       });
 
       $.each(entry.goals, function(i, e) {
-        // $log.debug("goal entry: ", e);
+        $log.info("goal entry: ", e);
         if(forceCompare || e.comparing) {
           var useMultipliers = null;
 
@@ -55,17 +62,27 @@ function calculateGoalsService($q, $log, ratioProfileService) {
             useMultipliers = ratioProfiles[e.exerciseModel.ratioProfileId];
           }
 
-          // $log.info("useMultipliers: ", useMultipliers);
+          $log.debug("useMultipliers: ", useMultipliers);
           var rm = e.recordedModel;
           e.estimated1RM = getEstimated1RM(rm.reps, rm.weight, useMultipliers);
           e.goal = getEstimated1RM(e.reps, e.weight, useMultipliers);
-          e.grade = e.estimated1RM/e.goal;
-          average += e.grade;
-          exercisesCalculated++;
+          if(e.estimated1RM != undefined && e.goal != undefined) {
+            $log.debug("add grade to avg");
+            e.grade = e.estimated1RM/e.goal; 
+            average += e.grade; 
+            exercisesCalculated++;
+          } else {
+            e.grade = NaN;
+          }
         }
       });
 
-      entry.averageGrade = average/exercisesCalculated;
+      if(exercisesCalculated == 0) {
+        entry.average = 0;
+      } else {
+        entry.averageGrade = average/exercisesCalculated; 
+      }
+      $log.debug("averageGrade: ", entry.averageGrade);
     });
 
     $log.info("Finished calculateGoalsService.analyze");
@@ -75,16 +92,21 @@ function calculateGoalsService($q, $log, ratioProfileService) {
   }
 
   function getEstimated1RM(reps, weight, multipliers) {
-    // $log.debug("getEstimated1RM: " + reps + ", " + weight);
+    $log.debug("getEstimated1RM: " + reps + ", " + weight);
 
     if(multipliers == null || multipliers == undefined) {
       multipliers = defaultMultipliers;
     }
 
-    var m = multipliers[reps-1].multiplier;
+    var m = multipliers[reps];
+
+    if(m == undefined) {
+      return undefined;
+    }
+
     var oneRm = (weight/m);
-    // $log.debug("multiplier: ", m);
-    // $log.debug("weight/m = ", oneRm);
+    $log.debug("multiplier: ", m);
+    $log.debug("weight/m = ", oneRm);
     return oneRm;
   }
   
