@@ -5,6 +5,7 @@
  */
 package com.performancecarerx.model.dto;
 
+import com.performancecarerx.model.ExerciseStandard;
 import com.performancecarerx.model.UserProfileModel;
 import java.util.List;
 
@@ -16,11 +17,13 @@ public class UserDataResponse {
     private UserProfileModel userProfileModel;
     private List<ExercisesByDate> exercisesByDate;
     private List<GroupedGradedExercises> gradedExercises;
+    private ExerciseStandard standard;
     
-    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedGradedExercises> gradedExercises) {
+    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedGradedExercises> gradedExercises, ExerciseStandard standard) {
         this.userProfileModel = userProfileModel;
         this.exercisesByDate = exercisesByDate;
         this.gradedExercises = gradedExercises;
+        this.standard = standard;
     }
     
     public UserProfileModel getUserProfileModel() {
@@ -32,6 +35,9 @@ public class UserDataResponse {
     public List<GroupedGradedExercises> getGradedExercises() {
         return gradedExercises;
     }
+    public ExerciseStandard getStandard() {
+        return standard;
+    }
     
     @Override
     public String toString() { 
@@ -40,6 +46,7 @@ public class UserDataResponse {
                 .append("userProfileModel=").append(userProfileModel) 
                 .append(", exercisesByDate=").append(exercisesByDate)
                 .append(", gradedExercises=").append(gradedExercises)
+                .append(", standard=").append(standard)
                 .append("]");
         return builder.toString();
     }

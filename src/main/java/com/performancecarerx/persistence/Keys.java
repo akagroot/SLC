@@ -6,6 +6,7 @@ package com.performancecarerx.persistence;
 
 import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
+import com.performancecarerx.persistence.tables.ExerciseStandards;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
 import com.performancecarerx.persistence.tables.RatioProfileValues;
@@ -14,6 +15,7 @@ import com.performancecarerx.persistence.tables.Roles;
 import com.performancecarerx.persistence.tables.Users;
 import com.performancecarerx.persistence.tables.records.ExerciseGoalsRecord;
 import com.performancecarerx.persistence.tables.records.ExerciseGroupsRecord;
+import com.performancecarerx.persistence.tables.records.ExerciseStandardsRecord;
 import com.performancecarerx.persistence.tables.records.ExercisesRecord;
 import com.performancecarerx.persistence.tables.records.ExercisesRecordedRecord;
 import com.performancecarerx.persistence.tables.records.RatioProfileValuesRecord;
@@ -73,6 +75,8 @@ public class Keys {
 
     public static final ForeignKey<ExerciseGoalsRecord, ExercisesRecord> EXERCISE_GOALS__FK_EXERCISE_GOALS_EXERCISE_IDX = ForeignKeys0.EXERCISE_GOALS__FK_EXERCISE_GOALS_EXERCISE_IDX;
     public static final ForeignKey<ExerciseGoalsRecord, UsersRecord> EXERCISE_GOALS__FK_EXERCISE_GOALS_USER_IDX = ForeignKeys0.EXERCISE_GOALS__FK_EXERCISE_GOALS_USER_IDX;
+    public static final ForeignKey<ExerciseStandardsRecord, UsersRecord> EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_USER_IDX = ForeignKeys0.EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_USER_IDX;
+    public static final ForeignKey<ExerciseStandardsRecord, ExercisesRecord> EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_EXERCISE_IDX = ForeignKeys0.EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_EXERCISE_IDX;
     public static final ForeignKey<ExercisesRecord, ExerciseGroupsRecord> EXERCISES__FK_EXERCISES_EXERCISE_GROUP_KEY_NAME_IDX = ForeignKeys0.EXERCISES__FK_EXERCISES_EXERCISE_GROUP_KEY_NAME_IDX;
     public static final ForeignKey<ExercisesRecord, RatioProfilesRecord> EXERCISES__FK_EXERCISES_RATIO_PROFILE_IDX = ForeignKeys0.EXERCISES__FK_EXERCISES_RATIO_PROFILE_IDX;
     public static final ForeignKey<ExercisesRecordedRecord, ExercisesRecord> EXERCISES_RECORDED__FK_EXERCISES_RECORDED_EXERCISES_IDX = ForeignKeys0.EXERCISES_RECORDED__FK_EXERCISES_RECORDED_EXERCISES_IDX;
@@ -107,6 +111,8 @@ public class Keys {
     private static class ForeignKeys0 extends AbstractKeys {
         public static final ForeignKey<ExerciseGoalsRecord, ExercisesRecord> EXERCISE_GOALS__FK_EXERCISE_GOALS_EXERCISE_IDX = createForeignKey(com.performancecarerx.persistence.Keys.EXERCISES_PKEY, ExerciseGoals.EXERCISE_GOALS, "exercise_goals__fk_exercise_goals_exercise_idx", ExerciseGoals.EXERCISE_GOALS.EXERCISE_ID);
         public static final ForeignKey<ExerciseGoalsRecord, UsersRecord> EXERCISE_GOALS__FK_EXERCISE_GOALS_USER_IDX = createForeignKey(com.performancecarerx.persistence.Keys.USERS_PKEY, ExerciseGoals.EXERCISE_GOALS, "exercise_goals__fk_exercise_goals_user_idx", ExerciseGoals.EXERCISE_GOALS.USER_ID);
+        public static final ForeignKey<ExerciseStandardsRecord, UsersRecord> EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_USER_IDX = createForeignKey(com.performancecarerx.persistence.Keys.USERS_PKEY, ExerciseStandards.EXERCISE_STANDARDS, "exercise_standards__fk_exercise_standards_user_idx", ExerciseStandards.EXERCISE_STANDARDS.USER_ID);
+        public static final ForeignKey<ExerciseStandardsRecord, ExercisesRecord> EXERCISE_STANDARDS__FK_EXERCISE_STANDARDS_EXERCISE_IDX = createForeignKey(com.performancecarerx.persistence.Keys.EXERCISES_PKEY, ExerciseStandards.EXERCISE_STANDARDS, "exercise_standards__fk_exercise_standards_exercise_idx", ExerciseStandards.EXERCISE_STANDARDS.EXERCISE_ID);
         public static final ForeignKey<ExercisesRecord, ExerciseGroupsRecord> EXERCISES__FK_EXERCISES_EXERCISE_GROUP_KEY_NAME_IDX = createForeignKey(com.performancecarerx.persistence.Keys.EXERCISE_GROUPS_PKEY, Exercises.EXERCISES, "exercises__fk_exercises_exercise_group_key_name_idx", Exercises.EXERCISES.EXERCISE_GROUP_KEY_NAME);
         public static final ForeignKey<ExercisesRecord, RatioProfilesRecord> EXERCISES__FK_EXERCISES_RATIO_PROFILE_IDX = createForeignKey(com.performancecarerx.persistence.Keys.RATIO_PROFILES_PKEY, Exercises.EXERCISES, "exercises__fk_exercises_ratio_profile_idx", Exercises.EXERCISES.RATIO_PROFILE_ID);
         public static final ForeignKey<ExercisesRecordedRecord, ExercisesRecord> EXERCISES_RECORDED__FK_EXERCISES_RECORDED_EXERCISES_IDX = createForeignKey(com.performancecarerx.persistence.Keys.EXERCISES_PKEY, ExercisesRecorded.EXERCISES_RECORDED, "exercises_recorded__fk_exercises_recorded_exercises_idx", ExercisesRecorded.EXERCISES_RECORDED.EXERCISE_ID);

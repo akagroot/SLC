@@ -114,6 +114,15 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 			$log.debug("UserProfileCtrl.loadData.response: ", response);
 			calculateGoalsService.analyze(response.data.gradedExercises);
 			viewmodel.userData = response.data;
+
+			var standard = viewmodel.userData.standard;
+			if(standard != undefined && standard != null) {
+				var ratioProfiles = calculateGoalsService.getRatioProfiles();
+				var multipliers = ratioProfiles[standard.exercise.ratioProfileId];
+				standard.estimated1RM = calculateGoalsService.getEstimated1RM(standard.reps, standard.weight, multipliers);	
+			}
+			$log.debug("standard: ", standard);
+
 			resetUpdateUserModel();
 			viewmodel.selectedUserRole = response.data.userProfileModel.role;
 			viewmodel.loadingData = false;

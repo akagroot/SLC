@@ -35,7 +35,7 @@ public class ExerciseRepositoryImpl implements ExerciseRepository {
     
     private final DSLContext dslContext;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(UserRepositoryImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExerciseRepositoryImpl.class);
 
     @Autowired
     public ExerciseRepositoryImpl(DSLContext dslContext) {

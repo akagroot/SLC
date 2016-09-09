@@ -8,7 +8,9 @@ package com.performancecarerx.service.impl;
 import com.performancecarerx.constants.Constants;
 import com.performancecarerx.model.ExerciseGoalModel;
 import com.performancecarerx.model.ExerciseGroupModel;
+import com.performancecarerx.model.ExerciseModel;
 import com.performancecarerx.model.ExerciseRecordedModel;
+import com.performancecarerx.model.ExerciseStandard;
 import com.performancecarerx.model.StormpathAccount;
 import com.performancecarerx.model.UserProfileModel;
 import com.performancecarerx.model.dto.AddUserModel;
@@ -20,6 +22,7 @@ import com.performancecarerx.repository.ExerciseGoalRepository;
 import com.performancecarerx.repository.UserRepository;
 import com.performancecarerx.repository.impl.ExerciseGoalRepositoryImpl;
 import com.performancecarerx.service.ExerciseService;
+import com.performancecarerx.service.ExerciseStandardService;
 import com.performancecarerx.service.StormpathService;
 import com.performancecarerx.service.UserProfileService;
 import java.util.ArrayList;
@@ -44,6 +47,9 @@ public class UserProfileServiceImpl implements UserProfileService {
     
     @Autowired
     private ExerciseGoalRepository exerciseGoalRepository;
+    
+    @Autowired
+    private ExerciseStandardService exerciseStandardService;
     
     @Autowired
     private StormpathService stormpathService;
@@ -129,9 +135,19 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfileModel model = userRepository.getUserByEmail(email);
         List<ExercisesByDate> exercisesByDateList = getExercisesByDateForUser(email);
         List<GroupedGradedExercises> groupedGradedExercisesList = getGroupedGradedExercisesForUser(email, isAdmin);
+        ExerciseStandard standard = getExerciseStandardForUser(model.getId());
         
-        UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedGradedExercisesList);
+        UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedGradedExercisesList, standard);
         return response;
+    }
+    
+    public ExerciseStandard getExerciseStandardForUser(Integer userId) {
+        ExerciseStandard standard = exerciseStandardService.getStandardForUser(userId);
+        if(standard != null) {
+            ExerciseModel exercise = exerciseService.getExercise(standard.getExerciseId());
+            standard.setExercise(exercise);
+        }
+        return standard;
     }
     
     public List<GroupedGradedExercises> getGroupedGradedExercisesForUser(String email, Boolean isAdmin) {

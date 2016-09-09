@@ -86,12 +86,19 @@ angular.module('myApp', [
 			controllerAs: 'UserProfile',
 			title: 'PerformanceCareRx - UserProfile'
 		})
-		.state('userGoals', {
-			url: '/userGoals/:userId',
-			templateUrl: 'view/userGoals/userGoals.html',
-			controller: 'UserGoalsCtrl',
-			controllerAs: 'UserGoals',
-			title: 'PerformanceCareRx - UserGoals'
+		// .state('userGoals', {
+		// 	url: '/userGoals/:userId',
+		// 	templateUrl: 'view/userGoals/userGoals.html',
+		// 	controller: 'UserGoalsCtrl',
+		// 	controllerAs: 'UserGoals',
+		// 	title: 'PerformanceCareRx - UserGoals'
+		// })
+		.state('standards', {
+			url: '/standards/:userId',
+			templateUrl: 'view/standards/standards.html',
+			controller: 'StandardsCtrl',
+			controllerAs: 'Standards',
+			title: 'PerformanceCareRx - Standards'
 		});
 })
 .run(function($rootScope, $q, API_END_POINT, userService, $state, exerciseService) {

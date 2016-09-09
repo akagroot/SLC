@@ -6,6 +6,7 @@ package com.performancecarerx.persistence;
 
 import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
+import com.performancecarerx.persistence.tables.ExerciseStandards;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
 import com.performancecarerx.persistence.tables.RatioProfileValues;
@@ -38,6 +39,11 @@ public class Tables {
      * The table <code>public.exercise_groups</code>.
      */
     public static final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
+
+    /**
+     * The table <code>public.exercise_standards</code>.
+     */
+    public static final ExerciseStandards EXERCISE_STANDARDS = com.performancecarerx.persistence.tables.ExerciseStandards.EXERCISE_STANDARDS;
 
     /**
      * The table <code>public.exercises</code>.

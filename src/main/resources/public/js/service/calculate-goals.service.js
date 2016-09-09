@@ -16,7 +16,9 @@ function calculateGoalsService($q, $log, ratioProfileService) {
   var ratioProfiles = null;
 
   service.analyze = analyze;
+  service.getRatioProfiles = getRatioProfiles;
   service.setRatioProfiles = setRatioProfiles;
+  service.getEstimated1RM = getEstimated1RM;
 
   function setRatioProfiles(profiles) {
     ratioProfiles = new Object();
@@ -31,6 +33,10 @@ function calculateGoalsService($q, $log, ratioProfileService) {
     });
 
     $log.debug("calculateGoalsService.ratioProfiles: ", ratioProfiles);
+  }
+
+  function getRatioProfiles() {
+    return ratioProfiles;
   }
 
   function analyze(groupedExercises) {
