@@ -15,8 +15,12 @@ function userService($q, $log, commonService) {
   service.updateUser = updateUser;
   service.deleteUser = deleteUser;
   service.setGoalVisibility = setGoalVisibility;
+  service.getPerfectAccount = getPerfectAccount;
+  service.setPerfectAccount = setPerfectAccount;
 
   var getUserProfileRoute = "/userProfile";
+  var setPerfectAccountRoute = "/updatePerfectAccount";
+  var getPerfectAccountRoute = "/perfectAccount";
   var getUserDataRoute = "/userData";
   var getUserDataByIdRoute = "/userData/{userId}";
   var getAllUsersRoute = "/allUsers";
@@ -33,6 +37,14 @@ function userService($q, $log, commonService) {
   var deleteGoalRoute = "/deleteGoal/{goalId}";
   var visibilityGoalRoute = "/updateGoalVisibility";
   var getGroupedGoalsRoute = "/groupedGoals/{userId}";
+
+  function setPerfectAccount(id) {
+    return commonService.post(setPerfectAccountRoute, id);
+  }
+
+  function getPerfectAccount() {
+    return commonService.get(getPerfectAccountRoute);
+  }
 
   function addGoal(model) {
     return commonService.post(addGoalRoute, model);

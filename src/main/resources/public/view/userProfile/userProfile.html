@@ -48,31 +48,62 @@
 	<div ng-if="UserProfile.setRoleError" class="alert alert-danger">
 		<strong>Error!</strong> {{UserProfile.setRoleErrorMessage}}
 	</div>
-	<div>
-		<div style="display:inline-block">
-			<h3 style="display:inline-block;">Goals</h3>
-			<span ng-if="UserProfile.isAdmin" class="pull-right action-icon pull-right align-h3">
-				<a ui-sref="userGoals({userId: UserProfile.userId})" style="margin-top:5px;">(Edit)</a>
-			</span>
-		</div>
-	</div>
+
+	<ul class="list-group">
+		<li class="list-group-item">
+			<label>Standard:</label>
+			<span ng-if="UserProfile.userData.standard">{{UserProfile.userData.standard.exercise.name}}</span>
+			<div class="pull-right">
+				<span class="badge" ng-if="UserProfile.userData.standard">
+					Single Rep: {{UserProfile.userData.standard.estimated1RM | number:0}}
+				</span>
+				<span ng-if="UserProfile.isAdmin" class="action-icon">
+					<a ui-sref="standards({userId: UserProfile.userId})">
+						<span class="text-muted glyphicon glyphicon-edit"></span>
+					</a>
+				</span>
+			</div>
+		</li>
+	</ul>
 
 	<style>
 		tr.comparing {
 			background-color: lightgrey;
 			text-decoration: line-through;
 		}
+
+		/* Tooltip container */
+		.tooltip {
+		    position: relative;
+		    display: inline-block;
+		    /*border-bottom: 1px dotted black;  If you want dots under the hoverable text */
+		}
+
+		/* Tooltip text */
+		.tooltip .tooltiptext {
+		    visibility: hidden;
+		    width: 120px;
+		    background-color: black;
+		    color: #fff;
+		    text-align: center;
+		    padding: 5px 0;
+		    border-radius: 6px;
+		 
+		    /* Position the tooltip text - see examples below! */
+		    position: absolute;
+		    left: -45px;
+		    top: 20px;
+		    z-index: 1;
+		}
+
+		/* Show the tooltip text when you mouse over the tooltip container */
+		.tooltip:hover .tooltiptext {
+		    visibility: visible;
+		}
 	</style>
 
-	<div ng-if="UserProfile.userData.gradedExercises.length > 0">
-		<div ng-if="UserProfile.successfullyUpdatedVisibility" class="alert alert-success">
-			<strong>Success!</strong> Saved!
-		</div>
-
-		<div ng-if="UserProfile.updateGoalVisibilityError" class="alert alert-danger">
-			<strong>Error!</strong> {{UserProfile.updateGoalVisibilityErrorMessage}}
-		</div>
-		<div ng-repeat="entry in UserProfile.userData.gradedExercises"
+	<div ng-if="UserProfile.userData.exercisesByGroup.length > 0">
+		<div ng-repeat="entry in UserProfile.userData.exercisesByGroup"
 		class="table-responsive">
 			<table class="table">
 				<thead>
@@ -90,31 +121,33 @@
 						<th class="right">Goal</th>
 						<th width="80px" class="right">RM</th>
 						<th class="right">Grade</th>
-						<th width="80px" class="right">#</th>
 						<th class="right">Reps</th>
+						<th width="80px" class="right">#</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="goal in entry.goals" 
-						ng-click="UserProfile.tableRowClicked(entry, goal)"
-						ng-class="{'comparing':entry.comparing && !goal.comparing}">
+					<tr ng-repeat="exercise in entry.exercises" 
+						ng-click="UserProfile.tableRowClicked(entry, exercise)"
+						ng-class="{'comparing':entry.comparing && !exercise.comparing}">
 						<td ng-if="UserProfile.isAdmin">
-							<input id="compare{{goal.id}}" type="checkbox" ng-model="goal.comparing" ng-click="goal.comparing=!goal.comparing" />
+							<input id="compare{{exercise.id}}" type="checkbox" ng-model="exercise.comparing" ng-click="exercise.comparing=!exercise.comparing" />
 						</td>
-						<td class="age-cell"><div class="age-label label label-info">1</div></td>
-						<td><div class="exercise-name">{{goal.exerciseModel.name}}</div></td>
-						<td class="right">{{goal.goal | number:0}}</td>
-						<td class="right">{{goal.estimated1RM | number:0}}</td>
-						<td class="right">{{goal.grade | number:2}}</td>
-						<td class="right">{{goal.weight}}</td>
-						<td class="right">{{goal.reps}}</td>
+						<td class="age-cell">
+							<div class="age-label label label-info tooltip">
+								<span class="tooltiptext">{{exercise.recordedDttm | date}}</span>
+								{{exercise.monthsAgo}}
+							</div>
+						</td>
+						<td><div class="exercise-name">{{exercise.exerciseModel.name}}</div></td>
+						<td class="right">{{exercise.goal | number:0}}</td>
+						<td class="right">{{exercise.estimated1RM | number:0}}</td>
+						<td class="right">{{exercise.grade | number:2}}</td>
+						<td class="right">{{exercise.reps}}</td>
+						<td class="right">{{exercise.weight}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-	</div>
-	<div ng-if="UserProfile.userData.gradedExercises.length == 0" class="alert alert-warning">
-		There are no graded exercises available.
 	</div>
 
 	<form name="addExerciseForm" ng-submit="UserProfile.addExercise(addExerciseForm)">

@@ -12,4 +12,5 @@ package com.performancecarerx.constants;
 public class Constants {
     public static final String USER_ROLE_ADMIN = "ADMIN";
     public static final String USER_ROLE_ATHLETE = "ATHLETE";
+    public static final String PARAMETER_PERFECT_ACCOUNT_ID = "perfect_account_id";
 }

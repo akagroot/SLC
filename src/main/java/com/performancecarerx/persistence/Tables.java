@@ -6,8 +6,10 @@ package com.performancecarerx.persistence;
 
 import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
+import com.performancecarerx.persistence.tables.ExerciseStandards;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
+import com.performancecarerx.persistence.tables.Parameters;
 import com.performancecarerx.persistence.tables.RatioProfileValues;
 import com.performancecarerx.persistence.tables.RatioProfiles;
 import com.performancecarerx.persistence.tables.Roles;
@@ -40,6 +42,11 @@ public class Tables {
     public static final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
 
     /**
+     * The table <code>public.exercise_standards</code>.
+     */
+    public static final ExerciseStandards EXERCISE_STANDARDS = com.performancecarerx.persistence.tables.ExerciseStandards.EXERCISE_STANDARDS;
+
+    /**
      * The table <code>public.exercises</code>.
      */
     public static final Exercises EXERCISES = com.performancecarerx.persistence.tables.Exercises.EXERCISES;
@@ -48,6 +55,11 @@ public class Tables {
      * The table <code>public.exercises_recorded</code>.
      */
     public static final ExercisesRecorded EXERCISES_RECORDED = com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
+
+    /**
+     * The table <code>public.parameters</code>.
+     */
+    public static final Parameters PARAMETERS = com.performancecarerx.persistence.tables.Parameters.PARAMETERS;
 
     /**
      * The table <code>public.ratio_profile_values</code>.

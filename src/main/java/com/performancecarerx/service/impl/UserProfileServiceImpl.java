@@ -6,24 +6,31 @@
 package com.performancecarerx.service.impl;
 
 import com.performancecarerx.constants.Constants;
+import com.performancecarerx.exception.NotFoundException;
 import com.performancecarerx.model.ExerciseGoalModel;
 import com.performancecarerx.model.ExerciseGroupModel;
+import com.performancecarerx.model.ExerciseModel;
 import com.performancecarerx.model.ExerciseRecordedModel;
+import com.performancecarerx.model.ExerciseStandard;
 import com.performancecarerx.model.StormpathAccount;
 import com.performancecarerx.model.UserProfileModel;
 import com.performancecarerx.model.dto.AddUserModel;
 import com.performancecarerx.model.dto.ExercisesByDate;
 import com.performancecarerx.model.dto.GroupedGradedExercises;
+import com.performancecarerx.model.dto.GroupedRecordedExercises;
 import com.performancecarerx.model.dto.UpdateUserInfoModel;
 import com.performancecarerx.model.dto.UserDataResponse;
 import com.performancecarerx.repository.ExerciseGoalRepository;
+import com.performancecarerx.repository.ParameterRepository;
 import com.performancecarerx.repository.UserRepository;
 import com.performancecarerx.repository.impl.ExerciseGoalRepositoryImpl;
 import com.performancecarerx.service.ExerciseService;
+import com.performancecarerx.service.ExerciseStandardService;
 import com.performancecarerx.service.StormpathService;
 import com.performancecarerx.service.UserProfileService;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
@@ -43,7 +50,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     private UserRepository userRepository;
     
     @Autowired
+    private ParameterRepository parameterRepository;
+    
+    @Autowired
     private ExerciseGoalRepository exerciseGoalRepository;
+    
+    @Autowired
+    private ExerciseStandardService exerciseStandardService;
     
     @Autowired
     private StormpathService stormpathService;
@@ -125,13 +138,105 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
     
     @Override
-    public UserDataResponse buildUserDataResponse(String email, Boolean isAdmin) {
+    public void setPerfectAccountId(Integer id) {
+        String value = String.valueOf(id);
+        
+        String currentValue = parameterRepository.getParameterValue(Constants.PARAMETER_PERFECT_ACCOUNT_ID);
+        if(currentValue == null) {
+            parameterRepository.insertParameterValue(Constants.PARAMETER_PERFECT_ACCOUNT_ID, value);
+        } else {
+            parameterRepository.setParameterValue(Constants.PARAMETER_PERFECT_ACCOUNT_ID, value);   
+        }
+    }
+    
+    @Override
+    public UserDataResponse getPerfectAccount() {
+        String value = parameterRepository.getParameterValue(Constants.PARAMETER_PERFECT_ACCOUNT_ID);
+        if(value == null) {
+            throw new NotFoundException("The perfect account PARAMETER has not been set up.");
+        }
+        
+        Integer perfectAccountId = Integer.parseInt(value);
+        UserProfileModel model = userRepository.getUserById(perfectAccountId);
+        
+        if(model == null) {
+            throw new NotFoundException("The perfect account USER has not been set up.");
+        }
+        
+        return buildUserDataResponse(model.getEmail());
+    }
+    
+    @Override
+    public UserDataResponse buildUserDataResponse(String email) {
         UserProfileModel model = userRepository.getUserByEmail(email);
         List<ExercisesByDate> exercisesByDateList = getExercisesByDateForUser(email);
-        List<GroupedGradedExercises> groupedGradedExercisesList = getGroupedGradedExercisesForUser(email, isAdmin);
+        List<GroupedRecordedExercises> groupedRecordedExercisesList = getGroupedRecordedExercisesForUser(email);
+        ExerciseStandard standard = getExerciseStandardForUser(model.getId());
         
-        UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedGradedExercisesList);
+        UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedRecordedExercisesList, standard);
         return response;
+    }
+    
+    public ExerciseStandard getExerciseStandardForUser(Integer userId) {
+        ExerciseStandard standard = exerciseStandardService.getStandardForUser(userId);
+        if(standard != null) {
+            ExerciseModel exercise = exerciseService.getExercise(standard.getExerciseId());
+            standard.setExercise(exercise);
+        }
+        return standard;
+    }
+    
+    public List<GroupedRecordedExercises> getGroupedRecordedExercisesForUser(String email) {
+        List<GroupedRecordedExercises> groupedRecordedList = new ArrayList();
+        List<ExerciseRecordedModel> exercisesRecorded = exerciseService.getExercisesForUser(email);
+        
+        GroupedRecordedExercises grouped = null;
+        ExerciseGroupModel lastGroupModel = null;
+        String atGroup = null;
+        List<ExerciseRecordedModel> currentList = new ArrayList();
+        int monthsAgo;
+        ExerciseRecordedModel currentRecord;
+        
+        exercisesRecorded.sort(new Comparator<ExerciseRecordedModel>() {
+            @Override
+            public int compare(ExerciseRecordedModel o1, ExerciseRecordedModel o2) {
+                ExerciseGroupModel o1gm = o1.getExerciseModel().getExerciseGroupModel();
+                ExerciseGroupModel o2gm = o2.getExerciseModel().getExerciseGroupModel();
+                
+                if(o1gm.getDisplayName().compareToIgnoreCase(o2gm.getDisplayName()) != 0) {
+                    return o1gm.getDisplayName().compareToIgnoreCase(o2gm.getDisplayName());
+                }
+                
+                return o1.getExerciseModel().getName().compareToIgnoreCase(o2.getExerciseModel().getName());
+            }
+        } );
+        
+        for(ExerciseRecordedModel ex : exercisesRecorded) {
+            ExerciseGroupModel exgm = ex.getExerciseModel().getExerciseGroupModel();
+            if(!exgm.getKeyName().equals(atGroup)) {
+                if(atGroup != null) {
+                    lastGroupModel = currentList.get(0).getExerciseModel().getExerciseGroupModel();
+                    grouped = new GroupedRecordedExercises(lastGroupModel, currentList);
+                    groupedRecordedList.add(grouped);
+                    
+                    currentList = new ArrayList();
+                }
+                
+                atGroup = exgm.getKeyName();
+            }
+            
+            monthsAgo = getMonthsPassed(ex.getRecordedDttm());
+            ex.setMonthsAgo(monthsAgo);
+            currentList.add(ex);
+        }
+        
+        if(atGroup != null) {
+            lastGroupModel = currentList.get(0).getExerciseModel().getExerciseGroupModel();
+            grouped = new GroupedRecordedExercises(lastGroupModel, currentList);
+            groupedRecordedList.add(grouped);
+        }
+        
+        return groupedRecordedList;
     }
     
     public List<GroupedGradedExercises> getGroupedGradedExercisesForUser(String email, Boolean isAdmin) {

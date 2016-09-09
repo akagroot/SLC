@@ -6,8 +6,10 @@ package com.performancecarerx.persistence;
 
 import com.performancecarerx.persistence.tables.ExerciseGoals;
 import com.performancecarerx.persistence.tables.ExerciseGroups;
+import com.performancecarerx.persistence.tables.ExerciseStandards;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
+import com.performancecarerx.persistence.tables.Parameters;
 import com.performancecarerx.persistence.tables.RatioProfileValues;
 import com.performancecarerx.persistence.tables.RatioProfiles;
 import com.performancecarerx.persistence.tables.Roles;
@@ -38,7 +40,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 180890672;
+    private static final long serialVersionUID = 491291682;
 
     /**
      * The reference instance of <code>public</code>
@@ -56,6 +58,11 @@ public class Public extends SchemaImpl {
     public final ExerciseGroups EXERCISE_GROUPS = com.performancecarerx.persistence.tables.ExerciseGroups.EXERCISE_GROUPS;
 
     /**
+     * The table <code>public.exercise_standards</code>.
+     */
+    public final ExerciseStandards EXERCISE_STANDARDS = com.performancecarerx.persistence.tables.ExerciseStandards.EXERCISE_STANDARDS;
+
+    /**
      * The table <code>public.exercises</code>.
      */
     public final Exercises EXERCISES = com.performancecarerx.persistence.tables.Exercises.EXERCISES;
@@ -64,6 +71,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.exercises_recorded</code>.
      */
     public final ExercisesRecorded EXERCISES_RECORDED = com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
+
+    /**
+     * The table <code>public.parameters</code>.
+     */
+    public final Parameters PARAMETERS = com.performancecarerx.persistence.tables.Parameters.PARAMETERS;
 
     /**
      * The table <code>public.ratio_profile_values</code>.
@@ -129,8 +141,10 @@ public class Public extends SchemaImpl {
         return Arrays.<Table<?>>asList(
             ExerciseGoals.EXERCISE_GOALS,
             ExerciseGroups.EXERCISE_GROUPS,
+            ExerciseStandards.EXERCISE_STANDARDS,
             Exercises.EXERCISES,
             ExercisesRecorded.EXERCISES_RECORDED,
+            Parameters.PARAMETERS,
             RatioProfileValues.RATIO_PROFILE_VALUES,
             RatioProfiles.RATIO_PROFILES,
             Roles.ROLES,

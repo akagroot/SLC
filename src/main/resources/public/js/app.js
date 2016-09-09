@@ -86,12 +86,26 @@ angular.module('myApp', [
 			controllerAs: 'UserProfile',
 			title: 'PerformanceCareRx - UserProfile'
 		})
-		.state('userGoals', {
-			url: '/userGoals/:userId',
-			templateUrl: 'view/userGoals/userGoals.html',
-			controller: 'UserGoalsCtrl',
-			controllerAs: 'UserGoals',
-			title: 'PerformanceCareRx - UserGoals'
+		// .state('userGoals', {
+		// 	url: '/userGoals/:userId',
+		// 	templateUrl: 'view/userGoals/userGoals.html',
+		// 	controller: 'UserGoalsCtrl',
+		// 	controllerAs: 'UserGoals',
+		// 	title: 'PerformanceCareRx - UserGoals'
+		// })
+		.state('standards', {
+			url: '/standards/:userId',
+			templateUrl: 'view/standards/standards.html',
+			controller: 'StandardsCtrl',
+			controllerAs: 'Standards',
+			title: 'PerformanceCareRx - Standards'
+		})
+		.state('perfectAccount', {
+			url: '/perfectAccount',
+			templateUrl: 'view/perfectAccount/perfectAccount.html',
+			controller: 'PerfectAccountCtrl',
+			controllerAs: 'PerfectAccount',
+			title: 'PerformanceCareRx - Perfect Account'
 		});
 })
 .run(function($rootScope, $q, API_END_POINT, userService, $state, exerciseService) {

@@ -20,6 +20,7 @@ public class ExerciseRecordedModel {
     private Integer reps;
     private Integer userId;
     private String note;
+    private Integer monthsAgo;
     
     private ExerciseModel exerciseModel;
     private UserProfileModel userProfileModel;
@@ -57,6 +58,11 @@ public class ExerciseRecordedModel {
     public String getNote() {
         return note;
     }
+
+    public Integer getMonthsAgo() {
+        return monthsAgo;
+    }
+    
     public ExerciseModel getExerciseModel() {
         return exerciseModel;
     }
@@ -85,6 +91,11 @@ public class ExerciseRecordedModel {
     public void setNote(String note) {
         this.note = note;
     }
+
+    public void setMonthsAgo(Integer monthsAgo) {
+        this.monthsAgo = monthsAgo;
+    }
+    
     public void setExerciseModel(ExerciseModel model) {
         this.exerciseModel = model;
     }
@@ -103,6 +114,7 @@ public class ExerciseRecordedModel {
                 .append(", reps=").append(reps)
                 .append(", userId=").append(userId)
                 .append(", note=").append(note)
+                .append(", monthsAgo=").append(monthsAgo)
                 .append(", exerciseModel=").append(exerciseModel)
                 .append(", userProfileModel=").append(userProfileModel)
                 .append("]");
