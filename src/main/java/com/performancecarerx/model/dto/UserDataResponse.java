@@ -16,13 +16,13 @@ import java.util.List;
 public class UserDataResponse {
     private UserProfileModel userProfileModel;
     private List<ExercisesByDate> exercisesByDate;
-    private List<GroupedGradedExercises> gradedExercises;
+    private List<GroupedRecordedExercises> exercisesByGroup;
     private ExerciseStandard standard;
     
-    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedGradedExercises> gradedExercises, ExerciseStandard standard) {
+    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedRecordedExercises> exercisesByGroup, ExerciseStandard standard) {
         this.userProfileModel = userProfileModel;
         this.exercisesByDate = exercisesByDate;
-        this.gradedExercises = gradedExercises;
+        this.exercisesByGroup = exercisesByGroup;
         this.standard = standard;
     }
     
@@ -32,8 +32,8 @@ public class UserDataResponse {
     public List<ExercisesByDate> getExercisesByDate() {
         return exercisesByDate;
     }
-    public List<GroupedGradedExercises> getGradedExercises() {
-        return gradedExercises;
+    public List<GroupedRecordedExercises> getExercisesByGroup() {
+        return exercisesByGroup;
     }
     public ExerciseStandard getStandard() {
         return standard;
@@ -45,7 +45,7 @@ public class UserDataResponse {
         builder.append("UserDataResponse [")
                 .append("userProfileModel=").append(userProfileModel) 
                 .append(", exercisesByDate=").append(exercisesByDate)
-                .append(", gradedExercises=").append(gradedExercises)
+                .append(", exercisesByGroup=").append(exercisesByGroup)
                 .append(", standard=").append(standard)
                 .append("]");
         return builder.toString();

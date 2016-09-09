@@ -19,7 +19,9 @@ public interface UserProfileService {
     public UserProfileModel getUserByEmail(String email);
     public UserProfileModel getUserById(Integer userId);
     public List<UserProfileModel> getAllUsers();
-    public UserDataResponse buildUserDataResponse(String email, Boolean isAdmin);
+    public void setPerfectAccountId(Integer id);
+    public UserDataResponse getPerfectAccount();
+    public UserDataResponse buildUserDataResponse(String email);
     public UserProfileModel createUser(UserProfileModel model);
     public UserProfileModel createUser(AddUserModel model);
     public UserProfileModel updateUser(UpdateUserInfoModel model);

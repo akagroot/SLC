@@ -14,11 +14,26 @@ function calculateGoalsService($q, $log, ratioProfileService) {
   ];
 
   var ratioProfiles = null;
+  var perfectAccountValues = null;
 
   service.analyze = analyze;
+  service.analyze2 = analyze2;
   service.getRatioProfiles = getRatioProfiles;
   service.setRatioProfiles = setRatioProfiles;
+  service.setPerfectAccount = setPerfectAccount;
   service.getEstimated1RM = getEstimated1RM;
+
+  function setPerfectAccount(account) {
+    perfectAccountValues = new Object();
+
+    $.each(account.exercisesByGroup, function(i, l) {
+      $.each(l.exercises, function(i, e) {
+        perfectAccountValues[e.exerciseId] = angular.copy(e);
+      });
+    });
+
+    $log.debug("calculateGoalsService.setPerfectAccount: ", perfectAccountValues);
+  }
 
   function setRatioProfiles(profiles) {
     ratioProfiles = new Object();
@@ -37,6 +52,76 @@ function calculateGoalsService($q, $log, ratioProfileService) {
 
   function getRatioProfiles() {
     return ratioProfiles;
+  }
+
+  function analyze2(userProfile) {
+    var usersStandard = angular.copy(userProfile.standard);
+    $log.debug("usersStandard: ", usersStandard);
+
+    var perfectStandard = perfectAccountValues[usersStandard.exerciseId];
+    $log.debug("perfectStandard: ", perfectStandard);
+
+    var multipliers = ratioProfiles[perfectStandard.exerciseModel.ratioProfileId];
+    var perfectStandard1RM = getEstimated1RM(perfectStandard.reps, perfectStandard.weight, multipliers);
+    var usersStandard1RM = getEstimated1RM(usersStandard.reps, usersStandard.weight, multipliers);
+    
+    var forceCompare = true;
+
+    $.each(userProfile.exercisesByGroup, function(i, g) {
+      $.each(g.exercises, function(i, e) {
+        if(e.comparing) {
+          forceCompare = false;
+        }
+      });
+    });
+
+    $.each(userProfile.exercisesByGroup, function(i, g) {
+      var average = 0;
+      var exercisesCalculated = 0;
+      
+      g.averageGrade = 0;
+
+      $.each(g.exercises, function(i, e) {
+        if(forceCompare || e.comparing) {
+          multipliers = ratioProfiles[e.exerciseModel.ratioProfileId];
+
+          var perfectExercise = perfectAccountValues[e.exerciseId];
+          var nextPerfectStandard1RM = getEstimated1RM(perfectExercise.reps, perfectExercise.weight, multipliers);
+          var nextPerfectRatio = perfectStandard1RM/nextPerfectStandard1RM;
+
+          $log.info(perfectStandard.exerciseModel.name + " :: " + e.exerciseModel.name);
+          $log.debug(perfectStandard1RM + "/" + nextPerfectStandard1RM + " = ", nextPerfectRatio);
+
+          $log.debug("e: ", e);
+          var nextUserEstimated1RM = getEstimated1RM(e.reps, e.weight, multipliers);
+          var nextUserRatio = usersStandard1RM/nextUserEstimated1RM;
+
+          $log.debug(usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
+
+          var grade = nextUserRatio/nextPerfectRatio;
+
+          e.grade = grade;
+          e.goal = nextUserEstimated1RM/grade;
+          e.estimated1RM = nextUserEstimated1RM;
+
+          if(e.estimated1RM != undefined && e.goal != undefined) {
+            $log.debug("add grade to avg");
+            e.grade = e.estimated1RM/e.goal; 
+            average += e.grade; 
+            exercisesCalculated++;
+          } else {
+            e.grade = NaN;
+          }
+        }
+      });
+
+      if(exercisesCalculated == 0) {
+        g.average = 0;
+      } else {
+        g.averageGrade = average/exercisesCalculated; 
+      }
+      $log.debug("averageGrade: ", g.averageGrade);
+    });
   }
 
   function analyze(groupedExercises) {
@@ -98,7 +183,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
   }
 
   function getEstimated1RM(reps, weight, multipliers) {
-    $log.debug("getEstimated1RM: " + reps + ", " + weight);
+    // $log.debug("getEstimated1RM: " + reps + ", " + weight);
 
     if(multipliers == null || multipliers == undefined) {
       multipliers = defaultMultipliers;
@@ -111,8 +196,8 @@ function calculateGoalsService($q, $log, ratioProfileService) {
     }
 
     var oneRm = (weight/m);
-    $log.debug("multiplier: ", m);
-    $log.debug("weight/m = ", oneRm);
+    // $log.debug("multiplier: ", m);
+    // $log.debug("weight/m = ", oneRm);
     return oneRm;
   }
   

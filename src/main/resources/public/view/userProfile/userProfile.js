@@ -44,7 +44,7 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		loadUserData();
 	});
 
-	viewmodel.compareGoal = compareGoal;
+	viewmodel.compareExercise = compareExercise;
 	viewmodel.addExercise = addExercise;
 	viewmodel.setGoalVisibility = setGoalVisibility;
 	viewmodel.countVisibleEntries = countVisibleEntries;
@@ -69,13 +69,13 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		setRootscopeVars();
 	}
 
-	function tableRowClicked(entry, goal) {
+	function tableRowClicked(entry, exercise) {
 		if(!viewmodel.isAdmin) {
 			return;
 		}
 
-		goal.comparing = !goal.comparing;
-		compareGoal(entry, goal);
+		exercise.comparing = !exercise.comparing;
+		compareExercise(entry, exercise);
 	}
 	
 	function setRootscopeVars() {
@@ -89,13 +89,18 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		var deferred = $q.defer();
 
 		$q.all([
-			ratioProfileService.getRatioProfiles()
-			.then(function(response) {
+			ratioProfileService.getRatioProfiles().then(function(response) {
 				console.log("UserProfileCtrl.setRatioProfiles: ", response);
 				calculateGoalsService.setRatioProfiles(response.data);
 			}), 
-			exerciseService.getGroupedExercises()
-			.then(function(response) {
+
+			userService.getPerfectAccount().then(function(response) {
+				calculateGoalsService.setPerfectAccount(response.data);
+			}, function(error) {
+				$log.error("UserProfileCtrl.getPerfectAccount error: ", error);
+			}),
+
+			exerciseService.getGroupedExercises().then(function(response) {
 				console.log("UserProfileCtrl.getGroupedExercises: ", response);
 				viewmodel.groupedExercises = calculateGoalsService.analyze(response);
 			}, function(error) {
@@ -112,7 +117,6 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		userService.getUserData(viewmodel.userId)
 		.then(function(response) {
 			$log.debug("UserProfileCtrl.loadData.response: ", response);
-			calculateGoalsService.analyze(response.data.gradedExercises);
 			viewmodel.userData = response.data;
 
 			var standard = viewmodel.userData.standard;
@@ -120,6 +124,9 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 				var ratioProfiles = calculateGoalsService.getRatioProfiles();
 				var multipliers = ratioProfiles[standard.exercise.ratioProfileId];
 				standard.estimated1RM = calculateGoalsService.getEstimated1RM(standard.reps, standard.weight, multipliers);	
+
+				// Analyze the users data
+				calculateGoalsService.analyze2(response.data);
 			}
 			$log.debug("standard: ", standard);
 
@@ -154,19 +161,23 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		});
 	}
 
-	function compareGoal(entry, goal) {
-		console.log("compareGoal: ", goal);
-		console.log("entry: ", entry);
+	function compareExercise(entry, exercise) {
+		console.log("compareExercise: ", exercise);
+		// console.log("entry: ", entry);
 
 		var comparing = false;
 
-		$.each(entry.goals, function(i, e) {
+		$.each(entry.exercises, function(i, e) {
 			if(e.comparing) {
 				comparing = true;
 			}
 		});
-		entry.comparing = comparing;
-		calculateGoalsService.analyze(viewmodel.userData.gradedExercises);
+
+		$.each(viewmodel.userData.exercisesByGroup, function(i, e) {
+			e.comparing = comparing;
+		});
+
+		calculateGoalsService.analyze2(viewmodel.userData);
 	} 
 
 	function setGoalVisibility(goalId, visibility) {

@@ -99,6 +99,13 @@ angular.module('myApp', [
 			controller: 'StandardsCtrl',
 			controllerAs: 'Standards',
 			title: 'PerformanceCareRx - Standards'
+		})
+		.state('perfectAccount', {
+			url: '/perfectAccount',
+			templateUrl: 'view/perfectAccount/perfectAccount.html',
+			controller: 'PerfectAccountCtrl',
+			controllerAs: 'PerfectAccount',
+			title: 'PerformanceCareRx - Perfect Account'
 		});
 })
 .run(function($rootScope, $q, API_END_POINT, userService, $state, exerciseService) {

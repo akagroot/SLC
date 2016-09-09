@@ -9,6 +9,7 @@ import com.performancecarerx.persistence.tables.ExerciseGroups;
 import com.performancecarerx.persistence.tables.ExerciseStandards;
 import com.performancecarerx.persistence.tables.Exercises;
 import com.performancecarerx.persistence.tables.ExercisesRecorded;
+import com.performancecarerx.persistence.tables.Parameters;
 import com.performancecarerx.persistence.tables.RatioProfileValues;
 import com.performancecarerx.persistence.tables.RatioProfiles;
 import com.performancecarerx.persistence.tables.Roles;
@@ -39,7 +40,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -253543238;
+    private static final long serialVersionUID = 491291682;
 
     /**
      * The reference instance of <code>public</code>
@@ -70,6 +71,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.exercises_recorded</code>.
      */
     public final ExercisesRecorded EXERCISES_RECORDED = com.performancecarerx.persistence.tables.ExercisesRecorded.EXERCISES_RECORDED;
+
+    /**
+     * The table <code>public.parameters</code>.
+     */
+    public final Parameters PARAMETERS = com.performancecarerx.persistence.tables.Parameters.PARAMETERS;
 
     /**
      * The table <code>public.ratio_profile_values</code>.
@@ -138,6 +144,7 @@ public class Public extends SchemaImpl {
             ExerciseStandards.EXERCISE_STANDARDS,
             Exercises.EXERCISES,
             ExercisesRecorded.EXERCISES_RECORDED,
+            Parameters.PARAMETERS,
             RatioProfileValues.RATIO_PROFILE_VALUES,
             RatioProfiles.RATIO_PROFILES,
             Roles.ROLES,

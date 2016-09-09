@@ -66,12 +66,27 @@ public class UserProfileController {
         return userProfileService.getAllUsers();
     }
     
+    @RequestMapping(value="/api/v1/perfectAccount", method=RequestMethod.GET)
+    public UserDataResponse getPerfectAccount() {
+        LOGGER.debug("getPerfectAccount()");
+        securityService.checkUserIsLoggedIn();
+        return userProfileService.getPerfectAccount();
+    }
+    
+    @RequestMapping(value="/api/v1/updatePerfectAccount", method=RequestMethod.POST) 
+    public Boolean updatePerfectAccount(@RequestBody Integer newId) {
+        LOGGER.debug("updatePerfectAccount {}", newId);
+        String email = securityService.checkUserIsLoggedIn();
+        securityService.checkUserIsAdmin(email);
+        userProfileService.setPerfectAccountId(newId);
+        return true;
+    }
+    
     @RequestMapping(value = "/api/v1/userData", method=RequestMethod.GET)
     public UserDataResponse getUserData() {
         LOGGER.debug("getUserData()");
         String email = securityService.checkUserIsLoggedIn();
-        Boolean isAdmin = userProfileService.getUserByEmail(email).getRole().equals(Constants.USER_ROLE_ADMIN);
-        return userProfileService.buildUserDataResponse(email, isAdmin);
+        return userProfileService.buildUserDataResponse(email);
     }
     
     @RequestMapping(value = "/api/v1/userData/{userId}", method=RequestMethod.GET)
@@ -81,7 +96,7 @@ public class UserProfileController {
         securityService.checkUserIsAdmin(email);
         
         UserProfileModel user = userProfileService.getUserById(userId);
-        return userProfileService.buildUserDataResponse(user.getEmail(), true);
+        return userProfileService.buildUserDataResponse(user.getEmail());
     }
     
     @RequestMapping(value = "/api/v1/addUser", method=RequestMethod.POST)
