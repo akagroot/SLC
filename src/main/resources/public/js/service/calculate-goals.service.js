@@ -98,7 +98,13 @@ function calculateGoalsService($q, $log, ratioProfileService) {
 
           $log.debug(usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
 
-          var grade = nextUserRatio/nextPerfectRatio;
+          var standardDeviation = calcStandardDeviation([nextPerfectRatio, nextUserRatio]);
+          var grade = null;
+          if(nextUserRatio <= nextPerfectRatio) {
+            grade = 1 - standardDeviation;
+          } else {
+            grade = 1 + standardDeviation;
+          }
 
           e.grade = grade;
           e.goal = nextUserEstimated1RM/grade;
@@ -106,7 +112,6 @@ function calculateGoalsService($q, $log, ratioProfileService) {
 
           if(e.estimated1RM != undefined && e.goal != undefined) {
             $log.debug("add grade to avg");
-            e.grade = e.estimated1RM/e.goal; 
             average += e.grade; 
             exercisesCalculated++;
           } else {
@@ -122,6 +127,29 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       }
       $log.debug("averageGrade: ", g.averageGrade);
     });
+  }
+
+  function calcStandardDeviation(listOfNumbers) {
+    if(listOfNumbers == null) {
+      return null;
+    }
+
+    var average = 0; 
+    $.each(listOfNumbers, function(i, e) {
+      average += e;
+    });
+    average = average/listOfNumbers.length;
+
+    var numerator = 0;
+    $.each(listOfNumbers, function(i, e) {
+      var nextNumber = e - average;
+      nextNumber = nextNumber * nextNumber;
+      numerator += nextNumber;
+    });
+
+    numerator = numerator/(listOfNumbers.length - 1);
+
+    return Math.sqrt(numerator);
   }
 
   function analyze(groupedExercises) {
