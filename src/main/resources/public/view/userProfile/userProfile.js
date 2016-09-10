@@ -121,9 +121,8 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 
 			var standard = viewmodel.userData.standard;
 			if(standard != undefined && standard != null) {
-				var ratioProfiles = calculateGoalsService.getRatioProfiles();
-				var multipliers = ratioProfiles[standard.exercise.ratioProfileId];
-				standard.estimated1RM = calculateGoalsService.getEstimated1RM(standard.reps, standard.weight, multipliers);	
+				$log.debug("init standard: ", standard);
+				setSelectedStandard(standard);
 
 				// Analyze the users data
 				calculateGoalsService.analyze2(response.data);
@@ -137,6 +136,14 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 			viewmodel.error = true;
 			viewmodel.errorMessage = error;
 		});
+	}
+
+	function setSelectedStandard(standard) {
+		$log.debug("setSelectedStandard: ", standard);
+		var ratioProfiles = calculateGoalsService.getRatioProfiles();
+		var multipliers = ratioProfiles[standard.exerciseModel.ratioProfileId];
+		standard.estimated1RM = calculateGoalsService.getEstimated1RM(standard.reps, standard.weight, multipliers);	
+		viewmodel.userData.selectedStandard = standard;
 	}
 
 	function resetAddExerciseModel() {
@@ -163,19 +170,43 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 
 	function compareExercise(entry, exercise) {
 		console.log("compareExercise: ", exercise);
-		// console.log("entry: ", entry);
 
 		var comparing = false;
+		var newStandard = null;
 
 		$.each(entry.exercises, function(i, e) {
 			if(e.comparing) {
 				comparing = true;
+
+				if(!viewmodel.customStandard) {
+					$log.debug("newStandard: ", e);
+					newStandard = e;
+				}
 			}
 		});
 
 		$.each(viewmodel.userData.exercisesByGroup, function(i, e) {
 			e.comparing = comparing;
 		});
+
+		if(!comparing) {
+			setSelectedStandard(viewmodel.userData.standard);
+			viewmodel.customStandard = false;
+		} else if(!viewmodel.customStandard) {
+			viewmodel.customStandard = true;
+			setSelectedStandard(newStandard);
+		} else if(!viewmodel.userData.selectedStandard.comparing) {
+			// Find a new standard 
+			var newStandard = null;
+			$.each(viewmodel.userData.exercisesByGroup, function(i, group) {
+				$.each(group.exercises, function(i, e) {
+					if(e.comparing && newStandard == null) {
+						newStandard = e;
+					}
+				});
+			});
+			setSelectedStandard(newStandard);
+		}
 
 		calculateGoalsService.analyze2(viewmodel.userData);
 	} 

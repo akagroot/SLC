@@ -171,17 +171,17 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfileModel model = userRepository.getUserByEmail(email);
         List<ExercisesByDate> exercisesByDateList = getExercisesByDateForUser(email);
         List<GroupedRecordedExercises> groupedRecordedExercisesList = getGroupedRecordedExercisesForUser(email);
-        ExerciseStandard standard = getExerciseStandardForUser(model.getId());
+        ExerciseRecordedModel standard = getExerciseStandardForUser(model.getId());
         
         UserDataResponse response = new UserDataResponse(model, exercisesByDateList, groupedRecordedExercisesList, standard);
         return response;
     }
     
-    public ExerciseStandard getExerciseStandardForUser(Integer userId) {
-        ExerciseStandard standard = exerciseStandardService.getStandardForUser(userId);
+    public ExerciseRecordedModel getExerciseStandardForUser(Integer userId) {
+        ExerciseRecordedModel standard = exerciseStandardService.getStandardForUser(userId);
         if(standard != null) {
             ExerciseModel exercise = exerciseService.getExercise(standard.getExerciseId());
-            standard.setExercise(exercise);
+            standard.setExerciseModel(exercise);
         }
         return standard;
     }
@@ -207,7 +207,14 @@ public class UserProfileServiceImpl implements UserProfileService {
                     return o1gm.getDisplayName().compareToIgnoreCase(o2gm.getDisplayName());
                 }
                 
-                return o1.getExerciseModel().getName().compareToIgnoreCase(o2.getExerciseModel().getName());
+                String o1Name = o1.getExerciseModel().getName();
+                String o2Name = o2.getExerciseModel().getName();
+                
+                if(o1Name.compareToIgnoreCase(o2Name) != 0) {
+                    return o1Name.compareToIgnoreCase(o2Name);
+                }
+                
+                return o1.getRecordedDttm().compareTo(o2.getRecordedDttm());
             }
         } );
         

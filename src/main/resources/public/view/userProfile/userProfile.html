@@ -52,10 +52,10 @@
 	<ul class="list-group">
 		<li class="list-group-item">
 			<label>Standard:</label>
-			<span ng-if="UserProfile.userData.standard">{{UserProfile.userData.standard.exercise.name}}</span>
+			<span ng-if="UserProfile.userData.selectedStandard">{{UserProfile.userData.selectedStandard.exerciseModel.name}}</span>
 			<div class="pull-right">
-				<span class="badge" ng-if="UserProfile.userData.standard">
-					Single Rep: {{UserProfile.userData.standard.estimated1RM | number:0}}
+				<span class="badge" ng-if="UserProfile.userData.selectedStandard">
+					Single Rep: {{UserProfile.userData.selectedStandard.estimated1RM | number:0}}
 				</span>
 				<span ng-if="UserProfile.isAdmin" class="action-icon">
 					<a ui-sref="standards({userId: UserProfile.userId})">
@@ -70,6 +70,15 @@
 		tr.comparing {
 			background-color: lightgrey;
 			text-decoration: line-through;
+		}
+		tr.comparing.success {
+
+		}
+		tr.comparing-success {
+			color: #3c763d;
+		}
+		tr.comparing-warning {
+			color: #8a6d3b;
 		}
 
 		/* Tooltip container */
@@ -128,7 +137,7 @@
 				<tbody>
 					<tr ng-repeat="exercise in entry.exercises" 
 						ng-click="UserProfile.tableRowClicked(entry, exercise)"
-						ng-class="{'comparing':entry.comparing && !exercise.comparing}">
+						ng-class="{'success':exercise.grade >= 1 && (!entry.comparing || exercise.comparing), 'comparing':entry.comparing && !exercise.comparing, 'compring-success':exercise.grade >=1 && entry.comparing}">
 						<td ng-if="UserProfile.isAdmin">
 							<input id="compare{{exercise.id}}" type="checkbox" ng-model="exercise.comparing" ng-click="exercise.comparing=!exercise.comparing" />
 						</td>

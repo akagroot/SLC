@@ -5,8 +5,8 @@
  */
 package com.performancecarerx.controller;
 
+import com.performancecarerx.model.ExerciseRecordedModel;
 import com.performancecarerx.model.ExerciseStandard;
-import com.performancecarerx.service.ExerciseService;
 import com.performancecarerx.service.ExerciseStandardService;
 import com.performancecarerx.service.SecurityService;
 import org.slf4j.Logger;
@@ -34,7 +34,7 @@ public class ExerciseStandardController {
     private ExerciseStandardService exerciseStandardService;
     
     @RequestMapping(value="/api/v1/getStandard/{userId}", method=RequestMethod.GET)
-    public ExerciseStandard getStandardForUser(@PathVariable("userId") Integer userId) {
+    public ExerciseRecordedModel getStandardForUser(@PathVariable("userId") Integer userId) {
         LOGGER.debug("/getStandard/{}", userId);
         // Check user is logged in
         securityService.getLoggedInUser();
@@ -42,7 +42,7 @@ public class ExerciseStandardController {
     }
     
     @RequestMapping(value="/api/v1/updateStandard", method=RequestMethod.POST) 
-    public Boolean updateStandard(@RequestBody ExerciseStandard standard) {
+    public Boolean updateStandard(@RequestBody ExerciseRecordedModel standard) {
         LOGGER.debug("/updateStandard: {}", standard);
         String loggedInEmail = securityService.getLoggedInUser();
         securityService.checkUserIsAdmin(loggedInEmail);

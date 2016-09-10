@@ -5,9 +5,8 @@
  */
 package com.performancecarerx.repository.impl;
 
-import com.performancecarerx.model.ExerciseStandard;
+import com.performancecarerx.model.ExerciseRecordedModel;
 import static com.performancecarerx.persistence.tables.ExerciseStandards.EXERCISE_STANDARDS;
-import static com.performancecarerx.persistence.tables.Users.USERS;
 import com.performancecarerx.repository.ExerciseStandardRepository;
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -33,7 +32,7 @@ public class ExerciseStandardRepositoryImpl implements ExerciseStandardRepositor
         this.dslContext = dslContext;
     }
     
-    public ExerciseStandard getStandardForUser(Integer userId) {
+    public ExerciseRecordedModel getStandardForUser(Integer userId) {
         LOGGER.debug("getStandardForUser {}", userId);
         Record record = dslContext.select(
                 EXERCISE_STANDARDS.EXERCISE_ID, 
@@ -51,7 +50,7 @@ public class ExerciseStandardRepositoryImpl implements ExerciseStandardRepositor
         return record.map(new ExerciseStandardRecordMapper());
     }
     
-    public ExerciseStandard addStandard(ExerciseStandard standard) {
+    public ExerciseRecordedModel addStandard(ExerciseRecordedModel standard) {
         LOGGER.debug("addStandard: {}", standard);
         dslContext.insertInto(EXERCISE_STANDARDS)
                 .columns(
@@ -69,7 +68,7 @@ public class ExerciseStandardRepositoryImpl implements ExerciseStandardRepositor
         return standard;
     }
     
-    public ExerciseStandard updateStandard(ExerciseStandard standard) {
+    public ExerciseRecordedModel updateStandard(ExerciseRecordedModel standard) {
         LOGGER.debug("updateStandard: {}", standard);
         dslContext.update(EXERCISE_STANDARDS)
                 .set(EXERCISE_STANDARDS.EXERCISE_ID, standard.getExerciseId())
@@ -81,10 +80,10 @@ public class ExerciseStandardRepositoryImpl implements ExerciseStandardRepositor
         return standard;
     }
     
-    public class ExerciseStandardRecordMapper implements RecordMapper<Record, ExerciseStandard> {
+    public class ExerciseStandardRecordMapper implements RecordMapper<Record, ExerciseRecordedModel> {
         @Override
-        public ExerciseStandard map(Record rec) {
-            ExerciseStandard model = new ExerciseStandard();
+        public ExerciseRecordedModel map(Record rec) {
+            ExerciseRecordedModel model = new ExerciseRecordedModel();
             model.setUserId(rec.getValue(EXERCISE_STANDARDS.USER_ID));
             model.setExerciseId(rec.getValue(EXERCISE_STANDARDS.EXERCISE_ID));
             model.setReps(rec.getValue(EXERCISE_STANDARDS.REPS));

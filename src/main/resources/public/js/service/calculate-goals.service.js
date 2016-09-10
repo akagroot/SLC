@@ -55,7 +55,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
   }
 
   function analyze2(userProfile) {
-    var usersStandard = angular.copy(userProfile.standard);
+    var usersStandard = angular.copy(userProfile.selectedStandard);
     $log.debug("usersStandard: ", usersStandard);
 
     var perfectStandard = perfectAccountValues[usersStandard.exerciseId];
@@ -90,21 +90,24 @@ function calculateGoalsService($q, $log, ratioProfileService) {
           var nextPerfectRatio = perfectStandard1RM/nextPerfectStandard1RM;
 
           $log.info(perfectStandard.exerciseModel.name + " :: " + e.exerciseModel.name);
-          $log.debug(perfectStandard1RM + "/" + nextPerfectStandard1RM + " = ", nextPerfectRatio);
+          $log.debug("Ideal: " + perfectStandard1RM + "/" + nextPerfectStandard1RM + " = ", nextPerfectRatio);
 
-          $log.debug("e: ", e);
           var nextUserEstimated1RM = getEstimated1RM(e.reps, e.weight, multipliers);
           var nextUserRatio = usersStandard1RM/nextUserEstimated1RM;
 
-          $log.debug(usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
+          $log.debug("Users: " + usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
 
           var standardDeviation = calcStandardDeviation([nextPerfectRatio, nextUserRatio]);
+          $log.debug("standardDeviation: ", standardDeviation);
           var grade = null;
-          if(nextUserRatio <= nextPerfectRatio) {
-            grade = 1 - standardDeviation;
+          var factor = null;
+          if(nextPerfectRatio >= 1) {
+            factor = (nextUserRatio <= nextPerfectRatio ? 1:-1);
           } else {
-            grade = 1 + standardDeviation;
+            factor = (nextUserRatio <= nextPerfectRatio ? -1:1);
           }
+          $log.debug("factor: ", factor);
+          grade = 1 + (factor*standardDeviation);
 
           e.grade = grade;
           e.goal = nextUserEstimated1RM/grade;

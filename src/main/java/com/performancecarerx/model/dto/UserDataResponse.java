@@ -5,6 +5,7 @@
  */
 package com.performancecarerx.model.dto;
 
+import com.performancecarerx.model.ExerciseRecordedModel;
 import com.performancecarerx.model.ExerciseStandard;
 import com.performancecarerx.model.UserProfileModel;
 import java.util.List;
@@ -17,9 +18,9 @@ public class UserDataResponse {
     private UserProfileModel userProfileModel;
     private List<ExercisesByDate> exercisesByDate;
     private List<GroupedRecordedExercises> exercisesByGroup;
-    private ExerciseStandard standard;
+    private ExerciseRecordedModel standard;
     
-    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedRecordedExercises> exercisesByGroup, ExerciseStandard standard) {
+    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedRecordedExercises> exercisesByGroup, ExerciseRecordedModel standard) {
         this.userProfileModel = userProfileModel;
         this.exercisesByDate = exercisesByDate;
         this.exercisesByGroup = exercisesByGroup;
@@ -35,7 +36,7 @@ public class UserDataResponse {
     public List<GroupedRecordedExercises> getExercisesByGroup() {
         return exercisesByGroup;
     }
-    public ExerciseStandard getStandard() {
+    public ExerciseRecordedModel getStandard() {
         return standard;
     }
     

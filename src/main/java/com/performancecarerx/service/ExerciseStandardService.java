@@ -5,13 +5,13 @@
  */
 package com.performancecarerx.service;
 
-import com.performancecarerx.model.ExerciseStandard;
+import com.performancecarerx.model.ExerciseRecordedModel;
 
 /**
  *
  * @author jberroteran
  */
 public interface ExerciseStandardService {
-    public ExerciseStandard getStandardForUser(Integer userId);
-    public ExerciseStandard updateStandardForUser(ExerciseStandard standard);
+    public ExerciseRecordedModel getStandardForUser(Integer userId);
+    public ExerciseRecordedModel updateStandardForUser(ExerciseRecordedModel standard);
 }

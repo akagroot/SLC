@@ -5,14 +5,14 @@
  */
 package com.performancecarerx.repository;
 
-import com.performancecarerx.model.ExerciseStandard;
+import com.performancecarerx.model.ExerciseRecordedModel;
 
 /**
  *
  * @author jberroteran
  */
 public interface ExerciseStandardRepository {
-    public ExerciseStandard getStandardForUser(Integer userId);
-    public ExerciseStandard addStandard(ExerciseStandard standard);
-    public ExerciseStandard updateStandard(ExerciseStandard standard);
+    public ExerciseRecordedModel getStandardForUser(Integer userId);
+    public ExerciseRecordedModel addStandard(ExerciseRecordedModel standard);
+    public ExerciseRecordedModel updateStandard(ExerciseRecordedModel standard);
 }

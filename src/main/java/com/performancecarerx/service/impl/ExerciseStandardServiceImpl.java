@@ -5,6 +5,7 @@
  */
 package com.performancecarerx.service.impl;
 
+import com.performancecarerx.model.ExerciseRecordedModel;
 import com.performancecarerx.model.ExerciseStandard;
 import com.performancecarerx.repository.ExerciseStandardRepository;
 import com.performancecarerx.service.ExerciseStandardService;
@@ -26,16 +27,16 @@ public class ExerciseStandardServiceImpl implements ExerciseStandardService {
     private ExerciseStandardRepository exerciseStandardRepository;
     
     @Override
-    public ExerciseStandard getStandardForUser(Integer userId) {
+    public ExerciseRecordedModel getStandardForUser(Integer userId) {
         LOGGER.debug("getStandardForUser: {}", userId);
         return exerciseStandardRepository.getStandardForUser(userId);
     }
 
     @Override
-    public ExerciseStandard updateStandardForUser(ExerciseStandard standard) {
+    public ExerciseRecordedModel updateStandardForUser(ExerciseRecordedModel standard) {
         LOGGER.debug("updateStandard: {}", standard);
         
-        ExerciseStandard currentStandard = exerciseStandardRepository.getStandardForUser(standard.getUserId());
+        ExerciseRecordedModel currentStandard = exerciseStandardRepository.getStandardForUser(standard.getUserId());
         
         if(currentStandard == null) {
             standard = exerciseStandardRepository.addStandard(standard);

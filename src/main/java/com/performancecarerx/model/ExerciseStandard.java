@@ -16,7 +16,7 @@ public class ExerciseStandard {
     private int weight;
     
     private UserProfileModel user;
-    private ExerciseModel exercise;
+    private ExerciseModel exerciseModel;
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -38,8 +38,8 @@ public class ExerciseStandard {
         this.user = user;
     }
 
-    public void setExercise(ExerciseModel exercise) {
-        this.exercise = exercise;
+    public void setExerciseModel(ExerciseModel exerciseModel) {
+        this.exerciseModel = exerciseModel;
     }
 
     public int getUserId() {
@@ -62,8 +62,8 @@ public class ExerciseStandard {
         return user;
     }
 
-    public ExerciseModel getExercise() {
-        return exercise;
+    public ExerciseModel getExerciseModel() {
+        return exerciseModel;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ExerciseStandard {
                 ", reps=" + reps + 
                 ", weight=" + weight + 
                 ", user=" + user + 
-                ", exercise=" + exercise + 
+                ", exerciseModel=" + exerciseModel + 
             ']';
     }
     
