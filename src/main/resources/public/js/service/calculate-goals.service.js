@@ -97,17 +97,18 @@ function calculateGoalsService($q, $log, ratioProfileService) {
 
           $log.debug("Users: " + usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
 
-          var standardDeviation = calcStandardDeviation([nextPerfectRatio, nextUserRatio]);
-          $log.debug("standardDeviation: ", standardDeviation);
-          var grade = null;
-          var factor = null;
-          if(nextPerfectRatio >= 1) {
-            factor = (nextUserRatio <= nextPerfectRatio ? 1:-1);
-          } else {
-            factor = (nextUserRatio <= nextPerfectRatio ? -1:1);
-          }
-          $log.debug("factor: ", factor);
-          grade = 1 + (factor*standardDeviation);
+          // var standardDeviation = calcStandardDeviation([nextPerfectRatio, nextUserRatio]);
+          // $log.debug("standardDeviation: ", standardDeviation);
+          // var grade = null;
+          // var factor = null;
+          // if(nextPerfectRatio >= 1) {
+          //   factor = (nextUserRatio <= nextPerfectRatio ? 1:-1);
+          // } else {
+          //   factor = (nextUserRatio <= nextPerfectRatio ? -1:1);
+          // }
+          // $log.debug("factor: ", factor);
+          // grade = 1 + (factor*standardDeviation);
+          var grade = nextPerfectRatio/nextUserRatio;
 
           e.grade = grade;
           e.goal = nextUserEstimated1RM/grade;
