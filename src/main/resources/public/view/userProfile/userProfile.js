@@ -50,6 +50,7 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 	viewmodel.countVisibleEntries = countVisibleEntries;
 	viewmodel.deleteExerciseRecorded = deleteExerciseRecorded;
 	viewmodel.roleChanged = roleChanged;
+	viewmodel.coachChanged = coachChanged;
 	viewmodel.cancelEditUser = cancelEditUser;
 	viewmodel.updateUser = updateUser;
 	viewmodel.deleteUser = deleteUser;
@@ -61,9 +62,6 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		}, function() {
 			console.log("userProfile.js $rootScope.currentUser: ", $rootScope.userProfile);
 			setRootscopeVars();
-			// viewmodel.currentUser = $rootScope.userProfile;
-			// // ng-if="UserProfile.currentUser != null && UserProfile.currentUser.role=='ADMIN'"
-			// viewmodel.isAdmin = viewmodel.currentUser.role == 'ADMIN';
 		});	
 	} else {
 		setRootscopeVars();
@@ -81,7 +79,7 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 	function setRootscopeVars() {
 		if($rootScope.userProfile != undefined && $rootScope.userProfile != null) {
 			viewmodel.currentUser = $rootScope.userProfile;
-			viewmodel.isAdmin = viewmodel.currentUser.role == 'ADMIN';	
+			viewmodel.isAdmin = $rootScope.isAdmin;
 		}
 	}
 
@@ -98,6 +96,16 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 				calculateGoalsService.setPerfectAccount(response.data);
 			}, function(error) {
 				$log.error("UserProfileCtrl.getPerfectAccount error: ", error);
+			}),
+
+			userService.getAllCoaches().then(function(response) {
+				viewmodel.coaches = response.data;
+
+				$.each(viewmodel.coaches, function(i, e) {
+					e.fullName = e.lastName + ", " + e.firstName;
+				});
+			}, function(error) {
+				$log.error("UserProfileCtrl.getAllCoaches error: ", error);
 			}),
 
 			exerciseService.getGroupedExercises().then(function(response) {
@@ -131,6 +139,19 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 
 			resetUpdateUserModel();
 			viewmodel.selectedUserRole = response.data.userProfileModel.role;
+	
+			viewmodel.coachName = null;
+			if(!viewmodel.isAdmin) {
+				$.each(viewmodel.coaches, function(i, e) {
+					if(e.id == viewmodel.userData.userProfileModel.coachId) {
+						viewmodel.coachName = e.firstName + " " + e.lastName;
+					}
+				});
+				if(viewmodel.coachName == null) {
+					viewmodel.coachName = "Unassigned";
+				}
+			}
+
 			viewmodel.loadingData = false;
 		}, function(error) {
 			viewmodel.error = true;
@@ -152,6 +173,7 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 	}
 
 	function updateUser() {
+		$log.info('updateUser: ', viewmodel.updateUserModel);
 		viewmodel.updateUserError = false;
 		viewmodel.saving = true;
 
@@ -232,6 +254,7 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 		viewmodel.updateUserModel.userId = viewmodel.userId;
 		viewmodel.updateUserModel.firstName = viewmodel.userData.userProfileModel.firstName;
 		viewmodel.updateUserModel.lastName = viewmodel.userData.userProfileModel.lastName;
+		viewmodel.updateUserModel.coachId = viewmodel.userData.userProfileModel.coachId;
 	}
 
 	function cancelEditUser() {
@@ -259,6 +282,17 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 			viewmodel.saving = false;
 			alert("The user was NOT deleted.");
 		});
+	}
+
+	function coachChanged() {
+		$log.info("Coach changed: ", viewmodel.userData.userProfileModel.coachId);
+		if(viewmodel.userData.userProfileModel.coachId.length == 0) {
+			$log.debug("null coachId");
+			viewmodel.userData.userProfileModel.coachId = null;
+		}
+		viewmodel.updateUserModel.coachId = viewmodel.userData.userProfileModel.coachId;
+
+		updateUser();
 	}
 
 	function roleChanged() {

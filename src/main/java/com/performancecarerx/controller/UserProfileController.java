@@ -61,9 +61,16 @@ public class UserProfileController {
     public List<UserProfileModel> getAllUsers() {
         LOGGER.debug("getAllUsers()");
         String email = securityService.checkUserIsLoggedIn();
-        securityService.checkUserIsAdmin(email);
+        UserProfileModel loggedInUser = securityService.checkUserIsAdmin(email);
         
-        return userProfileService.getAllUsers();
+        return userProfileService.getAllUsers(loggedInUser);
+    }
+    
+    @RequestMapping(value="/api/v1/allCoaches", method=RequestMethod.GET) 
+    public List<UserProfileModel> getAllCoaches() {
+        LOGGER.debug("getAllCoaches()");
+        String email = securityService.checkUserIsLoggedIn();
+        return userProfileService.getAllAdmins();
     }
     
     @RequestMapping(value="/api/v1/perfectAccount", method=RequestMethod.GET)

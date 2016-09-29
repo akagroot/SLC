@@ -3,7 +3,7 @@
 <div ng-if="!UserProfile.loadingData">
 	<div ng-if="UserProfile.saving" us-spinner></div>
 	<div ng-if="UserProfile.updateUserSuccess" class="alert alert-success">
-		<strong>Success!</strong> The user's name has been updated.
+		<strong>Success!</strong> User profile updated
 	</div>
 	<div ng-if="UserProfile.updateUserError" class="alert alert-danger">
 		<strong>Error!</strong> {{UserProfile.updateUserErrorMessage}}
@@ -43,7 +43,22 @@
 				</div>
 			</form>
 		</div>
-		<label>{{UserProfile.userData.userProfileModel.email}}</label>
+		<div>
+			<label>{{UserProfile.userData.userProfileModel.email}}</label>
+			<div class="pull-right">
+				<label>Coach: </label>
+				<span ng-if="!UserProfile.isAdmin">
+					<label>{{UserProfile.coachName}}</label>
+				</span>
+				<span ng-if="UserProfile.isAdmin">
+					<select ng-model="UserProfile.userData.userProfileModel.coachId" 
+					ng-change="UserProfile.coachChanged()"
+					ng-options="coach.id as coach.fullName for coach in UserProfile.coaches">
+						<option value="">Unassigned</option>
+					</select>
+				</span>
+			</div>
+		</div>
 	</div>
 	<div ng-if="UserProfile.setRoleError" class="alert alert-danger">
 		<strong>Error!</strong> {{UserProfile.setRoleErrorMessage}}

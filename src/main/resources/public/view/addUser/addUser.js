@@ -11,6 +11,7 @@ function AddUserCtrl(userService, $rootScope, $state) {
 	viewmodel.error = false;
 	viewmodel.errorMessage = null;
 	viewmodel.success = false;
+	viewmodel.coaches = null;
 
 	if($rootScope.userProfile == null || $rootScope.userProfile.role != "ADMIN") {
 		$state.go('redirectToDashboard');
@@ -19,6 +20,17 @@ function AddUserCtrl(userService, $rootScope, $state) {
 	viewmodel.addUser = addUser;
 	
 	resetAddUserModel();
+	loadData();
+
+	function loadData() {
+		userService.getAllCoaches()
+		.then(function(response) {
+			viewmodel.coaches = response.data;
+		}, function(error) {
+			viewmodel.error = true;
+			viewmodel.errorMessage = error;
+		})
+	}
 
 	function resetAddUserModel() {
 		var holdRole = null;

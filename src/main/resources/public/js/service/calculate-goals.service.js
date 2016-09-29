@@ -32,7 +32,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       });
     });
 
-    $log.debug("calculateGoalsService.setPerfectAccount: ", perfectAccountValues);
+    // $log.debug("calculateGoalsService.setPerfectAccount: ", perfectAccountValues);
   }
 
   function setRatioProfiles(profiles) {
@@ -47,7 +47,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       ratioProfiles[e.id] = mappedValues;
     });
 
-    $log.debug("calculateGoalsService.ratioProfiles: ", ratioProfiles);
+    // $log.debug("calculateGoalsService.ratioProfiles: ", ratioProfiles);
   }
 
   function getRatioProfiles() {
@@ -56,10 +56,10 @@ function calculateGoalsService($q, $log, ratioProfileService) {
 
   function analyze2(userProfile) {
     var usersStandard = angular.copy(userProfile.selectedStandard);
-    $log.debug("usersStandard: ", usersStandard);
+    // $log.debug("usersStandard: ", usersStandard);
 
     var perfectStandard = perfectAccountValues[usersStandard.exerciseId];
-    $log.debug("perfectStandard: ", perfectStandard);
+    // $log.debug("perfectStandard: ", perfectStandard);
 
     var multipliers = ratioProfiles[perfectStandard.exerciseModel.ratioProfileId];
     var perfectStandard1RM = getEstimated1RM(perfectStandard.reps, perfectStandard.weight, multipliers);
@@ -89,13 +89,13 @@ function calculateGoalsService($q, $log, ratioProfileService) {
           var nextPerfectStandard1RM = getEstimated1RM(perfectExercise.reps, perfectExercise.weight, multipliers);
           var nextPerfectRatio = perfectStandard1RM/nextPerfectStandard1RM;
 
-          $log.info(perfectStandard.exerciseModel.name + " :: " + e.exerciseModel.name);
-          $log.debug("Ideal: " + perfectStandard1RM + "/" + nextPerfectStandard1RM + " = ", nextPerfectRatio);
+          // $log.info(perfectStandard.exerciseModel.name + " :: " + e.exerciseModel.name);
+          // $log.debug("Ideal: " + perfectStandard1RM + "/" + nextPerfectStandard1RM + " = ", nextPerfectRatio);
 
           var nextUserEstimated1RM = getEstimated1RM(e.reps, e.weight, multipliers);
           var nextUserRatio = usersStandard1RM/nextUserEstimated1RM;
 
-          $log.debug("Users: " + usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
+          // $log.debug("Users: " + usersStandard1RM + "/" + nextUserEstimated1RM + " = ", nextUserRatio);
 
           // var standardDeviation = calcStandardDeviation([nextPerfectRatio, nextUserRatio]);
           // $log.debug("standardDeviation: ", standardDeviation);
@@ -115,7 +115,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
           e.estimated1RM = nextUserEstimated1RM;
 
           if(e.estimated1RM != undefined && e.goal != undefined) {
-            $log.debug("add grade to avg");
+            // $log.debug("add grade to avg");
             average += e.grade; 
             exercisesCalculated++;
           } else {
@@ -129,7 +129,7 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       } else {
         g.averageGrade = average/exercisesCalculated; 
       }
-      $log.debug("averageGrade: ", g.averageGrade);
+      // $log.debug("averageGrade: ", g.averageGrade);
     });
   }
 
@@ -185,12 +185,12 @@ function calculateGoalsService($q, $log, ratioProfileService) {
             useMultipliers = ratioProfiles[e.exerciseModel.ratioProfileId];
           }
 
-          $log.debug("useMultipliers: ", useMultipliers);
+          // $log.debug("useMultipliers: ", useMultipliers);
           var rm = e.recordedModel;
           e.estimated1RM = getEstimated1RM(rm.reps, rm.weight, useMultipliers);
           e.goal = getEstimated1RM(e.reps, e.weight, useMultipliers);
           if(e.estimated1RM != undefined && e.goal != undefined) {
-            $log.debug("add grade to avg");
+            // $log.debug("add grade to avg");
             e.grade = e.estimated1RM/e.goal; 
             average += e.grade; 
             exercisesCalculated++;
@@ -205,11 +205,11 @@ function calculateGoalsService($q, $log, ratioProfileService) {
       } else {
         entry.averageGrade = average/exercisesCalculated; 
       }
-      $log.debug("averageGrade: ", entry.averageGrade);
+      // $log.debug("averageGrade: ", entry.averageGrade);
     });
 
     $log.info("Finished calculateGoalsService.analyze");
-    $log.debug("groupedExercises: ", groupedExercises);
+    // $log.debug("groupedExercises: ", groupedExercises);
 
     return groupedExercises;
   }

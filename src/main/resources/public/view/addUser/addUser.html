@@ -17,6 +17,12 @@
 		</select>
 	</div>
 	<div class="form-group">
+		<label>Coach</label>
+		<select class="form-control" ng-model="AddUser.addUserModel.coachId" >
+			<option ng-repeat="coach in AddUser.coaches" value="{{coach.id}}">{{coach.lastName}}, {{coach.firstName}}</option>
+		</select>
+	</div>
+	<div class="form-group">
 		<label>Email</label>
 		<input type="email" class="form-control" required
 			ng-model="AddUser.addUserModel.email"/>

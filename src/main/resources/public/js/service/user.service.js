@@ -8,6 +8,7 @@ function userService($q, $log, commonService) {
 	var service = {};
 
   service.getAllUsers = getAllUsers;
+  service.getAllCoaches = getAllCoaches;
   service.getUserProfile = getUserProfile;
   service.getUserData = getUserData;
   service.addUser = addUser;
@@ -24,6 +25,7 @@ function userService($q, $log, commonService) {
   var getUserDataRoute = "/userData";
   var getUserDataByIdRoute = "/userData/{userId}";
   var getAllUsersRoute = "/allUsers";
+  var getAllCoachesRoute = "/allCoaches";
   var addUserRoute = "/addUser";
   var setUserRoleRoute = "/updateRole";
   var updateUserRoute = "/updateUser";
@@ -67,6 +69,10 @@ function userService($q, $log, commonService) {
 
   function getAllUsers(){
     return commonService.get(getAllUsersRoute);
+  }
+
+  function getAllCoaches() {
+    return commonService.get(getAllCoachesRoute);
   }
 
   function getUserProfile() {

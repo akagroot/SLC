@@ -93,10 +93,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     
     @Override
     public UserProfileModel createUser(AddUserModel model) {
-        UserProfileModel userProfileModel = new UserProfileModel(model.getEmail());
-        userProfileModel.setFirstName(model.getFirstName());
-        userProfileModel.setLastName(model.getLastName());
-        userProfileModel.setRole(model.getRole());
+        UserProfileModel userProfileModel = model.toUserProfileModel();
         return createUser(userProfileModel);
     }
     
@@ -105,6 +102,7 @@ public class UserProfileServiceImpl implements UserProfileService {
         UserProfileModel upModel = userRepository.getUserById(model.getUserId());
         upModel.setFirstName(model.getFirstName());
         upModel.setLastName(model.getLastName());
+        upModel.setCoachId(model.getCoachId());
         return updateUser(upModel);
     }
     
@@ -118,8 +116,13 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
 
     @Override
-    public List<UserProfileModel> getAllUsers() {
+    public List<UserProfileModel> getAllUsers(UserProfileModel loggedInUser) {
         return userRepository.getAllUsers();
+    }
+    
+    @Override
+    public List<UserProfileModel> getAllAdmins() {
+        return userRepository.getAllAdmins();
     }
 
     @Override
@@ -134,6 +137,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     
     @Override
     public Boolean deleteUser(Integer userId) {
+        userRepository.removeCoachId(userId);
         return userRepository.deleteUser(userId);
     }
     

@@ -1,15 +1,22 @@
 <div>
 	<div class="pull-right">
-		<div class="btn btn-default">
+		<span>
+			<select ng-change="Users.selectedAthleteFilterChanged()" ng-model="Users.selectedAthleteFilter">
+				<option value="ALL">All Athletes</option>
+				<option value="MY">My Athletes</option>
+				<option value="UNASSIGNED">Unassigned</option>
+			</select>
+		</span>
+		<span class="btn btn-default">
 			<a ui-sref="addUser">Add Athlete</a>
-		</div>
+		</span>
 	</div>
 	<h2>Athletes</h2>
 </div>
 <div ng-if="Users.dataLoading"><span us-spinner></span> Loading Athletes...</div>
 <div ng-if="!Users.dataLoading">
 	<ul class="list-group">
-		<li ng-repeat="user in Users.users" class="list-group-item">
+		<li ng-repeat="user in Users.users | selectedAthlete: Users.selectedAthleteFilter" class="list-group-item">
 			<a ui-sref="userProfile({userId: user.id})">{{user.lastName}}, {{user.firstName}}</a>
 		</li>
 	<ul>

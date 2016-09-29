@@ -18,7 +18,8 @@ import java.util.List;
 public interface UserProfileService {
     public UserProfileModel getUserByEmail(String email);
     public UserProfileModel getUserById(Integer userId);
-    public List<UserProfileModel> getAllUsers();
+    public List<UserProfileModel> getAllUsers(UserProfileModel loggedInUser);
+    public List<UserProfileModel> getAllAdmins();
     public void setPerfectAccountId(Integer id);
     public UserDataResponse getPerfectAccount();
     public UserDataResponse buildUserDataResponse(String email);

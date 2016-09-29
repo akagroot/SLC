@@ -7,6 +7,7 @@ angular.module('myApp')
         }, 
         templateUrl: 'js/directive/menu/menu.html', 
         controller: function($rootScope, $scope, $log) {
+            $scope.isAdmin = $rootScope.isAdmin;
             $scope.userProfile = $rootScope.userProfile;
 
             $scope.$watch(function() {
@@ -14,6 +15,8 @@ angular.module('myApp')
             }, function() {
                 console.log("menu.directive.js $rootScope.currentUser: ", $rootScope.userProfile);
                 $scope.userProfile = $rootScope.userProfile;
+                $scope.isAdmin = $rootScope.isAdmin;
+                console.log("menu.directive.js isAdmin: ", $scope.isAdmin);
             });
         }
     };

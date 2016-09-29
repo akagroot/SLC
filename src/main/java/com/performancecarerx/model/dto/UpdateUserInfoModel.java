@@ -13,6 +13,7 @@ public class UpdateUserInfoModel {
     private Integer userId;
     private String firstName;
     private String lastName; 
+    private Integer coachId;
     
     public UpdateUserInfoModel() {
         
@@ -26,6 +27,11 @@ public class UpdateUserInfoModel {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public void setCoachId(Integer coachId) {
+        this.coachId = coachId;
+    }
+    
     public Integer getUserId() {
         return userId;
     }
@@ -35,6 +41,11 @@ public class UpdateUserInfoModel {
     public String getLastName() {
         return lastName;
     }
+
+    public Integer getCoachId() {
+        return coachId;
+    }
+    
     
     @Override
     public String toString() {
@@ -43,6 +54,7 @@ public class UpdateUserInfoModel {
                 .append("userId=").append(userId)
                 .append(", firstName=").append(firstName)
                 .append(", lastName=").append(lastName)
+                .append(", coachId=").append(coachId)
                 .append("]");
         return builder.toString();
     }

@@ -112,9 +112,14 @@ angular.module('myApp', [
 	console.log("app.js run: ", API_END_POINT);
 
 	$rootScope.userProfile = null;
+	$rootScope.isAdmin = false;
+
 	userService.getUserProfile()
 		.then(function(response) {
 			console.log("Response: ", response);
+			if(response.data.role == "ADMIN") {
+				$rootScope.isAdmin = true;
+			}
 			$rootScope.userProfile = response.data;
 		}, function(error) {
 			console.log("Error: ", error);
@@ -126,7 +131,7 @@ angular.module('myApp', [
 				console.log("Redirect to login...");
 				window.location = '/login'
 			} else if($state.current.name == "redirectToDashboard") {
-				if($rootScope.userProfile.role == "ADMIN") {
+				if($rootScope.isAdmin) {
 					$state.go("users");
 				} else {
 					$state.go("userProfile");
