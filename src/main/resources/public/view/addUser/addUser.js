@@ -58,7 +58,7 @@ function AddUserCtrl(userService, $rootScope, $state) {
 				resetAddUserModel();
 			}, function(error) {
 				viewmodel.error = true;
-				viewmodel.errorMessage = error.error;
+				viewmodel.errorMessage = error.data.error;
 			}).finally(function() {
 				viewmodel.saving = false;
 			});

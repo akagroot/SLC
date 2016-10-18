@@ -254,12 +254,11 @@
 	<div ng-if="UserProfile.userData.exercisesByDate.length == 0">
 		<label>There are no recorded exercises for this user.</label>
 	</div>
-
-	<div ng-if="UserProfile.isAdmin">
-		<hr/>
-		<button ng-click="UserProfile.deleteUser(UserProfile.userId)" class="btn btn-danger">Delete User</button>
-	</div>
 </div>
 <div ng-if="UserProfile.error" class="alert alert-danger">
 	<strong>Error!</strong> {{UserProfile.errorMessage}}
+</div>
+<div ng-if="UserProfile.isAdmin">
+	<hr/>
+	<button ng-click="UserProfile.deleteUser(UserProfile.userId)" class="btn btn-danger">Delete User</button>
 </div>

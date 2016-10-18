@@ -73,6 +73,10 @@ function PerfectAccountCtrl(userService, $rootScope, $state, $scope, $stateParam
 	}
 
 	function setAccount(form) {
+		if(!window.confirm("This will change the 'Perfect Account'.  If this new account is not setup correctly, this will make the grades and ratios for all users incorrect.  Are you sure you want to change?")) {
+			return;			
+		}
+
 		viewmodel.saving = true;
 		clearMessages();
 

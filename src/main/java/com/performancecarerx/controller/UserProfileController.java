@@ -112,6 +112,12 @@ public class UserProfileController {
         String email = securityService.checkUserIsLoggedIn();
         securityService.checkUserIsAdmin(email);
         
+        UserProfileModel user = userProfileService.getUserByEmail(model.getEmail());
+        
+        if(user != null) {
+            throw new NotAllowedException("This user already exists in the database.");
+        }
+        
         return userProfileService.createUser(model);
     }
     

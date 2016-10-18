@@ -286,10 +286,6 @@ function UserProfileCtrl($stateParams, userService, $q, $log, exerciseService, r
 
 	function coachChanged() {
 		$log.info("Coach changed: ", viewmodel.userData.userProfileModel.coachId);
-		if(viewmodel.userData.userProfileModel.coachId.length == 0) {
-			$log.debug("null coachId");
-			viewmodel.userData.userProfileModel.coachId = null;
-		}
 		viewmodel.updateUserModel.coachId = viewmodel.userData.userProfileModel.coachId;
 
 		updateUser();
