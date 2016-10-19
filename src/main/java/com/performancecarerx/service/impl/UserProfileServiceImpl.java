@@ -142,6 +142,12 @@ public class UserProfileServiceImpl implements UserProfileService {
     }
     
     @Override
+    public Boolean doesUserExist(String email) {
+        UserProfileModel user = userRepository.getUserByEmail(email);
+        return user != null;
+    }
+    
+    @Override
     public void setPerfectAccountId(Integer id) {
         String value = String.valueOf(id);
         

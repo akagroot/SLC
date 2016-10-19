@@ -28,5 +28,6 @@ public interface UserProfileService {
     public UserProfileModel updateUser(UpdateUserInfoModel model);
     public Boolean deleteUser(Integer userId);
     public Boolean setUserRole(Integer userId, String role);
+    public Boolean doesUserExist(String email);
     public Integer getNumberOfAdmins();
 }
