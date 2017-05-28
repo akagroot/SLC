@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author jberroteran
  */
 @RestController
+@RequestMapping(value = "/api/pub/v1/userProfile")
 public class UserProfileController {
     private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileController.class); 
     
@@ -39,7 +40,7 @@ public class UserProfileController {
     @Autowired
     private UserProfileService userProfileService;
     
-    @RequestMapping(value = "/api/v1/userProfile", method=RequestMethod.GET)
+    @RequestMapping(value = "", method=RequestMethod.GET)
     public UserProfileModel userProfile() {
         LOGGER.debug("userProfile()");
         String email = securityService.checkUserIsLoggedIn();
@@ -48,7 +49,7 @@ public class UserProfileController {
         return model;
     }
     
-    @RequestMapping(value = "/api/v1/userProfile/{userId}", method=RequestMethod.GET) 
+    @RequestMapping(value = "/{userId}", method=RequestMethod.GET) 
     public UserProfileModel userProfile(@PathVariable("userId") Integer userId) {
         LOGGER.debug("userProfile() {}", userId);
         String email = securityService.checkUserIsLoggedIn();
@@ -57,7 +58,7 @@ public class UserProfileController {
         return userProfileService.getUserById(userId);
     }
     
-    @RequestMapping(value = "/api/v1/allUsers", method=RequestMethod.GET) 
+    @RequestMapping(value = "/allUsers", method=RequestMethod.GET) 
     public List<UserProfileModel> getAllUsers() {
         LOGGER.debug("getAllUsers()");
         String email = securityService.checkUserIsLoggedIn();
@@ -66,47 +67,7 @@ public class UserProfileController {
         return userProfileService.getAllUsers(loggedInUser);
     }
     
-    @RequestMapping(value="/api/v1/allCoaches", method=RequestMethod.GET) 
-    public List<UserProfileModel> getAllCoaches() {
-        LOGGER.debug("getAllCoaches()");
-        String email = securityService.checkUserIsLoggedIn();
-        return userProfileService.getAllAdmins();
-    }
-    
-    @RequestMapping(value="/api/v1/perfectAccount", method=RequestMethod.GET)
-    public UserDataResponse getPerfectAccount() {
-        LOGGER.debug("getPerfectAccount()");
-        securityService.checkUserIsLoggedIn();
-        return userProfileService.getPerfectAccount();
-    }
-    
-    @RequestMapping(value="/api/v1/updatePerfectAccount", method=RequestMethod.POST) 
-    public Boolean updatePerfectAccount(@RequestBody Integer newId) {
-        LOGGER.debug("updatePerfectAccount {}", newId);
-        String email = securityService.checkUserIsLoggedIn();
-        securityService.checkUserIsAdmin(email);
-        userProfileService.setPerfectAccountId(newId);
-        return true;
-    }
-    
-    @RequestMapping(value = "/api/v1/userData", method=RequestMethod.GET)
-    public UserDataResponse getUserData() {
-        LOGGER.debug("getUserData()");
-        String email = securityService.checkUserIsLoggedIn();
-        return userProfileService.buildUserDataResponse(email);
-    }
-    
-    @RequestMapping(value = "/api/v1/userData/{userId}", method=RequestMethod.GET)
-    public UserDataResponse getUserDataByUserId(@PathVariable("userId") Integer userId) {
-        LOGGER.debug("getUserDataByUserId() {}", userId);
-        String email = securityService.checkUserIsLoggedIn();
-        securityService.checkUserIsAdmin(email);
-        
-        UserProfileModel user = userProfileService.getUserById(userId);
-        return userProfileService.buildUserDataResponse(user.getEmail());
-    }
-    
-    @RequestMapping(value = "/api/v1/addUser", method=RequestMethod.POST)
+    @RequestMapping(value = "/addUser", method=RequestMethod.POST)
     public UserProfileModel addUser(@RequestBody @Valid AddUserModel model) {
         LOGGER.debug("addUser() {}", model);
         String email = securityService.checkUserIsLoggedIn();
@@ -119,7 +80,7 @@ public class UserProfileController {
         return userProfileService.createUser(model);
     }
     
-    @RequestMapping(value = "/api/v1/updateUser", method=RequestMethod.POST) 
+    @RequestMapping(value = "/updateUser", method=RequestMethod.POST) 
     public UserProfileModel updateUser(@RequestBody @Valid UpdateUserInfoModel model) {
         LOGGER.debug("updateUser() {}", model);
         String email = securityService.checkUserIsLoggedIn();
@@ -128,7 +89,7 @@ public class UserProfileController {
         return userProfileService.updateUser(model);
     }
     
-    @RequestMapping(value = "/api/v1/updateRole", method=RequestMethod.POST)
+    @RequestMapping(value = "/updateRole", method=RequestMethod.POST)
     public Boolean setUserRole(@RequestBody @Valid UpdateUserRoleModel role) {
         LOGGER.debug("setUserRole() {}", role);
         String email = securityService.checkUserIsLoggedIn();
@@ -142,7 +103,7 @@ public class UserProfileController {
         return userProfileService.setUserRole(role.getUserId(), role.getRole());
     }
     
-    @RequestMapping(value = "/api/v1/deleteUser/{userId}", method=RequestMethod.GET)
+    @RequestMapping(value = "/deleteUser/{userId}", method=RequestMethod.GET)
     public Boolean deleteUser(@PathVariable("userId") Integer userId) {
         LOGGER.debug("deleteUser() {}", userId);
         String email = securityService.checkUserIsLoggedIn();

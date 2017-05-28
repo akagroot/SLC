@@ -20,9 +20,6 @@ public interface UserProfileService {
     public UserProfileModel getUserById(Integer userId);
     public List<UserProfileModel> getAllUsers(UserProfileModel loggedInUser);
     public List<UserProfileModel> getAllAdmins();
-    public void setPerfectAccountId(Integer id);
-    public UserDataResponse getPerfectAccount();
-    public UserDataResponse buildUserDataResponse(String email);
     public UserProfileModel createUser(UserProfileModel model);
     public UserProfileModel createUser(AddUserModel model);
     public UserProfileModel updateUser(UpdateUserInfoModel model);

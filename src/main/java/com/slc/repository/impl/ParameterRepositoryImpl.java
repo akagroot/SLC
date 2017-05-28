@@ -5,7 +5,7 @@
  */
 package com.slc.repository.impl;
 
-import static com.performancecarerx.persistence.tables.Parameters.PARAMETERS;
+import static com.slc.persistence.tables.Parameters.PARAMETERS;
 import com.slc.repository.ParameterRepository;
 import org.jooq.DSLContext;
 import org.slf4j.Logger;

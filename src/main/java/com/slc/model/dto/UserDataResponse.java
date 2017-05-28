@@ -5,8 +5,6 @@
  */
 package com.slc.model.dto;
 
-import com.slc.model.ExerciseRecordedModel;
-import com.slc.model.ExerciseStandard;
 import com.slc.model.UserProfileModel;
 import java.util.List;
 
@@ -16,38 +14,20 @@ import java.util.List;
  */
 public class UserDataResponse {
     private UserProfileModel userProfileModel;
-    private List<ExercisesByDate> exercisesByDate;
-    private List<GroupedRecordedExercises> exercisesByGroup;
-    private ExerciseRecordedModel standard;
     
-    public UserDataResponse(UserProfileModel userProfileModel, List<ExercisesByDate> exercisesByDate, List<GroupedRecordedExercises> exercisesByGroup, ExerciseRecordedModel standard) {
+    public UserDataResponse(UserProfileModel userProfileModel) {
         this.userProfileModel = userProfileModel;
-        this.exercisesByDate = exercisesByDate;
-        this.exercisesByGroup = exercisesByGroup;
-        this.standard = standard;
     }
     
     public UserProfileModel getUserProfileModel() {
         return userProfileModel;
-    }
-    public List<ExercisesByDate> getExercisesByDate() {
-        return exercisesByDate;
-    }
-    public List<GroupedRecordedExercises> getExercisesByGroup() {
-        return exercisesByGroup;
-    }
-    public ExerciseRecordedModel getStandard() {
-        return standard;
     }
     
     @Override
     public String toString() { 
         StringBuilder builder = new StringBuilder();
         builder.append("UserDataResponse [")
-                .append("userProfileModel=").append(userProfileModel) 
-                .append(", exercisesByDate=").append(exercisesByDate)
-                .append(", exercisesByGroup=").append(exercisesByGroup)
-                .append(", standard=").append(standard)
+                .append("userProfileModel=").append(userProfileModel)
                 .append("]");
         return builder.toString();
     }

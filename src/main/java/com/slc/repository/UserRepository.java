@@ -20,9 +20,6 @@ public interface UserRepository {
     public Boolean deleteUser(Integer userId);
     public List<UserProfileModel> getAllUsers();
     public List<UserProfileModel> getAllAdmins();
-    public List<UserProfileModel> getAllUsersAthletes(Integer userId);
-    public Integer removeCoachId(Integer coachId);
     public Boolean setUserRole(Integer userId, String role);
-    public Boolean setCoach(Integer userId, Integer coachId);
     public Integer getNumberOfAdmins();
 }

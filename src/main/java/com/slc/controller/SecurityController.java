@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping(value="/api/pub/v1")
 public class SecurityController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SecurityController.class); 
@@ -23,7 +24,7 @@ public class SecurityController {
         }
     }
     
-    @RequestMapping(value = "/api/v1/isLoggedIn", method=RequestMethod.GET)
+    @RequestMapping(value = "/isLoggedIn", method=RequestMethod.GET)
     public IsLoggedInResponse isLoggedIn() {
         LOGGER.debug("isLoggedIn()");
         return new IsLoggedInResponse(securityService.getLoggedInUser() != null);

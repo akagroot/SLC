@@ -15,7 +15,6 @@ public class UserProfileModel {
     private String role;
     private String firstName;
     private String lastName;
-    private Integer coachId;
     
     public UserProfileModel(String email) {
         this.email = email;
@@ -40,10 +39,6 @@ public class UserProfileModel {
     public String getLastName() {
         return lastName;
     }
-
-    public Integer getCoachId() {
-        return coachId;
-    }
     
     
     
@@ -63,11 +58,6 @@ public class UserProfileModel {
         this.lastName = lastName;
     }
 
-    public void setCoachId(Integer coachId) {
-        this.coachId = coachId;
-    }
-    
-    
     
     @Override
     public String toString() {
@@ -78,7 +68,6 @@ public class UserProfileModel {
                 .append(", role=").append(role)
                 .append(", firstName=").append(firstName) 
                 .append(", lastName=").append(lastName)
-                .append(", coachId=").append(coachId)
                 .append("]");
         return builder.toString();
     }
