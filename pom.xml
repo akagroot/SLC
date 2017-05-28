@@ -111,5 +111,5 @@
             <url>https://repo.spring.io/libs-release</url>
         </pluginRepository>
     </pluginRepositories>
-    <name>PCRX-Heroku</name>
+    <name>SLC-Rest</name>
 </project>
